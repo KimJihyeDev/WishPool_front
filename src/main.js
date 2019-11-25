@@ -1,8 +1,29 @@
+//뷰라이브러리 기능추가
 import Vue from 'vue'
+
+//최상위 컴포넌트 추가
 import App from './App.vue'
+
+//뷰라우터 라이브러리 기능추가
+import VueRouter from 'vue-router'
+
+//라우팅 파일을 이용해 라우팅 배열정보 불러오기
+import Routes from './router/routes.js'
+
+//뷰라이브러리에서 라우팅 사용할수 있게 설정
+Vue.use(VueRouter)
+
+
+
+const router = new VueRouter({
+  routes:Routes
+})
+
 
 Vue.config.productionTip = false
 
+
 new Vue({
   render: h => h(App),
+  router:router
 }).$mount('#app')

@@ -1,24 +1,26 @@
 <template>
   <div id="app">
+    <!--헤더공통컴포넌트-->
+    <Header/>
+
+    <!--본문 컨텐츠 출력 영역 -->
+    <router-view></router-view>
+
+    <!-- 하단 공통컴포넌트 -->
+    <Footer/>
+
   </div>
 </template>
 
 <script>
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 
 export default {
   name: 'app',
   components: {
-  }
+    Header,
+    Footer
+  },
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
