@@ -14,7 +14,6 @@
 <script>
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-import ItemList from './components/item/ItemList.vue'
 
 export default {
   name: 'app',
