@@ -34,7 +34,7 @@ export default {
 }
 .btn-list{
 	float:right;
-	width: 45%;
+	width: 50%;
 	display: flex;
 	justify-content: space-between
 }
