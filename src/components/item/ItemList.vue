@@ -22,8 +22,11 @@
 
         <div class="container">
             <div class="row">
-                <item/>
-
+                <item v-for="item in items"
+				:key="item.id"
+				:itemName="item.itemName"
+				:itemPrice="item.itemPrice" 
+			/>
             </div>
         </div>
 
@@ -40,7 +43,13 @@
             name: 'ItemList',
             data() {
                 return {
-					items: []
+					items: [
+						{	
+							id: 0,
+							itemName: '아이템 이름',
+							itemPrice: '10000원'
+						}
+					]
 				}
             },
             components: {
