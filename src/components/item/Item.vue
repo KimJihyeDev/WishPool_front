@@ -10,10 +10,10 @@
 						<div class="birthday-date">{{price}}</div>
 					</div>
 					<div class="btn-list">
-						<a href="#" class="btn btn-sm bg-blue">공개</a>
-						<a href="#" class="btn btn-sm bg-blue">링크</a>
-						<a href="#" class="btn btn-sm bg-blue">수정</a>
-						<a href="#" class="btn btn-sm bg-blue">완료</a>
+						<a href="javascript:void(0)" class="btn btn-sm bg-blue">공개</a>
+						<a href="javascript:void(0)" class="btn btn-sm bg-blue">링크</a>
+						<a href="javascript:void(0)" class="btn btn-sm bg-blue">수정</a>
+						<a href="javascript:void(0)" class="btn btn-sm bg-blue">완료</a>
 					</div>
 				</div>
 			</div>
@@ -31,10 +31,12 @@ export default {
 <style scoped>
 .btn-group-sm>.btn, .btn-sm{
 	padding: 0.3rem 0.5rem;
+	/* background: transparent;
+	border: 1px solid #38a9ff; */
 }
 .btn-list{
 	float:right;
-	width: 50%;
+	width: 50%; /*미디어 쿼리로 수정필요*/
 	display: flex;
 	justify-content: space-between
 }
