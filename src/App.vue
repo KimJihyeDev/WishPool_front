@@ -1,28 +1,26 @@
 <template>
   <div id="app">
     <!--헤더공통컴포넌트-->
-    <!-- <Header/> -->
-    <ItemList />
+    <Header/>
     <!--본문 컨텐츠 출력 영역 -->
-    <!-- <router-view></router-view> -->
+    <router-view></router-view>
 
     <!-- 하단 공통컴포넌트 -->
-    <!-- <Footer/> -->
+    <Footer/>
 
   </div>
 </template>
 
 <script>
-// import Header from './components/Header.vue'
-// import Footer from './components/Footer.vue'
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 import ItemList from './components/item/ItemList.vue'
 
 export default {
   name: 'app',
   components: {
-    // Header,
-    // Footer,
-    ItemList
+    Header,
+    Footer,
   },
 }
 </script>
