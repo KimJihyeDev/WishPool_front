@@ -2,7 +2,6 @@
   <div id="app">
     <!--헤더공통컴포넌트-->
     <Header/>
-
     <!--본문 컨텐츠 출력 영역 -->
     <router-view></router-view>
 
@@ -20,7 +19,7 @@ export default {
   name: 'app',
   components: {
     Header,
-    Footer
+    Footer,
   },
 }
 </script>
