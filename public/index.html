@@ -33,91 +33,62 @@
 </head>
 
 <body>
-
 	<div id="app"></div>
-<!-- Preloader -->
 
-<!-- <div id="hellopreloader">
-	<div class="preloader">
-		<svg width="45" height="45" stroke="#fff">
-			<g fill="none" fill-rule="evenodd" stroke-width="2" transform="translate(1 1)">
-				<circle cx="22" cy="22" r="6" stroke="none">
-					<animate attributeName="r" begin="1.5s" calcMode="linear" dur="3s" repeatCount="indefinite" values="6;22"/>
-					<animate attributeName="stroke-opacity" begin="1.5s" calcMode="linear" dur="3s" repeatCount="indefinite" values="1;0"/>
-					<animate attributeName="stroke-width" begin="1.5s" calcMode="linear" dur="3s" repeatCount="indefinite" values="2;0"/>
-				</circle>
-				<circle cx="22" cy="22" r="6" stroke="none">
-					<animate attributeName="r" begin="3s" calcMode="linear" dur="3s" repeatCount="indefinite" values="6;22"/>
-					<animate attributeName="stroke-opacity" begin="3s" calcMode="linear" dur="3s" repeatCount="indefinite" values="1;0"/>
-					<animate attributeName="stroke-width" begin="3s" calcMode="linear" dur="3s" repeatCount="indefinite" values="2;0"/>
-				</circle>
-				<circle cx="22" cy="22" r="8">
-					<animate attributeName="r" begin="0s" calcMode="linear" dur="1.5s" repeatCount="indefinite" values="6;1;2;3;4;5;6"/>
-				</circle>
-			</g>
-		</svg>
+	<!-- JS Scripts -->
+	<script src="<%= BASE_URL %>assets/js/jQuery/jquery-3.4.1.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/jquery.appear.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/jquery.mousewheel.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/perfect-scrollbar.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/jquery.matchHeight.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/svgxuse.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/imagesloaded.pkgd.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/Headroom.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/velocity.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/ScrollMagic.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/jquery.waypoints.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/jquery.countTo.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/popper.min.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/material.min.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/bootstrap-select.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/smooth-scroll.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/selectize.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/swiper.jquery.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/moment.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/daterangepicker.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/fullcalendar.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/isotope.pkgd.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/ajax-pagination.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/Chart.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/chartjs-plugin-deferred.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/circle-progress.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/loader.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/run-chart.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/jquery.magnific-popup.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/jquery.gifplayer.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/mediaelement-and-player.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/mediaelement-playlist-plugin.min.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/ion.rangeSlider.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/leaflet.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/MarkerClusterGroup.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs/lazyload.js"></script>
+	<script type="text/javascript">
+		var pageLazyLoad = new LazyLoad({
+			elements_selector: "[loading=lazy]",
+			use_native: true // ← enables hybrid lazy loading
+		});
 
-		<div class="text">Loading ...</div>
-	</div>
-</div> -->
+		window.lazyLoadOptions = {
+			elements_selector: "[loading=lazy]",
+			use_native: true // ← enables hybrid lazy loading
+		};
+	</script>
 
-<!-- ... end Preloader -->
+	<script src="<%= BASE_URL %>assets/js/main.js"></script>
+	<script src="<%= BASE_URL %>assets/js/libs-init/libs-init.js"></script>
+	<script defer src="<%= BASE_URL %>assets/fonts/fontawesome-all.js"></script>
 
-
-<!-- JS Scripts -->
-<script src="<%= BASE_URL %>assets/js/jQuery/jquery-3.4.1.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/jquery.appear.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/jquery.mousewheel.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/perfect-scrollbar.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/jquery.matchHeight.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/svgxuse.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/imagesloaded.pkgd.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/Headroom.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/velocity.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/ScrollMagic.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/jquery.waypoints.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/jquery.countTo.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/popper.min.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/material.min.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/bootstrap-select.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/smooth-scroll.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/selectize.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/swiper.jquery.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/moment.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/daterangepicker.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/fullcalendar.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/isotope.pkgd.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/ajax-pagination.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/Chart.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/chartjs-plugin-deferred.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/circle-progress.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/loader.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/run-chart.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/jquery.magnific-popup.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/jquery.gifplayer.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/mediaelement-and-player.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/mediaelement-playlist-plugin.min.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/ion.rangeSlider.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/leaflet.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/MarkerClusterGroup.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs/lazyload.js"></script>
-<script type="text/javascript">
-	var pageLazyLoad = new LazyLoad({
-		elements_selector: "[loading=lazy]",
-		use_native: true // ← enables hybrid lazy loading
-	});
-
-	window.lazyLoadOptions = {
-		elements_selector: "[loading=lazy]",
-		use_native: true // ← enables hybrid lazy loading
-	};
-</script>
-
-<script src="<%= BASE_URL %>assets/js/main.js"></script>
-<script src="<%= BASE_URL %>assets/js/libs-init/libs-init.js"></script>
-<script defer src="<%= BASE_URL %>assets/fonts/fontawesome-all.js"></script>
-
-<script src="<%= BASE_URL %>assets/Bootstrap/dist/js/bootstrap.bundle.js"></script>
+	<script src="<%= BASE_URL %>assets/Bootstrap/dist/js/bootstrap.bundle.js"></script>
 
 </body>
 </html>
