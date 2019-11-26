@@ -6,10 +6,15 @@
 						<img src="/assets/img/avatar7-sm.jpg" alt="author">
 					</div>
 					<div class="birthday-author-name">
-						<a href="#" class="h6 author-name">{{itemName}} </a>
-						<div class="birthday-date">{{itemPrice}}</div>
+						<a href="#" class="h6 author-name">{{name}} </a>
+						<div class="birthday-date">{{price}}</div>
 					</div>
-					<a href="20-CalendarAndEvents-MonthlyCalendar.html" class="btn btn-sm bg-blue">Create Event</a>
+					<div class="btn-list">
+						<a href="#" class="btn btn-sm bg-blue">공개</a>
+						<a href="#" class="btn btn-sm bg-blue">링크</a>
+						<a href="#" class="btn btn-sm bg-blue">수정</a>
+						<a href="#" class="btn btn-sm bg-blue">완료</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -17,9 +22,20 @@
 <script>
 export default {
 	name: 'Item',
-	props:{
-		itemName:'', //아이템 이름
-		itemPrice:'' //아이템 가격
-	}
+	props: [
+		'name', //아이템 이름
+		'price' //아이템 가격
+	],
 }
 </script>
+<style scoped>
+.btn-group-sm>.btn, .btn-sm{
+	padding: 0.3rem 0.5rem;
+}
+.btn-list{
+	float:right;
+	width: 45%;
+	display: flex;
+	justify-content: space-between
+}
+</style>

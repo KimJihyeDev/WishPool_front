@@ -24,8 +24,8 @@
             <div class="row">
                 <item v-for="item in items"
 				:key="item.id"
-				:itemName="item.itemName"
-				:itemPrice="item.itemPrice" 
+				:name="item.itemName"
+				:price="item.itemPrice" 
 			/>
             </div>
         </div>
@@ -46,8 +46,18 @@
 					items: [
 						{	
 							id: 0,
-							itemName: '아이템 이름',
+							itemName: '고양이 마우스 장난감',
 							itemPrice: '10000원'
+						},
+						{	
+							id: 1,
+							itemName: 'vue.js 책',
+							itemPrice: '230000원'
+						},
+						{	
+							id: 2,
+							itemName: 'starbuck 기프티콘',
+							itemPrice: '1234원'
 						}
 					]
 				}
