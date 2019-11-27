@@ -9,9 +9,13 @@ import VueRouter from 'vue-router'
 
 //라우팅 파일을 이용해 라우팅 배열정보 불러오기
 import Routes from './router/routes.js'
+// axios 추가
+import axios from 'axios'
 
 //뷰라이브러리에서 라우팅 사용할수 있게 설정
 Vue.use(VueRouter)
+
+Vue.prototype.$http = axios
 
 
 
