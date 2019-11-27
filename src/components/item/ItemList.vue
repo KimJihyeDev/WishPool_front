@@ -18,7 +18,7 @@
         <div class="container">
 			 <!-- 아이템 추가 버튼 -->
 			<div class="col col-lg-3 col-md-6 col-sm-12 col-12">
-				<router-link to="/item/add" ><a href="#" class="btn btn-primary btn-lg full-width">아이템 추가</a></router-link>
+				<router-link to="/item/add" ><a href="javascript:void(0)" class="btn btn-primary btn-lg full-width">아이템 추가</a></router-link>
 			</div>
 			<!-- ... end 아이템 추가 버튼 -->
 			<!-- collapse -->
@@ -33,9 +33,11 @@
 					<div class="collapse multi-collapse show" id="multiCollapseExample1">
 						<div class="card card-body">
 							<item v-for="item in unPurchasedList"
-							:key="item.id"
+							:key="item.itemId"
 							:name="item.itemName"
 							:price="item.itemPrice" 
+							:id="item.itemId"
+							isCompleted="완료"
 							/>
 						</div>
 					</div>
@@ -50,10 +52,12 @@
 				<div class="col">
 					<div class="collapse multi-collapse show" id="multiCollapseExample2">
 						<div class="card card-body">
-							<item v-for="item in unPurchasedList"
-							:key="item.id"
+							<item v-for="item in purchasedList"
+							:key="item.itemId"
 							:name="item.itemName"
-							:price="item.itemPrice" 
+							:price="item.itemPrice"
+							:id="item.itemId"
+							isCompleted="취소" 
 							/>
 						</div>
 					</div>
@@ -109,45 +113,45 @@
     </template>
     <script>
         import Item from './Item.vue';
-
+		
         export default {
             name: 'ItemList',
             data() {
                 return {
 					items: [
 						{	
-							id: 0,
+							itemId: 0,
 							itemName: '고양이 마우스 장난감',
 							itemPrice: '10000원',
 							purchasedBy: 'me'
 						},
 						{	
-							id: 1,
+							itemId: 1,
 							itemName: 'vue.js 책',
 							itemPrice: '230000원',
 							purchasedBy: 'you'
 						},
 						{	
-							id: 2,
+							itemId: 2,
 							itemName: 'starbuck 기프티콘',
 							itemPrice: '1234원',
 							purchasedBy: 'he'
 						},
 												{	
-							id: 0,
-							itemName: '고양이 마우스 장난감',
+							itemId: 3,
+							itemName: '텀블러',
 							itemPrice: '10000원',
 							purchasedBy: ''
 						},
 						{	
-							id: 1,
-							itemName: 'vue.js 책',
+							itemId: 4,
+							itemName: '정수기',
 							itemPrice: '230000원',
 							purchasedBy: ''
 						},
 						{	
-							id: 2,
-							itemName: 'starbuck 기프티콘',
+							itemId: 5,
+							itemName: '루이비통',
 							itemPrice: '1234원',
 							purchasedBy: ''
 						}

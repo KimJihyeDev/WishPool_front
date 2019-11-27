@@ -2,6 +2,7 @@
 <div class="row">
     <div class="col col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
 		<div class="ui-block">
+			<a href="javascript:void(0)" v-on:click="goDetail">
 			<div class="birthday-item inline-items">
 				<div class="author-thumb">
 					<img src="/assets/img/avatar7-sm.jpg" alt="author">
@@ -12,22 +13,40 @@
 				</div>
 				<div class="btn-list">
 					<a href="javascript:void(0)" class="btn btn-sm bg-blue">공개</a>
-					<a href="javascript:void(0)" class="btn btn-sm bg-blue">링크</a>
+					<a v-on:click.stop="copyLink" href="javascript:void(0)" class="btn btn-sm bg-blue">링크</a>
 					<a href="javascript:void(0)" class="btn btn-sm bg-blue">수정</a>
-					<a href="javascript:void(0)" class="btn btn-sm bg-blue">완료</a>
+					<a href="javascript:void(0)" class="btn btn-sm bg-blue">{{isCompleted}}</a>
 				</div>
 			</div>
+			</a>
 		</div>
 	</div>
 </div>
 </template>
 <script>
+import ItemDetail from './ItemDetail.vue'
 export default {
 	name: 'Item',
 	props: [
 		'name', //아이템 이름
-		'price' //아이템 가격
+		'price', //아이템 가격
+		'isCompleted',
+		'id'
 	],
+	computed:{
+		getId(){
+			return this.id;
+		}
+	},
+	methods:{
+		copyLink(){
+			console.log(this.$route.params); //this.$route.params.detail....id?
+		},
+		goDetail(){
+			//console.log(this.id);
+			this.$router.push({path:'/item/detail/'+this.id, component:ItemDetail.vue})
+		}
+	}
 }
 </script>
 <style scoped>

@@ -4,6 +4,6 @@ import ItemAdd from '../components/item/ItemAdd.vue'
 
 export default [
     { path:'/category/list', component:Category },
-    { path:'/item/list', component:ItemList }
+    { path:'/item/list', component:ItemList },
     { path:'/item/add', component:ItemAdd }
 ]
