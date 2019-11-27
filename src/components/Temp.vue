@@ -14,12 +14,6 @@ export default {
             console.log(self.show);
             self.show=data;
         });
-        // this.$watch('$data.list', function(){
-        //     console.log('wat'+this.list[0].text);
-        // }, {
-        //     immediate: true,
-        //     deep: true
-        // })
     },
     data(){
         return {
