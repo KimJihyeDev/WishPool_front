@@ -11,23 +11,95 @@
 
         <!-- ... end Main Header Birthday -->
 
-        <!-- 아이템 추가 버튼 -->
-        <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
-            <a href="#" class="btn btn-primary btn-lg">아이템 추가<div class="ripple-container"></div>
-            </a>
-        </div>
-        <!-- ... end 아이템 추가 버튼 -->
+       
 
         <!-- Main Content Birthday -->
 
         <div class="container">
-            <div class="row">
-                <item v-for="item in items"
-				:key="item.id"
-				:name="item.itemName"
-				:price="item.itemPrice" 
-			/>
-            </div>
+			 <!-- 아이템 추가 버튼 -->
+			<div class="col col-lg-3 col-md-6 col-sm-12 col-12">
+				<a href="#" class="btn btn-primary btn-lg full-width">아이템 추가<div class="ripple-container"></div>
+				</a>
+			</div>
+			<!-- ... end 아이템 추가 버튼 -->
+			<!-- collapse -->
+			<div class="col">
+				<button class="btn form-group" type="button" data-toggle="collapse" data-target="#multiCollapseExample1" aria-expanded="true" aria-controls="multiCollapseExample1">
+					<span class="crumina-module crumina-heading with-title-decoration">
+						<h5 class="heading-title">Wishes&nbsp;&nbsp;<i class="fas fa-sort-down"></i></h5> <!--화살표방향 펼치고닫히고 바뀌어야-->
+					</span>
+				</button>
+				
+				<div class="col">
+					<div class="collapse multi-collapse show" id="multiCollapseExample1">
+						<div class="card card-body">
+							<item v-for="item in unPurchasedList"
+							:key="item.id"
+							:name="item.itemName"
+							:price="item.itemPrice" 
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<button class="btn form-group" style="margin-top:1.5rem" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="true" aria-controls="multiCollapseExample2">
+					<span class="crumina-module crumina-heading with-title-decoration">
+						<h5 class="heading-title">Completed&nbsp;&nbsp;<i class="fas fa-sort-down"></i></h5>
+					</span>
+				</button>
+				<div class="col">
+					<div class="collapse multi-collapse show" id="multiCollapseExample2">
+						<div class="card card-body">
+							<item v-for="item in unPurchasedList"
+							:key="item.id"
+							:name="item.itemName"
+							:price="item.itemPrice" 
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div id="accordion">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+					<h5 class="mb-0">
+						<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						Collapsible Group Item #1
+						</button>
+					</h5>
+					</div>
+
+					<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+						<div class="card-body">
+							
+						</div>
+					</div>
+            	</div> 
+				<div class="card">
+					<div class="card-header" id="headingTwo">
+						<h5 class="mb-0">
+							<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							Collapsible Group Item #2
+							</button>
+						</h5>
+					</div>
+					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+					<div class="card-body">
+						<div class="row">
+							<item v-for="item in purchasedList"
+								:key="item.id"
+								:name="item.itemName"
+								:price="item.itemPrice" 
+							/>
+							</div>
+     					</div>
+					</div>
+				</div>
+			
+            </div> -->
+				<!-- end of collapse -->
+            
         </div>
 
         <!-- ... end Main Content Birthday -->
@@ -47,24 +119,53 @@
 						{	
 							id: 0,
 							itemName: '고양이 마우스 장난감',
-							itemPrice: '10000원'
+							itemPrice: '10000원',
+							purchasedBy: 'me'
 						},
 						{	
 							id: 1,
 							itemName: 'vue.js 책',
-							itemPrice: '230000원'
+							itemPrice: '230000원',
+							purchasedBy: 'you'
 						},
 						{	
 							id: 2,
 							itemName: 'starbuck 기프티콘',
-							itemPrice: '1234원'
+							itemPrice: '1234원',
+							purchasedBy: 'he'
+						},
+												{	
+							id: 0,
+							itemName: '고양이 마우스 장난감',
+							itemPrice: '10000원',
+							purchasedBy: ''
+						},
+						{	
+							id: 1,
+							itemName: 'vue.js 책',
+							itemPrice: '230000원',
+							purchasedBy: ''
+						},
+						{	
+							id: 2,
+							itemName: 'starbuck 기프티콘',
+							itemPrice: '1234원',
+							purchasedBy: ''
 						}
 					]
 				}
             },
             components: {
                 'item': Item
-            }
+			},
+			computed:{
+				unPurchasedList(){
+					return this.items.filter(item => item.purchasedBy === '');
+				},
+				purchasedList(){
+					return this.items.filter(item => item.purchasedBy !== '')
+				}
+			}
         }
     </script>
     <style scoped>
@@ -74,4 +175,25 @@
 			width: 100%;
 			font-size: 1.2rem;
 		}
+
+		.show > .btn-secondary.dropdown-toggle {
+			background-color: #e6ecf5;
+			border-color: #e6ecf5;
+		}
+
+		.bootstrap-select > .dropdown-toggle{
+			padding: 0;
+			font-size: 1rem;
+			font-weight: bold;
+		}
+		.heading-title{
+			text-align: left;
+			padding-bottom: 5px;
+		}
+		@media (max-width: 1080px){
+			.btn-lg {
+				padding: 1rem;
+			}
+		}
+		
 	</style>
