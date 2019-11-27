@@ -1,23 +1,38 @@
 <template>
+  <div>
+    <h1>채팅방</h1>
+    <ul>
+      <li v-for="(msg, index) in messages" :key="index">{{msg.message}}</li>
+    </ul>
     <div>
-        <button v-on:click="event">클릭</button>
-
-
+      <input type="text" @keyup.enter="sendMessage()" v-model="message">
     </div>
+  </div>
 </template>
 
 <script>
+import io from 'socket.io-client';
+
 export default {
-    name:'Temp',
-    methods: {
-        event(){
-            this.$http.get('http://localhost:3000/users').then(response => { 
-                alert(response);
-                console.log(response);
-            }).catch((ex) => {
-                console.log("에러발생"+ ex);
-            });
-        }
+  name: 'room',
+  data() {
+    return {
+      messages: [],
+      // 1) 서버와 연결
+      socket : io('localhost:3001')
     }
+  },
+  methods: {
+    sendMessage(message) {
+      // 2) 채팅메세지를 서버로 전송
+      this.socket.emit('SEND_MESSAGE', {message});
+    }
+  },
+  mounted() {
+    // 3) 서버의 변경사항을 수신
+    this.socket.on('MESSAGE', (data) => {
+        this.messages = [...this.messages, data];
+    });
+  }
 }
 </script>

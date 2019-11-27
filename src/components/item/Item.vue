@@ -21,3 +21,10 @@
 			</div>
 		</div>
 </template>
+
+<script>
+export default {
+	naem: 'Item',
+	
+}
+</script>
