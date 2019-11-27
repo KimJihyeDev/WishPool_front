@@ -18,8 +18,7 @@
         <div class="container">
 			 <!-- 아이템 추가 버튼 -->
 			<div class="col col-lg-3 col-md-6 col-sm-12 col-12">
-				<a href="#" class="btn btn-primary btn-lg full-width">아이템 추가<div class="ripple-container"></div>
-				</a>
+				<router-link to="/item/add" ><a href="#" class="btn btn-primary btn-lg full-width">아이템 추가</a></router-link>
 			</div>
 			<!-- ... end 아이템 추가 버튼 -->
 			<!-- collapse -->
@@ -165,7 +164,7 @@
 				purchasedList(){
 					return this.items.filter(item => item.purchasedBy !== '')
 				}
-			}
+			},
         }
     </script>
     <style scoped>
