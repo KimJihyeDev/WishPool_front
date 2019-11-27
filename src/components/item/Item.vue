@@ -14,8 +14,8 @@
 				<div class="btn-list">
 					<a href="javascript:void(0)" class="btn btn-sm bg-blue">공개</a>
 					<a v-on:click.stop="copyLink" href="javascript:void(0)" class="btn btn-sm bg-blue">링크</a>
-					<a href="javascript:void(0)" class="btn btn-sm bg-blue">수정</a>
-					<a href="javascript:void(0)" class="btn btn-sm bg-blue">{{isCompleted}}</a>
+					<a v-on:click.stop="goModify" href="javascript:void(0)" class="btn btn-sm bg-blue">수정</a>
+					<a v-on:click.stop="makePurchase" href="javascript:void(0)" class="btn btn-sm bg-blue">{{isCompleted}}</a>
 				</div>
 			</div>
 			</a>
@@ -25,6 +25,8 @@
 </template>
 <script>
 import ItemDetail from './ItemDetail.vue'
+import ItemModify from './ItemModify.vue'
+
 export default {
 	name: 'Item',
 	props: [
@@ -33,11 +35,6 @@ export default {
 		'isCompleted',
 		'id'
 	],
-	computed:{
-		getId(){
-			return this.id;
-		}
-	},
 	methods:{
 		copyLink(){
 			console.log(this.$route.params); //this.$route.params.detail....id?
@@ -45,6 +42,16 @@ export default {
 		goDetail(){
 			//console.log(this.id);
 			this.$router.push({path:'/item/detail/'+this.id, component:ItemDetail.vue})
+		},
+		goModify(){
+			this.$router.push({path:'/item/modify/'+this.id, component:ItemModify.vue})
+		},
+		makePurchase(){
+			if(this.isCompleted =='완료'){
+				this.$emit('makePurchase', this.id);
+			}else if(this.isCompleted =='취소'){
+				this.$emit('cancelPurchase', this.id);
+			}
 		}
 	}
 }
