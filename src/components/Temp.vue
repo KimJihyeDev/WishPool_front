@@ -1,38 +1,54 @@
 <template>
-  <div>
-    <h1>채팅방</h1>
-    <ul>
-      <li v-for="(msg, index) in messages" :key="index">{{msg.message}}</li>
-    </ul>
     <div>
-      <input type="text" @keyup.enter="sendMessage()" v-model="message">
+        <button v-if="show" @click="request">클릭</button>
+        <button @click="makePurchase">완료</button>
+        <p v-for="li in list" v-bind:key="li.id">{{li}}</p>
     </div>
-  </div>
 </template>
-
 <script>
-import io from 'socket.io-client';
 
 export default {
-  name: 'room',
-  data() {
-    return {
-      messages: [],
-      // 1) 서버와 연결
-      socket : io('localhost:3001')
+    mounted(){
+        var self = this;
+        this.$socket.on('news', function(data){
+            console.log(self.show);
+            self.show=data;
+        });
+    },
+    data(){
+        return {
+            show: true,
+            list:[
+                {id:0, text:'사과'},
+                 {id:1, text:'사과'},
+                  {id:2, text:'사과'},
+            ]
+        }
+    },
+    watch:{
+        show: function(newVal, oldVal){
+            console.log('watch'+oldVal);
+            return newVal;
+        }
+    },
+    methods:{
+        request(){
+            this.$http.get('http://localhost:3000/temp')
+            .then(res=>{
+                console.log(res.data);
+            })
+        },
+        makePurchase(){
+                
+        //         this.$socket.emit('reply', {
+        //         purchasedBy: 'me'
+        // })
+        console.log('소켓 보내기전: '+this.show)
+           this.$socket.emit('reply', this.show);
+        },
+        change(data){
+            this.show = data;
+        }
     }
-  },
-  methods: {
-    sendMessage(message) {
-      // 2) 채팅메세지를 서버로 전송
-      this.socket.emit('SEND_MESSAGE', {message});
-    }
-  },
-  mounted() {
-    // 3) 서버의 변경사항을 수신
-    this.socket.on('MESSAGE', (data) => {
-        this.messages = [...this.messages, data];
-    });
-  }
 }
 </script>

@@ -15,11 +15,14 @@ import axios from 'axios'
 // import io from 'vue-socket.io';
 // const socket = io('http://localhost:3000');
 
+import io from 'socket.io-client'
+const socket = io('http://localhost:3001');
+
+Vue.prototype.$socket = socket;
+
 //뷰라이브러리에서 라우팅 사용할수 있게 설정
 Vue.use(VueRouter)
-
-Vue.prototype.$http = axios
-// Vue.prototype.$socket = socket;
+Vue.prototype.$http = axios;
 
 
 const router = new VueRouter({
