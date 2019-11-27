@@ -23,15 +23,6 @@
 	</div>
 </div>
 </template>
-<<<<<<< HEAD
-
-<script>
-export default {
-	naem: 'Item',
-	
-}
-</script>
-=======
 <script>
 import ItemDetail from './ItemDetail.vue'
 import ItemModify from './ItemModify.vue'
@@ -92,4 +83,3 @@ export default {
 		}
 	}
 </style>
->>>>>>> 40bb244fa1c1bdec9f5a887ced1b02fc52bd73a3
