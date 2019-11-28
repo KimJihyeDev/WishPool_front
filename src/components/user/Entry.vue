@@ -2,6 +2,7 @@
 
    <div class="container">
 	<div class="row" >
+	<button v-on:click="write">click</button>
 			<div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12" >
 				<div class="ui-block" >
 					<div class="ui-block-title">
@@ -11,35 +12,34 @@
 						<!-- 아이템 정보 입력 폼 시작  -->
 						<form >
 							<div class="row">
-								<button v-on:click="write">click</button>
 								<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-									<div class="form-group label-floating">
-										<label>이름</label>
-										<input class="form-control" placeholder="" type="text" value="James">
-									</div>
 						
 									<div class="form-group label-floating">
 										<label>이름</label>
-										<input class="form-control" placeholder="" type="text" value="">
+										<input class="form-control" placeholder="" type="text" v-model="user.userName">
 									</div>
 									<div class="form-group label-floating">
 										<label>아이디</label>
-										<input class="form-control" placeholder="" type="text" value="">
+										<input class="form-control" placeholder="" type="text" v-model="user.userId">
+									</div>
+									<div class="form-group label-floating">
+										<label >비밀번호</label>
+										<input name="form-control" v-model="user.password" />
+									</div>
+									<div class="form-group label-floating">
+										<label>이메일</label>
+										<input class="form-control" placeholder="" type="text" v-model="user.email">
 									</div>
 						
 									<div class="form-group label-floating">
-										<label >비밀번호</label>
-										<input name="form-control" value="" />
-									</div>
-									<div class="form-group label-floating">
 										<label>전화번호</label>
-										<input name="form-control" value="" />
+										<input name="form-control" v-model="user.phone" />
 									</div>
 									<div class="form-group label-floating">
 										<label>닉네임</label>
-										<input name="form-control" value="" />
+										<input name="form-control" v-model="user.nickName" />
 									</div>
-									<!-- 나중에 달력추가 -->
+									<!-- 나중에 달력추가 필요 -->
 								</div>
 							</div>
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
@@ -72,20 +72,19 @@ export default {
 	name: 'ItemAdd',
 	data(){
         return{
-            users:{
-				userId:'dd',
-				userName:'ㅇㅇ',
-				email:'dd',
-				password:'dd',
-				phone:'dd',
-				nickName:'ㅇㅇ',
-				birth:'2019-01-01',
-				entryDate:'',
+            user:{
+				userName:'',
+				userId:'',
+				password:'',
+				email:'',
+				phone:'',
+				nickName:'',
+				birth:'',
 				profileImgPath:'',
 				profileImgName:'',
-				// entryType:'wish',
-				userState:true,
-				createdAt: '',
+				entryType:'wish',
+				userState: true,
+
 
             }
 		}
@@ -93,16 +92,17 @@ export default {
 	},
 	methods:{
         write:function(){
-            // this.$http.post(this.$serverUrl + '/users', this.users)
+            // this.$http.post(this.$serverUrl + '/user', this.user)
             // .then(function(response){
             //     alert('등록');
             // })
             // .catch(function(err){
             //     console.error(err);
             // })
-        this.$http.post(this.$serverUrl + '/users',this.users)
+        this.$http.post(this.$serverUrl + '/user',this.user)
         .then(function(response){
             console.log(response);
+			
         })
         .catch(function (err) {
             console.error(err);
