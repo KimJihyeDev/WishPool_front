@@ -23,6 +23,7 @@ Vue.prototype.$socket = socket;
 //뷰라이브러리에서 라우팅 사용할수 있게 설정
 Vue.use(VueRouter)
 Vue.prototype.$http = axios;
+Vue.prototype.$url = 'http://localhost:8080';
 
 
 const router = new VueRouter({

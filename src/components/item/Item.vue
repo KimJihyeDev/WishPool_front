@@ -44,7 +44,8 @@ export default {
 	},
 	methods:{
 		copyLink(){
-			console.log(this.$route.params); //this.$route.params.detail....id?
+			console.log(this.$url+'/detail/'+this.id); //this.$route.params.detail....id?
+			// console.log(this.$url);
 		},
 		goDetail(){
 			//console.log(this.id);
