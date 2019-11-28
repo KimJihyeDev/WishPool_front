@@ -30,9 +30,6 @@
 </div>
 </template>
 <script>
-import ItemDetail from './ItemDetail.vue'
-import ItemModify from './ItemModify.vue'
-
 export default {
 	name: 'Item',
 	props: [
@@ -55,10 +52,10 @@ export default {
 		},
 		goDetail(){
 			//console.log(this.id);
-			this.$router.push({path:'/item/detail/'+this.id, component:ItemDetail.vue})
+			this.$router.push({path:'/item/detail/'+this.id})
 		},
 		goModify(){
-			this.$router.push({path:'/item/modify/'+this.id, component:ItemModify.vue})
+			this.$router.push({path:'/item/modify/'+this.id})
 		},
 		voidClick(){
 			//공개 버튼 누를때는 아무 작동 하지 않도록 클릭 무효화

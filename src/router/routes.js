@@ -15,6 +15,6 @@ export default [
     { path:'/item/modify',component:ItemModify},
     { path:'/temp',component:Temp},
     { path:'/item/detail/:itemId',component:ItemDetail},
-    
+    { path:'/item/modify/:itemId',component:ItemModify},
     
 ]

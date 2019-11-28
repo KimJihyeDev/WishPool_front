@@ -85,8 +85,6 @@
 </template>
 
 <script>
-import ItemModify from './ItemModify.vue';
-
 export default {
     name: 'ItemDetail',
     mounted(){
@@ -105,7 +103,7 @@ export default {
 	},
 	methods:{
 		modify(){
-			this.$router.push({path:'/item/modify/'+this.item._id, component:ItemModify.vue})
+			this.$router.push({path:'/item/modify/'+this.item._id})
 		}
 	}
 }
