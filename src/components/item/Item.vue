@@ -35,6 +35,13 @@ export default {
 		'isCompleted',
 		'id'
 	],
+	created(){
+		const self = this;
+		this.$socket.on('news', function(data){
+            console.log(self.show);
+            self.show=data;
+        });
+	},
 	methods:{
 		copyLink(){
 			console.log(this.$route.params); //this.$route.params.detail....id?
@@ -49,8 +56,11 @@ export default {
 		makePurchase(){
 			if(this.isCompleted =='완료'){
 				this.$emit('makePurchase', this.id);
+				this.$socket.emit('purchasedBy', 'me');
+				
 			}else if(this.isCompleted =='취소'){
 				this.$emit('cancelPurchase', this.id);
+				this.$socket.emit('purchasedBy', 'cancel');
 			}
 		}
 	}

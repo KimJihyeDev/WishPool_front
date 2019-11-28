@@ -78,10 +78,18 @@
         </div>
     </template>
     <script>
-        import Item from './Item.vue';
+		import Item from './Item.vue';
 		
         export default {
-            name: 'ItemList',
+			name: 'ItemList',
+			created(){
+				// const self = this;
+				// this.$socket.on('purchased', function(data){
+				// 	console.log('purchased'+data);
+				// 	self.purchasedBy = data;
+				// 	console.log(self.purchasedBy);
+				// });
+			},
             data() {
                 return {
 					items: [
@@ -138,13 +146,15 @@
 			methods:{
 				makePurchase(id){
 					console.log('purchase made.'+id);
-					// const index = this.items.findIndex(item=> item.itemId === id);
-					// this.item[index].purchasedBy = "me";
+					const index = this.items.findIndex(item=> item.itemId === id);
+					this.items[index].purchasedBy = "me";
 				},
 				cancelPurchase(id){
 					console.log('purchase canceled.'+id);
+					const index = this.items.findIndex(item=> item.itemId === id);
+					this.items[index].purchasedBy = "";
 				}
-			}
+			},
         }
     </script>
     <style scoped>
