@@ -30,21 +30,21 @@
 									</div>
 									<div class="form-group label-floating">
 										<label>아이템 이름</label>
-										<input class="form-control" placeholder="" type="text" value="James">
+										<input class="form-control" placeholder="" type="text" v-model="item.itemName">
 									</div>
 						
 									<div class="form-group label-floating">
 										<label>가격(숫자만 입력하세요)</label>
-										<input class="form-control" placeholder="" type="text" value="">
+										<input class="form-control" placeholder="" type="text" v-model="item.itemPrice">
 									</div>
 						
 									<div class="form-group label-floating">
 										<label >링크</label>
-										<input name="form-control" value="" />
+										<input class="form-control" v-model="item.itemLink" />
 									</div>
 									<div class="form-group label-floating">
 										<label>메모</label>
-										<input name="form-control" value="" />
+										<input class="form-control" v-model="item.itemMemo" />
 									</div>
 
 									<div class="form-group label-floating">
@@ -52,32 +52,32 @@
 											<div>
 												<span class="star-input" style="margin-top: 0;margin-bottom:3%">
 													<span class="input">
-														<input type="radio" name="star-input" value="1" id="p1">
+														<input type="radio" name="star-input" value="1" id="p1" v-model="item.itemRank" />
 														<label for="p1">1</label>
-														<input type="radio" name="star-input" value="2" id="p2">
+														<input type="radio" name="star-input" value="2" id="p2" v-model="item.itemRank" />
 														<label for="p2">2</label>
-														<input type="radio" name="star-input" value="3" id="p3">
+														<input type="radio" name="star-input" value="3" id="p3" v-model="item.itemRank" />
 														<label for="p3">3</label>
-														<input type="radio" name="star-input" value="4" id="p4">
+														<input type="radio" name="star-input" value="4" id="p4" v-model="item.itemRank" />
 														<label for="p4">4</label>
-														<input type="radio" name="star-input" value="5" id="p5">
+														<input type="radio" name="star-input" value="5" id="p5" v-model="item.itemRank" />
 														<label for="p5">5</label>
 													</span>
 												<!-- <output for="star-input"><b>0</b>점</output>						 -->
 												</span>
 											</div>
 
-										<select class=" form-control">
+										<select class=" form-control" v-model="item.visibleTo">
 											<option value="#" class="control-label">공개 범위를 선택하세요</option>
-											<option value="public">공개</option>
-											<option value="private">비공개</option>
-											<option value="group">그룹공개</option>
+											<option value="t">공개</option>
+											<option value="f">비공개</option>
+											<!-- <option value="groupId">그룹공개</option> -->
 										</select>
 									</div>
 								</div>
 							</div>
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-								<button class="btn btn-secondary btn-lg full-width">등록</button>
+								<button class="btn btn-secondary btn-lg full-width" v-on:click="addItem">등록</button>
 							</div>
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
 								<button class="btn btn-primary btn-lg full-width">취소</button>
@@ -103,7 +103,34 @@
 </script>
 <script>
 export default {
-    name: 'ItemAdd'
+	name: 'ItemAdd',
+	data(){
+		return {
+			item:{
+				itemName: '',
+				itemPrice: '',
+				itemLink: '',
+				itemRank: '',
+				visibleTo: '',
+				itemMemo: ''
+			}
+		}
+	},
+	methods:{
+		addItem(){
+			console.log(this.$serverUrl+this.$route.path);
+			this.$http.post(this.$serverUrl+this.$route.path, this.item)
+			.then(res=>{
+				if(res.data.code == 200){
+					console.log('정상 : '+res.data.msg);
+				}else if(res.data.code == 500){
+					console.log('서버오류 : '+res.data.msg);
+				}
+			}).catch(e=>{
+				console.error(e);
+			})
+		}
+	}
 }
 </script>
 

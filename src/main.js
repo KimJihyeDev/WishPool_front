@@ -24,6 +24,7 @@ Vue.prototype.$socket = socket;
 Vue.use(VueRouter)
 Vue.prototype.$http = axios;
 Vue.prototype.$url = 'http://localhost:8080';
+Vue.prototype.$serverUrl = 'http://localhost:3000';
 
 
 const router = new VueRouter({
