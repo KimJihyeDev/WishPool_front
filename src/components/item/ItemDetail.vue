@@ -72,7 +72,8 @@
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="btn-list">
                                     <button class="btn btn-secondary btn-lg full-width" v-on:click="modify">수정</button>
-                                    <button class="btn btn-primary btn-lg full-width">확인</button>
+                                    <button class="btn btn-primary btn-lg full-width" v-on:click="doDelete">삭제</button>
+									<button class="btn btn-primary btn-lg full-width">확인</button>
                                 </div>
 							</div>
 						</form>
@@ -104,6 +105,15 @@ export default {
 	methods:{
 		modify(){
 			this.$router.push({path:'/item/modify/'+this.item._id})
+		},
+		doDelete(){
+			this.$http.delete(this.$serverUrl+this.$route.path)
+			.then(()=>{
+				this.$socket.emit('reqList', 'delete');
+			}).catch(e=>{
+				console.error(e);
+			});
+			this.$router.push({path:'/item/list/'});
 		}
 	}
 }

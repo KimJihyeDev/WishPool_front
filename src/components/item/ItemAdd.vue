@@ -68,7 +68,7 @@
 											</div>
 
 										<select class=" form-control" v-model="item.visibleTo">
-											<option value="#" class="control-label">공개 범위를 선택하세요</option>
+											<option value="0" class="control-label">공개 범위를 선택하세요</option>
 											<option value="t">공개</option>
 											<option value="f">비공개</option>
 											<!-- <option value="groupId">그룹공개</option> -->
@@ -111,7 +111,7 @@ export default {
 				itemPrice: '',
 				itemLink: '',
 				itemRank: '',
-				visibleTo: '',
+				visibleTo: 0,
 				itemMemo: ''
 			}
 		}
@@ -123,12 +123,15 @@ export default {
 			.then(res=>{
 				if(res.data.code == 200){
 					console.log('정상 : '+res.data.msg);
+					this.$socket.emit('reqList');
 				}else if(res.data.code == 500){
 					console.log('서버오류 : '+res.data.msg);
 				}
 			}).catch(e=>{
 				console.error(e);
-			})
+			});
+			this.$router.push({path:'/item/list'});
+			// location.href=this.$url+'item/list';
 		}
 	}
 }

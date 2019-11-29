@@ -79,56 +79,68 @@
     </template>
     <script>
 		import Item from './Item.vue';
-		
+		// Vuex
+		// import { mapActions, mapState } from 'vuex';
+
         export default {
 			name: 'ItemList',
 			created(){
-				// const self = this;
-				// this.$socket.on('purchased', function(data){
-				// 	console.log('purchased'+data);
-				// 	self.purchasedBy = data;
-				// 	console.log(self.purchasedBy);
-				// });
+				// this.$http.get(this.$serverUrl+this.$route.path)
+				// .then(res=>{
+				// 	console.log(res.data);
+				// 	this.items = res.data;
+				// })
+
+				/*웹소켓으로 데이터 가져오기*/
+				const self = this;
+				this.$socket.emit('reqList');
+				this.$socket.on('resList', function(data){
+					self.items = data;
+				});
+
+				//Vuex
+				// this.fetchItemList();
 			},
             data() {
                 return {
+					//Vuex로 할경우 items는 주석처리해야함
 					items: [
-						{	
-							_id: 0,
-							itemName: '고양이 마우스 장난감',
-							itemPrice: '10000원',
-							purchasedBy: 'me'
-						},
-						{	
-							_id: 1,
-							itemName: 'vue.js 책',
-							itemPrice: '230000원',
-							purchasedBy: 'you'
-						},
-						{	
-							_id: 2,
-							itemName: 'starbuck 기프티콘',
-							itemPrice: '1234원',
-							purchasedBy: 'he'
-						},
-												{	
-							_id: 3,
-							itemName: '텀블러',
-							itemPrice: '10000원',
-							purchasedBy: ''
-						},
-						{	
-							_id: 4,
-							itemName: '정수기',
-							itemPrice: '230000원',
-							purchasedBy: ''
-						},
-						{	
-							_id: 5,
-							itemName: '루이비통',
-							itemPrice: '1234원',
-							purchasedBy: ''
-						}
+						// {	
+						// 	_id: 0,
+						// 	itemName: '고양이 마우스 장난감',
+						// 	itemPrice: '10000원',
+						// 	purchasedBy: 'me'
+						// },
+						// {	
+						// 	_id: 1,
+						// 	itemName: 'vue.js 책',
+						// 	itemPrice: '230000원',
+						// 	purchasedBy: 'you'
+						// },
+						// {	
+						// 	_id: 2,
+						// 	itemName: 'starbuck 기프티콘',
+						// 	itemPrice: '1234원',
+						// 	purchasedBy: 'he'
+						// },
+						// 						{	
+						// 	_id: 3,
+						// 	itemName: '텀블러',
+						// 	itemPrice: '10000원',
+						// 	purchasedBy: ''
+						// },
+						// {	
+						// 	_id: 4,
+						// 	itemName: '정수기',
+						// 	itemPrice: '230000원',
+						// 	purchasedBy: ''
+						// },
+						// {	
+						// 	_id: 5,
+						// 	itemName: '루이비통',
+						// 	itemPrice: '1234원',
+						// 	purchasedBy: ''
+						// }
 					]
 				}
             },
@@ -141,7 +153,9 @@
 				},
 				purchasedList(){
 					return this.items.filter(item => item.purchasedBy !== '')
-				}
+				},
+				// Vuex
+				// ...mapState(['items'])
 			},
 			methods:{
 				makePurchase(id){
@@ -153,7 +167,9 @@
 					console.log('purchase canceled.'+id);
 					const index = this.items.findIndex(item=> item._id === id);
 					this.items[index].purchasedBy = "";
-				}
+				},
+				// Vuex
+				// ...mapActions(['fetchItemList'])
 			},
         }
     </script>
