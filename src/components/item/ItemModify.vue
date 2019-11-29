@@ -134,7 +134,7 @@ export default {
 			.then(res=>{
 				console.log(res.data);
 				//목록으로 이동하는 코드
-				this.$route.push({path:'/item/list'})
+				this.$router.push({path:'/item/list'})
 			}).catch(e=>{
 				console.error(e);
 			})
