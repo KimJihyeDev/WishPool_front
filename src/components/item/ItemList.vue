@@ -33,10 +33,10 @@
 					<div class="collapse multi-collapse show" id="multiCollapseExample1">
 						<div class="card card-body">
 							<item v-for="item in unPurchasedList"
-							:key="item.itemId"
+							:key="item._id"
 							:name="item.itemName"
 							:price="item.itemPrice" 
-							:id="item.itemId"
+							:id="item._id"
 							isCompleted="완료"
 							v-on:makePurchase="makePurchase"
 							v-on:cancelPurchase="cancelPurchase"
@@ -55,10 +55,10 @@
 					<div class="collapse multi-collapse show" id="multiCollapseExample2">
 						<div class="card card-body">
 							<item v-for="item in purchasedList"
-							:key="item.itemId"
+							:key="item._id"
 							:name="item.itemName"
 							:price="item.itemPrice"
-							:id="item.itemId"
+							:id="item._id"
 							isCompleted="취소" 
 							v-on:makePurchase="makePurchase"
 							v-on:cancelPurchase="cancelPurchase"
@@ -78,45 +78,53 @@
         </div>
     </template>
     <script>
-        import Item from './Item.vue';
+		import Item from './Item.vue';
 		
         export default {
-            name: 'ItemList',
+			name: 'ItemList',
+			created(){
+				// const self = this;
+				// this.$socket.on('purchased', function(data){
+				// 	console.log('purchased'+data);
+				// 	self.purchasedBy = data;
+				// 	console.log(self.purchasedBy);
+				// });
+			},
             data() {
                 return {
 					items: [
 						{	
-							itemId: 0,
+							_id: 0,
 							itemName: '고양이 마우스 장난감',
 							itemPrice: '10000원',
 							purchasedBy: 'me'
 						},
 						{	
-							itemId: 1,
+							_id: 1,
 							itemName: 'vue.js 책',
 							itemPrice: '230000원',
 							purchasedBy: 'you'
 						},
 						{	
-							itemId: 2,
+							_id: 2,
 							itemName: 'starbuck 기프티콘',
 							itemPrice: '1234원',
 							purchasedBy: 'he'
 						},
 												{	
-							itemId: 3,
+							_id: 3,
 							itemName: '텀블러',
 							itemPrice: '10000원',
 							purchasedBy: ''
 						},
 						{	
-							itemId: 4,
+							_id: 4,
 							itemName: '정수기',
 							itemPrice: '230000원',
 							purchasedBy: ''
 						},
 						{	
-							itemId: 5,
+							_id: 5,
 							itemName: '루이비통',
 							itemPrice: '1234원',
 							purchasedBy: ''
@@ -138,13 +146,15 @@
 			methods:{
 				makePurchase(id){
 					console.log('purchase made.'+id);
-					// const index = this.items.findIndex(item=> item.itemId === id);
-					// this.item[index].purchasedBy = "me";
+					const index = this.items.findIndex(item=> item._id === id);
+					this.items[index].purchasedBy = "me";
 				},
 				cancelPurchase(id){
 					console.log('purchase canceled.'+id);
+					const index = this.items.findIndex(item=> item._id === id);
+					this.items[index].purchasedBy = "";
 				}
-			}
+			},
         }
     </script>
     <style scoped>
