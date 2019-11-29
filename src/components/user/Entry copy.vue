@@ -16,14 +16,13 @@
 									<div class="form-group label-floating">
 										<label>아이디</label>
 										<input class="form-control input-center" v-model="user.userId">
-										<p style="display:none">아이디를 입력해주세요</p>
-										<p style="display:none">아이디는 20자 이내의 영문,숫자만 가능합니다.</p>
+										<p v-show="false">아이디를 입력해주세요</p>
+										<p>아이디는 20자 이내의 영문,숫자만 가능합니다.</p>
 									</div>
 						
 									<div class="form-group label-floating">
 										<label>비밀번호</label>
 										<input class="form-control input-center"  type="password" v-on:blur="checkPwd" v-model="user.password">
-										<p style="display:none">비밀번호를 입력해주세요</p>
 										<p ref="isPwdOk" style="display:none">비밀번호는 8자~50자, 특수문자와 숫자를 반드시 포함시켜야 합니다.</p>
 									</div>
 									<div class="form-group label-floating">
@@ -34,25 +33,24 @@
 									<div class="form-group label-floating">
 										<label>이름</label>
 										<input class="form-control input-center" v-on:blur="checkName" v-model="user.userName">
-										<p style="display:none">이름을 입력해주세요</p>
 										<p ref="isNameOk" style="display:none">이름은 20자 이내의 한글, 영문만 가능합니다.</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>닉네임</label>
 										<input class="form-control input-center"  v-model="user.nickName" />
-										<p style="display:none">닉네임을 입력해주세요</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>이메일</label>
-										<input class="form-control input-center" placeholder="" type="text" v-model="user.email">
-										<p style="display:none">이메일을 입력해주세요</p>
-										<p  style="display:none">이메일을 형식이 맞지 않습니다.</p>
+										<input class="form-control" placeholder="" type="text" v-model="user.email">
 									</div>
 						
 									<div class="form-group label-floating">
 										<label>전화번호</label>
 										<input class="form-control input-center" v-model="user.phone" />
-										<p style="display:none">전화번호를 입력해주세요</p>
+									</div>
+									<div class="form-group label-floating">
+										<label>이메일</label>
+										<input class="form-control input-center"  v-model="user.email" />
 									</div>
 									<!-- 나중에 달력추가 필요 -->
 								</div>
@@ -83,9 +81,6 @@
  });
 </script>
 <script>
-// 나중에 추가할 것들
-// 웹소켓을 이용해 아이디, 이메일, 전화번호 중복체크
-// 달력 추가
 export default {
 	name: 'ItemAdd',
 	data(){
@@ -101,22 +96,22 @@ export default {
 				entryType:'wish',
 				},
 				confirm:''
-		}
-	},
-	methods:{
-		entry:function(){
-		
-			this.$http.post(this.$serverUrl + '/users',this.user)
-			.then(function(response){
-				console.log(response);
-			})
-			.catch(function (err) {
-				console.error(err);
-			})    
+			}
 		},
-		// null 값 여부는 폼 제출시에 체크하기
-		checkName:function(){
-			// 2~20자까지의 한글, 영문 이름만 입력 가능
+		methods:{
+			entry:function(){
+			
+				this.$http.post(this.$serverUrl + '/users',this.user)
+				.then(function(response){
+					console.log(response);
+				})
+				.catch(function (err) {
+					console.error(err);
+				})    
+			},
+			// null 값 여부는 폼 제출시에 체크하기
+			checkName:function(){
+				// 2~20자까지의 한글, 영문 이름만 입력 가능
 				var regName = /^[가-힣a-zA-Z]{2,20}$/; 
 				// 이름을 입력한 상태에서만 유효성 체크
 				if((this.user.userName !== '')){
@@ -128,81 +123,76 @@ export default {
 							return false;
 						}
 					}
-				} else {
-					this.$refs.isNameOk.style.display = "none";
 				}
-		
-		},
-		checkPwd:function(){
-			// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
-			// 테스트를 위해 변경(반드시 다시 글자수 바꾸기)
-			var regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{3,50}$/;
-			// 비밀번호를 입력한 상태에서만 유효성 체크
-			if(!(this.user.password === '')){
-				if(!(regPwd.test(this.user.password))){
-					this.$refs.isPwdOk.style.display = "block";
-					return false;
-				} else {
-					this.$refs.isPwdOk.style.display = "none";
+			},
+			checkPwd:function(){
+				// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
+				// 테스트를 위해 변경(반드시 다시 글자수 바꾸기)
+				var regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{3,50}$/;
+				// 비밀번호를 입력한 상태에서만 유효성 체크
+				if(!(this.user.password === '')){
+					if(!(regPwd.test(this.user.password))){
+						this.$refs.isPwdOk.style.display = "block";
+						return false;
+					} else {
+						this.$refs.isPwdOk.style.display = "none";
+					}
 				}
-			}
+			},
+			// confirmPwd:function(){
+			// 	if(this.user.password !== ''){
+			// 		if(this.confirm !== ''){
+			// 			if(this.user.password === this.confirm){
+			// 				this.$refs.isConfirmOk.style.display = "none";
+			// 			} else {
+			// 				this.$refs.isConfirmOk.style.display = "block";
+			// 				return false;
+			// 			}	
+			// 		}
+			// 	} else {
+			// 		return false;
+			// }
 		},
-		checkEmail:function(){
-			var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		watch:{
+			// 비밀번호 재입력의 변화를 감시
+			'confirm':{
+				handler:function(newVal,oldVal){
+					if(!(this.user.password === '') && !(this.confirm === '' )){
+						if(this.user.password !== this.confirm){
+							// alert('않다');
+							this.$refs.isConfirmOk.style.display = "block";
+						} else {
+							// alert('같다');
+							this.$refs.isConfirmOk.style.display = "none";
+						}
+					} else {
+						return false;
+					}
+				}
 			
-			if(!(this.user.email === '')){
-				if(!(regEmail.test(this.user.email))){
-					
-				} else {
-
-				}
-
-			} else {
-				
-			}
-
-		}
-	},
-	watch:{
-		// 비밀번호 재입력의 변화를 감시
-		'confirm':{
-			handler:function(newVal,oldVal){
-	
-				if(!(this.user.password === '') && !(this.confirm === '' )){
-					if(this.user.password !== this.confirm){
-						this.$refs.isConfirmOk.style.display = "block";
+			},
+			deep:true,
+        	immediate:true,
+			'user.password':{
+				handler:function(newVal,oldVal){
+					if(!(this.user.password === '') && !(this.confirm === '' )){
+						if(this.user.password !== this.confirm){
+							//alert('않다');
+							this.$refs.isConfirmOk.style.display = "block";
+						} else {
+							//alert('같다');
+							this.$refs.isConfirmOk.style.display = "none";
+						}
 					} else {
-						this.$refs.isConfirmOk.style.display = "none";
+						return false;
 					}
-				} else {
-					this.$refs.isConfirmOk.style.display = "none";
 				}
-			}
-		
-		},
-		deep:true,
-       	immediate:true,
-		// 비밀번호를 입력값을 수정하였을 경우 감시
-		'user.password':{
-			handler:function(newVal,oldVal){
-				if(!(this.user.password === '') && !(this.confirm === '' )){
-					if(this.user.password !== this.confirm){
-						this.$refs.isConfirmOk.style.display = "block";
-					} else {
-						this.$refs.isConfirmOk.style.display = "none";
-					}
-				} else {
-					this.$refs.isConfirmOk.style.display = "none";
-				}
-				// 비밀번호를 입력 후 빈문자열로 변하였을 때를 감시
-				if(this.user.password === '') {
-					this.$refs.isPwdOk.style.display = "none";
-				}
-			}
-		
-		},
-		deep:true,
-       	immediate:true,
+			
+			},
+			deep:true,
+        	immediate:true,
+			
+			
 	},
 }
 </script>
