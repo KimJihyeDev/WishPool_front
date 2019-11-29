@@ -15,14 +15,20 @@
 								
 									<div class="form-group label-floating">
 										<label>아이디</label>
-										<input class="form-control input-center"   v-model="user.userId">
+										<input class="form-control input-center" v-model="user.userId">
 										<p v-show="false">아이디를 입력해주세요</p>
 										<p>아이디는 20자 이내의 영문,숫자만 가능합니다.</p>
 									</div>
 						
 									<div class="form-group label-floating">
 										<label>비밀번호</label>
-										<input class="form-control input-center"  type="text" v-model="user.password">
+										<input class="form-control input-center"  type="password" v-on:blur="checkPwd" v-model="user.password">
+										<p ref="isPwdOk" style="display:none">비밀번호는 8자~50자, 특수문자와 숫자를 반드시 포함시켜야 합니다.</p>
+									</div>
+									<div class="form-group label-floating">
+										<label>비밀번호 재입력</label>
+										<input class="form-control input-center" type="password" v-model="confirm">
+										<p ref="isConfirmOk" style="display:none">위의 비밀번호를 다시 입력해주세요</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>이름</label>
@@ -84,44 +90,90 @@ export default {
 				birth:'2019-01-01', // 달력 추가 후 변경
 				entryType:'wish',
 				},
-				isAvailable: false
+				confirm:''
 			}
 		},
 		methods:{
-        entry:function(){
-		   
-			this.$http.post(this.$serverUrl + '/users',this.user)
-			.then(function(response){
-				console.log(response);
-			})
-			.catch(function (err) {
-				console.error(err);
-			})    
-		},
-		// null 값 여부는 폼 제출시에 체크하기
-		checkName:function(){
-			// 2~20자까지의 한글, 영문 이름만 입력 가능
-			var regType1 = /^[가-힣a-zA-Z]{2,20}$/; 
-			// 이름을 입력한 상태에서만 유효성 체크
-			if((this.user.userName !== '')){
-				console.log(regType1.test(this.user.userName));
-				if(!(regType1.test(this.user.userName))){
-					 this.$refs.isNameOk.style.display = "block";
-					return false;
-				}else{
-					 this.$refs.isNameOk.style.display = "none";
+			entry:function(){
+			
+				this.$http.post(this.$serverUrl + '/users',this.user)
+				.then(function(response){
+					console.log(response);
+				})
+				.catch(function (err) {
+					console.error(err);
+				})    
+			},
+			// null 값 여부는 폼 제출시에 체크하기
+			checkName:function(){
+				// 2~20자까지의 한글, 영문 이름만 입력 가능
+				var regName = /^[가-힣a-zA-Z]{2,20}$/; 
+				// 이름을 입력한 상태에서만 유효성 체크
+				if((this.user.userName !== '')){
+					if(this.user.userName !== ''){
+						if(regName.test(this.user.userName)){
+							this.$refs.isNameOk.style.display = "none";
+						}else{
+							this.$refs.isNameOk.style.display = "block";
+							return false;
+						}
+					}
 				}
-			}
-		}
-        
-	},
-	watch:{
-		userName:{
-			handler:function(newVal,oldVal){
+			},
+			checkPwd:function(){
+				// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
+				// 테스트를 위해 변경(반드시 다시 글자수 바꾸기)
+				var regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$/;
+				// 비밀번호를 입력한 상태에서만 유효성 체크
+				if(!(this.user.password === '')){
+					if(!(regPwd.test(this.user.password))){
+						this.$refs.isPwdOk.style.display = "block";
+						return false;
+					} else {
+						this.$refs.isPwdOk.style.display = "none";
+					}
+				}
+			},
+			// confirmPwd:function(){
+			// 	if(this.user.password !== ''){
+			// 		if(this.confirm !== ''){
+			// 			if(this.user.password === this.confirm){
+			// 				this.$refs.isConfirmOk.style.display = "none";
+			// 			} else {
+			// 				this.$refs.isConfirmOk.style.display = "block";
+			// 				return false;
+			// 			}	
+			// 		}
+			// 	} else {
+			// 		return false;
+			// }
+		},
+		watch:{
+			'confirm':{
+				handler:function(newVal,oldVal){
+					// 
+					if(this.user.password === ''){
+						return false;
+					} else {
+					// 비밀번호 재입력을 입력한 상황에서 비교
+						if(this.confirm !== ''){
+							if(this.user.password === this.confirm){
+								this.$refs.isConfirmOk.style.display = "none";
+							} else {
+								this.$refs.isConfirmOk.style.display = "block";
+								return false;
+							}	
+						}
+
+					}
+					// 
+				}
 				
-			}
-		}
-	}
+		},
+		deep:true,
+        immediate:true
+			
+	},
 }
 </script>
 
