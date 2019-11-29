@@ -79,26 +79,31 @@
     </template>
     <script>
 		import Item from './Item.vue';
-		
+		// Vuex
+		// import { mapActions, mapState } from 'vuex';
+
         export default {
 			name: 'ItemList',
 			created(){
-				this.$http.get(this.$serverUrl+this.$route.path)
-				.then(res=>{
-					console.log(res.data);
-					this.items = res.data;
-				})
+				// this.$http.get(this.$serverUrl+this.$route.path)
+				// .then(res=>{
+				// 	console.log(res.data);
+				// 	this.items = res.data;
+				// })
 
-				/*reqlist, reslist는 working code=>vuex에 넣어야 할까? */
+				/*웹소켓으로 데이터 가져오기*/
 				const self = this;
 				this.$socket.emit('reqList');
 				this.$socket.on('resList', function(data){
-					console.log(data);
 					self.items = data;
 				});
+
+				//Vuex
+				// this.fetchItemList();
 			},
             data() {
                 return {
+					//Vuex로 할경우 items는 주석처리해야함
 					items: [
 						// {	
 						// 	_id: 0,
@@ -148,7 +153,9 @@
 				},
 				purchasedList(){
 					return this.items.filter(item => item.purchasedBy !== '')
-				}
+				},
+				// Vuex
+				// ...mapState(['items'])
 			},
 			methods:{
 				makePurchase(id){
@@ -160,7 +167,9 @@
 					console.log('purchase canceled.'+id);
 					const index = this.items.findIndex(item=> item._id === id);
 					this.items[index].purchasedBy = "";
-				}
+				},
+				// Vuex
+				// ...mapActions(['fetchItemList'])
 			},
         }
     </script>

@@ -123,6 +123,7 @@ export default {
 			.then(res=>{
 				if(res.data.code == 200){
 					console.log('정상 : '+res.data.msg);
+					this.$socket.emit('reqList');
 				}else if(res.data.code == 500){
 					console.log('서버오류 : '+res.data.msg);
 				}

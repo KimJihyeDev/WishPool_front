@@ -18,6 +18,9 @@ import axios from 'axios'
 import io from 'socket.io-client'
 const socket = io('http://localhost:3001');
 
+//Vuex
+// import store from './store';
+
 Vue.prototype.$socket = socket;
 
 //뷰라이브러리에서 라우팅 사용할수 있게 설정
@@ -37,5 +40,6 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
-  router:router
+  router:router,
+  // store
 }).$mount('#app')
