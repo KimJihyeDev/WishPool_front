@@ -131,13 +131,14 @@ export default {
 	methods:{
 		doModify(){
 			this.$http.patch(this.$serverUrl+this.$route.path, this.item)
-			.then(res=>{
-				console.log(res.data);
+			.then(()=>{
+				// console.log(res.data);
 				//목록으로 이동하는 코드
-				this.$router.push({path:'/item/list'})
+				this.$socket.emit('reqList', 'delete');
 			}).catch(e=>{
 				console.error(e);
 			})
+			this.$router.push({path:'/item/list'})
 		}
 	},
 }
