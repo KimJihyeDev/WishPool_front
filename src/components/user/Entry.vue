@@ -11,39 +11,41 @@
 						<!-- 아이템 정보 입력 폼 시작  -->
 						<form >
 							<div class="row">
-								<button v-on:click="write">click</button>
 								<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-									<div class="form-group label-floating">
-										<label>이름</label>
-										<input class="form-control" placeholder="" type="text" value="James">
-									</div>
-						
-									<div class="form-group label-floating">
-										<label>이름</label>
-										<input class="form-control" placeholder="" type="text" value="">
-									</div>
+								
 									<div class="form-group label-floating">
 										<label>아이디</label>
-										<input class="form-control" placeholder="" type="text" value="">
+										<input class="form-control input-center"   v-model="user.userId">
+										<p v-show="false">아이디를 입력해주세요</p>
+										<p>아이디는 20자 이내의 영문,숫자만 가능합니다.</p>
 									</div>
 						
 									<div class="form-group label-floating">
-										<label >비밀번호</label>
-										<input name="form-control" value="" />
+										<label>비밀번호</label>
+										<input class="form-control input-center"  type="text" v-model="user.password">
 									</div>
 									<div class="form-group label-floating">
-										<label>전화번호</label>
-										<input name="form-control" value="" />
+										<label>이름</label>
+										<input class="form-control input-center" v-on:blur="checkName" v-model="user.userName">
+										<p ref="isNameOk" style="display:none">이름은 20자 이내의 한글, 영문만 가능합니다.</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>닉네임</label>
-										<input name="form-control" value="" />
+										<input class="form-control input-center"  v-model="user.nickName" />
+									</div>
+									<div class="form-group label-floating">
+										<label>전화번호</label>
+										<input class="form-control input-center" v-model="user.phone" />
+									</div>
+									<div class="form-group label-floating">
+										<label>이메일</label>
+										<input class="form-control input-center"  v-model="user.email" />
 									</div>
 									<!-- 나중에 달력추가 -->
 								</div>
 							</div>
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-								<button class="btn btn-secondary btn-lg full-width">등록</button>
+								<button class="btn btn-secondary btn-lg full-width" v-on:click="entry">등록</button>
 							</div>
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
 								<button class="btn btn-primary btn-lg full-width">취소</button>
@@ -72,44 +74,54 @@ export default {
 	name: 'ItemAdd',
 	data(){
         return{
-            users:{
-				userId:'dd',
-				userName:'ㅇㅇ',
-				email:'dd',
-				password:'dd',
-				phone:'dd',
-				nickName:'ㅇㅇ',
-				birth:'2019-01-01',
-				entryDate:'',
-				profileImgPath:'',
-				profileImgName:'',
-				// entryType:'wish',
-				userState:true,
-				createdAt: '',
-
-            }
+		        user:{
+				userId:'',
+				userName:'',
+				email:'',
+				password:'',
+				phone:'',
+				nickName:'',
+				birth:'2019-01-01', // 달력 추가 후 변경
+				entryType:'wish',
+				},
+				isAvailable: false
+			}
+		},
+		methods:{
+        entry:function(){
+		   
+			this.$http.post(this.$serverUrl + '/users',this.user)
+			.then(function(response){
+				console.log(response);
+			})
+			.catch(function (err) {
+				console.error(err);
+			})    
+		},
+		// null 값 여부는 폼 제출시에 체크하기
+		checkName:function(){
+			// 2~20자까지의 한글, 영문 이름만 입력 가능
+			var regType1 = /^[가-힣a-zA-Z]{2,20}$/; 
+			// 이름을 입력한 상태에서만 유효성 체크
+			if((this.user.userName !== '')){
+				console.log(regType1.test(this.user.userName));
+				if(!(regType1.test(this.user.userName))){
+					 this.$refs.isNameOk.style.display = "block";
+					return false;
+				}else{
+					 this.$refs.isNameOk.style.display = "none";
+				}
+			}
 		}
-		
-	},
-	methods:{
-        write:function(){
-            // this.$http.post(this.$serverUrl + '/users', this.users)
-            // .then(function(response){
-            //     alert('등록');
-            // })
-            // .catch(function(err){
-            //     console.error(err);
-            // })
-        this.$http.post(this.$serverUrl + '/users',this.users)
-        .then(function(response){
-            console.log(response);
-        })
-        .catch(function (err) {
-            console.error(err);
-        })    
-        },
         
-    },
+	},
+	watch:{
+		userName:{
+			handler:function(newVal,oldVal){
+				
+			}
+		}
+	}
 }
 </script>
 
@@ -133,5 +145,6 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 .star-input>.input>label[for="p4"]{width:120px;z-index:2;}
 .star-input>.input>label[for="p5"]{width:150px;z-index:1;}
 .star-input>output{display:inline-block;width:60px; font-size:18px;text-align:right; vertical-align:middle;}
-
+/* 입력폼 패딩 제거 처리 */
+.input-center{padding: 1.0rem}
 </style>
