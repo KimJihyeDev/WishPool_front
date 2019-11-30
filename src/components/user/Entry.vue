@@ -15,8 +15,8 @@
 								
 									<div class="form-group label-floating">
 										<label>아이디</label>
-										<input class="form-control input-center" v-model="user.userId">
-										<p style="display:none">아이디를 입력해주세요</p>
+										<input class="form-control input-center" ref="inputId" v-model="user.userId">
+										<p ref="isNameNull" style="display:none">아이디를 입력해주세요</p>
 										<p style="display:none">아이디는 20자 이내의 영문,숫자만 가능합니다.</p>
 									</div>
 						
@@ -52,7 +52,7 @@
 						
 									<div class="form-group label-floating">
 										<label>전화번호</label>
-										<input class="form-control input-center" v-on:blur="checkPhone" v-model="user.phone" />
+										<input class="form-control input-center"  v-on:blur="checkPhone" v-model="user.phone" />
 										<p style="display:none">전화번호를 입력해주세요</p>
 										<p ref="isPhoneOk" style="display:none">전화번호의 형식이 맞지 않습니다.</p>
 									</div>
@@ -107,7 +107,17 @@ export default {
 	},
 	methods:{
 		entry:function(){
+			// 값을 넘기기 전에 null 체크하기
 		
+			if(this.user.userName === '' ){
+				alert('아이디입력');
+				this.$refs.inputIdd.focus();
+				return false;
+			}
+			
+
+
+			// 회원 가입 처리
 			this.$http.post(this.$serverUrl + '/users',this.user)
 			.then(function(response){
 				console.log(response);
@@ -119,19 +129,19 @@ export default {
 		// null 값 여부는 폼 제출시에 체크하기
 		checkName:function(){
 			// 2~20자까지의 한글, 영문 이름만 입력 가능
-				const regName = /^[가-힣a-zA-Z]{2,20}$/; 
-				const uName = this.user.userName.replace(/(\s*)/g, "");
-				// 이름을 입력한 상태에서만 유효성 체크
-				if(this.user.userName !== ''){
-					// 공백을 제거한 후에 유효성 체크
-					if(regName.test(uName)){
-						this.$refs.isNameOk.style.display = "none";
-					}else{
-						this.$refs.isNameOk.style.display = "block";
-					}
-				} else {
+			const regName = /^[가-힣a-zA-Z]{2,20}$/; 
+			const uName = this.user.userName.replace(/(\s*)/g, "");
+			// 이름을 입력한 상태에서만 유효성 체크
+			if(this.user.userName !== ''){
+				// 공백을 제거한 후에 유효성 체크
+				if(regName.test(uName)){
 					this.$refs.isNameOk.style.display = "none";
+				}else{
+					this.$refs.isNameOk.style.display = "block";
 				}
+			} else {
+				this.$refs.isNameOk.style.display = "none";
+			}
 		
 		},
 		checkPwd:function(){
@@ -151,6 +161,7 @@ export default {
 			}
 		},
 		checkEmail:function(){
+			// 이메일 유효성 체크
 			const regEmail =  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 			const uEmail = this.user.email.replace(/(\s*)/g, "");
 
@@ -166,7 +177,7 @@ export default {
 
 		},
 		checkPhone:function(){
-			// 핸드폰 전화번호만 입력 가능
+			// 핸드폰 전화번호만 입력 받는다.
 			const regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
 			const uPhone = this.user.phone.replace(/(\s*)/g, "");
 
@@ -183,6 +194,7 @@ export default {
 
 		},
 		checkNickName:function(){
+			 // 2자 ~ 20 자인 한글, 영문, 숫자만 유효
 			const regNickName = /^([가-힣a-zA-Z0-9]{1,20})$/;
 			const uNickName = this.user.nickName.replace(/(\s*)/g, "");
 
@@ -213,7 +225,6 @@ export default {
 					this.$refs.isConfirmOk.style.display = "none";
 				}
 			}
-		
 		},
 		deep:true,
        	immediate:true,
@@ -229,9 +240,7 @@ export default {
 				} else {
 					this.$refs.isConfirmOk.style.display = "none";
 				}
-				
 			}
-		
 		},
 		deep:true,
        	immediate:true,
