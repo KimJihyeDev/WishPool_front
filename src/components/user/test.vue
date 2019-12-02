@@ -5,75 +5,41 @@
 			<div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12" >
 				<div class="ui-block" >
 					<div class="ui-block-title">
-						<h6 class="title" style="text-align:center">아이템 추가</h6>
+						<h6 class="title" style="text-align:center">회원가입 화면</h6>
 					</div>
 					<div class="ui-block-content"  >
 						<!-- 아이템 정보 입력 폼 시작  -->
 						<form >
 							<div class="row">
-						
+								<button v-on:click="write">click</button>
 								<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-									<div class="ui-block" style="border:0px;">
-										<article class="hentry has-post-thumbnail shared-photo">
-											<div class="post-thumb">
-												<button><img src="/assets/img/post-photo6.jpg" alt="photo"></button>
-											</div>
-										</article>
-									</div>
-									<div class="form-group label-floating is-select">
-										<!-- <label class="control-label">카테고리</label> -->
-											<select class=" form-control">
-												<option value="#" class="control-label">카테고리를 선택하세요</option>
-												<option value="MA">Male</option>
-												<option value="FE">Female</option>
-											</select>
-									</div>
 									<div class="form-group label-floating">
-										<label>아이템 이름</label>
+										<label>이름</label>
 										<input class="form-control" placeholder="" type="text" value="James">
 									</div>
 						
 									<div class="form-group label-floating">
-										<label>가격(숫자만 입력하세요)</label>
+										<label>이름</label>
+										<input class="form-control" placeholder="" type="text" value="">
+									</div>
+									<div class="form-group label-floating">
+										<label>아이디</label>
 										<input class="form-control" placeholder="" type="text" value="">
 									</div>
 						
 									<div class="form-group label-floating">
-										<label >링크</label>
+										<label >비밀번호</label>
 										<input name="form-control" value="" />
 									</div>
 									<div class="form-group label-floating">
-										<label>메모</label>
+										<label>전화번호</label>
 										<input name="form-control" value="" />
 									</div>
-
 									<div class="form-group label-floating">
-										<label>중요도</label>
-											<div>
-												<span class="star-input" style="margin-top: 0;margin-bottom:3%">
-													<span class="input">
-														<input type="radio" name="star-input" value="1" id="p1">
-														<label for="p1">1</label>
-														<input type="radio" name="star-input" value="2" id="p2">
-														<label for="p2">2</label>
-														<input type="radio" name="star-input" value="3" id="p3">
-														<label for="p3">3</label>
-														<input type="radio" name="star-input" value="4" id="p4">
-														<label for="p4">4</label>
-														<input type="radio" name="star-input" value="5" id="p5">
-														<label for="p5">5</label>
-													</span>
-												<!-- <output for="star-input"><b>0</b>점</output>						 -->
-												</span>
-											</div>
-
-										<select class=" form-control">
-											<option value="#" class="control-label">공개 범위를 선택하세요</option>
-											<option value="public">공개</option>
-											<option value="private">비공개</option>
-											<option value="group">그룹공개</option>
-										</select>
+										<label>닉네임</label>
+										<input name="form-control" value="" />
 									</div>
+									<!-- 나중에 달력추가 -->
 								</div>
 							</div>
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
@@ -103,7 +69,36 @@
 </script>
 <script>
 export default {
-    name: 'ItemAdd'
+	name: 'ItemAdd',
+	data(){
+        return{
+            users:{
+				userId:'dd',
+			
+
+            }
+		}
+		
+	},
+	methods:{
+        write:function(){
+            // this.$http.post(this.$serverUrl + '/users', this.users)
+            // .then(function(response){
+            //     alert('등록');
+            // })
+            // .catch(function(err){
+            //     console.error(err);
+            // })
+        this.$http.post(this.$serverUrl + '/users',this.users)
+        .then(function(response){
+            console.log(response);
+        })
+        .catch(function (err) {
+            console.error(err);
+        })    
+        },
+        
+    },
 }
 </script>
 
