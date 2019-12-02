@@ -453,7 +453,7 @@ export default {
     .invalid-feedback{
         display: block;
     }
-    .linkA:hover, .linkA:active{
+    .linkA{
        text-decoration: underline; 
     }
 </style>
