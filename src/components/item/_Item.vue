@@ -1,22 +1,6 @@
 <template>
-<div>
-    <li class="inline-items">
-        <div class="author-thumb">
-            <img src="/assets/img/avatar41-sm.jpg" alt="author">
-        </div>
-        <div class="notification-event">
-            <a href="#" class="h6 notification-friend">{{name}}</a>
-            <span class="chat-message-item">{{price}}</span>
-        </div>
-        <span class="notification-icon" data-toggle="tooltip" data-placement="top" data-original-title="ADD TO YOUR FAVS">
-            <a href="#">
-                <svg class="olymp-star-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-star-icon"></use></svg>
-            </a>
-        </span>
-
-    </li>
-    <!-- 삭제 -->
-    <!-- <div class="col col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+<div class="row">
+    <div class="col col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
 		<div class="ui-block">
 			<div class="half-block">
 				<a href="javascript:void(0)" v-on:click="goDetail">
@@ -42,7 +26,7 @@
 			</div>
 			
 		</div>
-	</div> -->
+	</div>
 </div>
 </template>
 <script>

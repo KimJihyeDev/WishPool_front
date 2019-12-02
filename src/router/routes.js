@@ -4,6 +4,7 @@ import ItemAdd from '../components/item/ItemAdd.vue'
 import ItemModify from '../components/item/ItemModify.vue'
 import Entry from '../components/user/Entry'
 import ItemDetail from '../components/item/ItemDetail.vue'
+import Item from '../components/item/Item.vue'
 import Register_ResetPassword from '../components/user/Register_ResetPassword.vue'
 import Login from '../components/user/Login.vue'
 
@@ -17,7 +18,8 @@ export default [
     { path:'/item/add', component:ItemAdd},
     { path:'/item/modify',component:ItemModify},
     { path:'/user/entry',component:Entry},
-    { path:'/temp',component:Temp},
+    { path:'/temp',component:Temp}, //삭제
+    { path:'/item',component:Item},
     { path:'/item/detail/:itemId',component:ItemDetail},
     { path:'/item/modify/:itemId',component:ItemModify},
     { path:'/user/register', component: Register_ResetPassword},
