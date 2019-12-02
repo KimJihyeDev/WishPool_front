@@ -16,44 +16,47 @@
 									<div class="form-group label-floating">
 										<label>아이디</label>
 										<input class="form-control input-center" ref="inputId" v-model="user.userId">
-										<p ref="isNameNull" style="display:none">아이디를 입력해주세요</p>
+										<p v-show="vShow.isIdNull" style="display:none">아이디를 입력해주세요</p>
+										<!-- <p ref="isNameNull" style="display:none">아이디를 입력해주세요</p> -->
 										<p ref="isIdOk" style="display:none">아이디는 3자~20자 이내의 영문,숫자만 가능합니다.</p>
 									</div>
 						
 									<div class="form-group label-floating">
 										<label>비밀번호</label>
 										<input class="form-control input-center"  type="password" ref="inputPwd" v-model="user.password">
-										<p style="display:none">비밀번호를 입력해주세요</p>
+										<!-- <p ref="isPwdNull" style="display:none">비밀번호를 입력해주세요</p> -->
+										<p v-show="vShow.isPwdNull" style="display:none">비밀번호를 입력해주세요</p>
 										<p ref="isPwdOk" style="display:none">비밀번호는 8자~50자, 특수문자와 숫자를 반드시 포함시켜야 합니다.</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>비밀번호 재입력</label>
 										<input class="form-control input-center" type="password" ref="inputConfirmPwd" v-model="confirm">
+										<p v-show="vShow.isConfirmNull" style="display:none">비밀번호 재입력을 입력해주세요.</p>
 										<p ref="isConfirmOk" style="display:none">위의 비밀번호를 다시 입력해주세요</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>이름</label>
 										<input class="form-control input-center" ref="inputName" v-model="user.userName">
-										<p style="display:none">이름을 입력해주세요</p>
+										<p v-show="vShow.isNameNull" style="display:none">이름을 입력해주세요</p>
 										<p ref="isNameOk" style="display:none">이름은 20자 이내의 한글, 영문만 가능합니다.</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>닉네임</label>
 										<input class="form-control input-center" ref="inputNickName" v-model="user.nickName" />
-										<p style="display:none">닉네임을 입력해주세요</p>
+										<p v-show="vShow.isNickNameNull" style="display:none">닉네임을 입력해주세요</p>
 										<p ref="isNickNameOk" style="display:none">닉네임은 1자~20자 이내의 한글, 영문, 숫자만 가능합니다.</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>이메일</label>
 										<input class="form-control input-center" placeholder="" type="text" ref="inputEmail" v-model="user.email">
-										<p style="display:none">이메일을 입력해주세요</p>
+										<p v-show="vShow.isEmailNull" style="display:none">이메일을 입력해주세요</p>
 										<p ref="isEmailOk" style="display:none">이메일 형식이 맞지 않습니다.</p>
 									</div>
 						
 									<div class="form-group label-floating">
 										<label>전화번호</label>
 										<input class="form-control input-center" ref="inputPhone" v-model="user.phone" />
-										<p style="display:none">전화번호를 입력해주세요</p>
+										<p v-show="vShow.isPhoneNull" style="display:none">전화번호를 입력해주세요</p>
 										<p ref="isPhoneOk" style="display:none">전화번호의 형식이 맞지 않습니다.</p>
 									</div>
 									<!-- 나중에 달력추가 필요 -->
@@ -111,6 +114,15 @@ export default {
 				uPhone:false,
 				uNickName:false,
 				// 생일은 나중에 체크
+			},
+			vShow:{
+				isIdNull:false,
+				isPwdNull:false,
+				isConfirmNull:false,
+				isNameNull:false,
+				isNickNameNull:false,
+				isEmailNull:false,
+				isPhoneNull:false,
 			}
 		}
 	},
@@ -118,41 +130,46 @@ export default {
 		entry:function(){
 			// 값을 넘기기 전에 아이디 체크
 			if(this.user.userId === '' ){
-				alert('아이디입력');this.$refs.inputId.focus();
 				this.$refs.inputId.focus();
+				this.vShow.isIdNull = true;
 				return false;
 			} else {
 				if(!(this.validated.uId)){
-					alert('아이디 형식에 맞게 입력해주세요');
+					this.$refs.inputId.focus();
+					// this.$refs.isNameOk.style.display = "block";
 					return false;
 				} 
 			}
 			// 값을 넘기기 전에 이름 체크
 			if(this.user.userName === '' ){
-				alert('이름');
+				// this.$refs.isNameNull.style.display = "block";
 				this.$refs.inputName.focus();
+				this.vShow.isNameNull = true;
 				return false;
 			} else {
 				if(!(this.validated.uName)){
-					alert('이름 형식에 맞게 입력해주세요');
+					this.$refs.inputName.focus();
+					// this.$refs.isNameOk.style.display = "blcok";
 					return false;
 				} 
 			}
 			// 값을 넘기기 전에 이메일 체크
 			if(this.user.email === '' ){
-				alert('email입력');
+				// this.$refs.isEmailNull.style.display = "block";
+				this.vShow.isEmailNull = true;
 				this.$refs.inputEmail.focus();
 				return false;
 			} else {
 				if(!(this.validated.uEmail)){
-					alert('email 형식에 맞게 입력해주세요');
+					// this.$refs.isNameOk.style.display ="block";
+					this.$refs.inputEmail.focus();
 					return false;
 				} 
 			}
 			
 			// 값을 넘기기 전에 패스워드 체크
 			if(this.user.password === '' ){
-				alert('pwd입력');
+				this.vShow.isPwdNull = true;
 				this.$refs.inputPwd.focus();
 				return false;
 			} else {
@@ -163,7 +180,7 @@ export default {
 			}
 			// 값을 넘기기 전에 패스워드 확인을 입력했는지 체크
 			if(this.confirm === '' ){
-				alert('pwd 확인 입력');
+				this.vShow.isConfirmNull = true;
 				this.$refs.inputConfirmPwd.focus();
 				return false;
 			} else {
@@ -175,7 +192,7 @@ export default {
 			
 			// 값을 넘기기 전에 전화번호 체크
 			if(this.user.phone === '' ){
-				alert('phone 입력');
+				this.vShow.isPhoneNull = true;
 				this.$refs.inputPhone.focus();
 				return false;
 			} else {
@@ -187,7 +204,7 @@ export default {
 			
 			// 값을 넘기기 전에 닉네임 체크
 			if(this.user.nickName === '' ){
-				alert('nickname 입력');
+				this.vShow.isNickNameNull = true;
 				this.$refs.inputNickName.focus();
 				return false;
 			} else {
@@ -222,7 +239,15 @@ export default {
 						return false;
 					}
 				} else {
+					this.vShow.isIdNull = false;
 					this.$refs.isIdOk.style.display = "none";
+				}
+
+			// 아이디 널값 확인 메시지 
+				if(this.vShow.isIdNull){
+					if(this.user.userId !==''){
+						this.vShow.isIdNull = false;
+					}
 				}
 			}
 		},
@@ -245,6 +270,12 @@ export default {
 				} else {
 					this.$refs.isNameOk.style.display = "none";
 				}
+				//  이름 널값 확인 메시지
+				if(this.vShow.isNameNull){
+					if(this.user.userName !==''){
+						this.vShow.isNameNull = false;
+					}
+				}
 			}
 		},
 		deep:true,
@@ -264,6 +295,13 @@ export default {
 					}
 				} else {
 					this.$refs.isEmailOk.style.display = "none";
+				}
+				// 이메일 널값 확인 메시지
+				if(this.vShow.isEmailNull){
+					// 한 글자라도 들어가면 메시지 안 보이게 처리
+					if(this.user.email.length !== 0){
+						this.vShow.isEmailNull = false;
+					}
 				}
 			}
 		},
@@ -286,6 +324,12 @@ export default {
 				} else {
 					this.$refs.isPhoneOk.style.display = "none";
 				}
+				// 전화번호 널값 확인 메시지
+				if(this.vShow.isPhoneNull){
+					if(this.user.phone !==''){
+						this.vShow.isPhoneNull = false;
+					}
+				}
 			}
 		},
 		deep:true,
@@ -306,6 +350,13 @@ export default {
 				} else {
 						this.$refs.isNickNameOk.style.display = "none";
 				}
+				// 닉네임 널값 확인 메시지
+				if(this.vShow.isNickNameNull){
+					if(this.user.nickName !==''){
+						this.vShow.isNickNameNull= false;
+					}
+				}
+				
 			}
 		},
 		deep:true,
@@ -325,6 +376,13 @@ export default {
 				} else {
 					this.$refs.isConfirmOk.style.display = "none";
 				}
+				// 비밀번호 재확인 널값 확인 메시지
+				if(this.vShow.isConfirmNull){
+					if(this.confirm !==''){
+						this.vShow.isConfirmNull= false;
+					}
+				}
+				
 			}
 		},
 		deep:true,
@@ -345,10 +403,8 @@ export default {
 						return false;
 					}
 				} else {
-						this.$refs.isPwdOk.style.display = "none";
+					this.$refs.isPwdOk.style.display = "none";
 				}
-
-
 
 				if((this.user.password !== '') && (this.confirm !== '' )){
 					if(this.user.password !== this.confirm){
@@ -360,6 +416,13 @@ export default {
 				} else {
 					this.$refs.isConfirmOk.style.display = "none";
 				}
+				// 비밀번호 널값 확인 메시지
+				if(this.vShow.isPwdNull){
+					if(this.user.password !==''){
+						this.vShow.isPwdNull= false;
+					}
+				}
+				
 			}
 		},
 		deep:true,
