@@ -17,42 +17,42 @@
 										<label>아이디</label>
 										<input class="form-control input-center" ref="inputId" v-model="user.userId">
 										<p ref="isNameNull" style="display:none">아이디를 입력해주세요</p>
-										<p ref="isIdOk" style="display:none">아이디는 20자 이내의 영문,숫자만 가능합니다.</p>
+										<p ref="isIdOk" style="display:none">아이디는 3자~20자 이내의 영문,숫자만 가능합니다.</p>
 									</div>
 						
 									<div class="form-group label-floating">
 										<label>비밀번호</label>
-										<input class="form-control input-center"  type="password" v-on:blur="checkPwd" v-model="user.password">
+										<input class="form-control input-center"  type="password" ref="inputPwd" v-model="user.password">
 										<p style="display:none">비밀번호를 입력해주세요</p>
 										<p ref="isPwdOk" style="display:none">비밀번호는 8자~50자, 특수문자와 숫자를 반드시 포함시켜야 합니다.</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>비밀번호 재입력</label>
-										<input class="form-control input-center" type="password" v-model="confirm">
+										<input class="form-control input-center" type="password" ref="inputConfirmPwd" v-model="confirm">
 										<p ref="isConfirmOk" style="display:none">위의 비밀번호를 다시 입력해주세요</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>이름</label>
-										<input class="form-control input-center" v-model="user.userName">
+										<input class="form-control input-center" ref="inputName" v-model="user.userName">
 										<p style="display:none">이름을 입력해주세요</p>
 										<p ref="isNameOk" style="display:none">이름은 20자 이내의 한글, 영문만 가능합니다.</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>닉네임</label>
-										<input class="form-control input-center" v-model="user.nickName" />
+										<input class="form-control input-center" ref="inputNickName" v-model="user.nickName" />
 										<p style="display:none">닉네임을 입력해주세요</p>
 										<p ref="isNickNameOk" style="display:none">닉네임은 1자~20자 이내의 한글, 영문, 숫자만 가능합니다.</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>이메일</label>
-										<input class="form-control input-center" placeholder="" type="text" v-on:blur="checkEmail" v-model="user.email">
+										<input class="form-control input-center" placeholder="" type="text" ref="inputEmail" v-model="user.email">
 										<p style="display:none">이메일을 입력해주세요</p>
 										<p ref="isEmailOk" style="display:none">이메일 형식이 맞지 않습니다.</p>
 									</div>
 						
 									<div class="form-group label-floating">
 										<label>전화번호</label>
-										<input class="form-control input-center" v-model="user.phone" />
+										<input class="form-control input-center" ref="inputPhone" v-model="user.phone" />
 										<p style="display:none">전화번호를 입력해주세요</p>
 										<p ref="isPhoneOk" style="display:none">전화번호의 형식이 맞지 않습니다.</p>
 									</div>
@@ -92,7 +92,7 @@ export default {
 	name: 'ItemAdd',
 	data(){
         return{
-		        user:{
+		    user:{
 				userId:'',
 				userName:'',
 				email:'',
@@ -103,19 +103,56 @@ export default {
 				entryType:'wish',
 				},
 				confirm:''
-		}
-	},
+			}
+		},
 	methods:{
 		entry:function(){
 			// 값을 넘기기 전에 null 체크하기
-		
-			if(this.user.userName === '' ){
+			if(this.user.userId === '' ){
 				alert('아이디입력');
-				this.$refs.inputIdd.focus();
+				this.$refs.inputId.focus();
+				return false;
+			} else{
+				// uId를 인식할 수 없음 
+				// uId를 인식할 수 있게 하려면?
+				if(uId){
+					return ture;
+				} else {
+					alert('아이디 형식에 맞게 입력해주세요')
+					return false;
+				}
+			}
+
+			if(this.user.userName === '' ){
+				alert('이름');
+				this.$refs.inputName.focus();
 				return false;
 			}
-			
-
+			if(this.user.email === '' ){
+				alert('이메일');
+				this.$refs.inputEmail.focus();
+				return false;
+			}
+			if(this.user.password === '' ){
+				alert('비번');
+				this.$refs.inputPwd.focus();
+				return false;
+			}
+			if(this.confirm === '' ){
+				alert('비번재입력');
+				this.$refs.inputConfirmPwd.focus();
+				return false;
+			}
+			if(this.user.nickName === '' ){
+				alert('닉네임');
+				this.$refs.inputNickName.focus();
+				return false;
+			}
+			if(this.user.phone === '' ){
+				alert('폰');
+				this.$refs.inputPhone.focus();
+				return false;
+			}
 
 			// 회원 가입 처리
 			this.$http.post(this.$serverUrl + '/users',this.user)
@@ -126,31 +163,19 @@ export default {
 				console.error(err);
 			})    
 		},
-		checkId:function(){
-			const regId = /^[A-za-z0-9]/g;
-			const uId = this.user.userId.replace(/(\s*)/g, "");
-
-			if(this.user.userId !== ''){
-					if(regName.test(uId)){
-					this.$refs.isIdOk.style.display = "none";
-				}else{
-					this.$refs.isIdOk.style.display = "block";
-				}
-			} else {
-				this.$refs.isIdOk.style.display = "none";
-			}
-
-		},
 		// null 값 여부는 폼 제출시에 체크하기
 		checkPwd:function(){
 			// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
 			const regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$/;
-			const uPwd = this.user.password.replace(/(\s*)/g, "");
+			// const uPwd = this.user.password.replace(/(\s*)/g, "");
+			const uPwd = regPwd.test(this.user.password.replace(/(\s*)/g, ""));
+			
 			// 비밀번호를 입력한 상태에서만 유효성 체크
 			// 공백 제거
 			if(this.user.password !== ''){
-				if(!(regPwd.test(uPwd))){
+				if(!uPwd){
 					this.$refs.isPwdOk.style.display = "block";
+					return false;
 				} else {
 					this.$refs.isPwdOk.style.display = "none";
 				}
@@ -158,57 +183,113 @@ export default {
 					this.$refs.isPwdOk.style.display = "none";
 			}
 		},
-		checkEmail:function(){
-			// 이메일 유효성 체크
-			const regEmail =  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-			const uEmail = this.user.email.replace(/(\s*)/g, "");
+	},
+	watch:{
+		'user.userId':{
+			handler:function(newVal,oldVal){
+				// 3~20자까지의 영문,숫자만 입력 가능
+				const regId =  /^[A-za-z]{3,20}/g;
+				// const uId = this.user.userId.replace(/(\s*)/g, "");
+				const uId = regId.test(this.user.userId.replace(/(\s*)/g, ""));
+				// 아이디를 입력한 상태에서만 공백체크
+				if(this.user.userId !== ''){
+					if(uId){
+						this.$refs.isIdOk.style.display = "none";
+					}else{
+						console.log(uId);
+						this.$refs.isIdOk.style.display = "block";
+						return false;
+					}
+				} else {
+					this.$refs.isIdOk.style.display = "none";
+				}
+			}
+		},
+		deep:true,
+		immediate:true,
+		'user.userName':{
+			handler:function(newVal,oldVal){
+				// 2~20자까지의 한글, 영문 이름만 입력 가능
+				const regName = /^[가-힣a-zA-Z]{2,20}$/; 
+				const uName = this.user.userName.replace(/(\s*)/g, "");
+				// 이름을 입력한 상태에서만 유효성 체크
+				if(this.user.userName !== ''){
+					// 공백을 제거한 후에 유효성 체크
+					if(regName.test(uName)){
+						this.$refs.isNameOk.style.display = "none";
+					}else{
+						this.$refs.isNameOk.style.display = "block";
+						return false;
+					}
+				} else {
+					this.$refs.isNameOk.style.display = "none";
+				}
+			}
+		},
+		deep:true,
+		immediate:true,
+		'user.email':{
+			handler:function(newVal,oldVal){
+				// 이메일 유효성 체크
+				const regEmail =  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+				const uEmail = this.user.email.replace(/(\s*)/g, "");
 
-			if(this.user.email !== ''){
-				if(!(regEmail.test(uEmail))){
-					this.$refs.isEmailOk.style.display = "block";
+				if(this.user.email !== ''){
+					if(!(regEmail.test(uEmail))){
+						this.$refs.isEmailOk.style.display = "block";
+						return false;
+					} else {
+						this.$refs.isEmailOk.style.display = "none";
+					}
 				} else {
 					this.$refs.isEmailOk.style.display = "none";
 				}
-			} else {
-				this.$refs.isEmailOk.style.display = "none";
 			}
-
 		},
-		checkPhone:function(){
-			// 핸드폰 전화번호만 입력 받는다.
-			const regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
-			const uPhone = this.user.phone.replace(/(\s*)/g, "");
+		deep:true,
+		immediate:true,
+		'user.phone':{
+			handler:function(newVal,oldVal){
+				// 핸드폰 전화번호만 입력 받는다.
+				const regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+				const uPhone = this.user.phone.replace(/(\s*)/g, "");
 
-			// 010,016,018,019 로 시작하는 핸드폰 번호만 유효
-			if(this.user.phone !== ''){
-				if(!(regPhone.test(uPhone))){
-					this.$refs.isPhoneOk.style.display = "block";
+				// 010,016,018,019 로 시작하는 핸드폰 번호만 유효
+				if(this.user.phone !== ''){
+					if(!(regPhone.test(uPhone))){
+						this.$refs.isPhoneOk.style.display = "block";
+						return false;
+					} else {
+						this.$refs.isPhoneOk.style.display = "none";
+					}
 				} else {
 					this.$refs.isPhoneOk.style.display = "none";
 				}
-			} else {
-				this.$refs.isPhoneOk.style.display = "none";
 			}
-
 		},
-		checkNickName:function(){
-			 // 2자 ~ 20 자인 한글, 영문, 숫자만 유효
-			// const regNickName = /^([가-힣a-zA-Z0-9]{1,20})$/;
-			// const uNickName = this.user.nickName.replace(/(\s*)/g, "");
+		deep:true,
+		immediate:true,
+		'user.nickName':{
+			handler:function(newVal,oldVal){
+				// 2자 ~ 20 자인 한글, 영문, 숫자만 유효
+				const regNickName = /^([가-힣a-zA-Z0-9]{1,20})$/;
+				const uNickName = this.user.nickName.replace(/(\s*)/g, "");
 
-			// if(this.user.nickName !== ''){
-			// 	if(regNickName.test(uNickName)){
-			// 		console.log(uNickName);
-			// 		this.$refs.isNickNameOk.style.display = "none";
-			// 	} else {
-			// 		this.$refs.isNickNameOk.style.display = "block";
-			// 	}
-			// } else {
-			// 		this.$refs.isNickNameOk.style.display = "none";
-			// }
-		}
-	},
-	watch:{
+				if(this.user.nickName !== ''){
+					if(regNickName.test(uNickName)){
+						this.$refs.isNickNameOk.style.display = "none";
+					} else {
+						this.$refs.isNickNameOk.style.display = "block";
+						return false;
+					}
+				} else {
+						this.$refs.isNickNameOk.style.display = "none";
+				}
+			}
+		},
+		deep:true,
+		immediate:true,
+		
 		// 비밀번호 재입력의 변화를 감시
 		'confirm':{
 			handler:function(newVal,oldVal){
@@ -216,6 +297,7 @@ export default {
 				if((this.user.password !== '') && (this.confirm !== '' )){
 					if(this.user.password !== this.confirm){
 						this.$refs.isConfirmOk.style.display = "block";
+						return false;
 					} else {
 						this.$refs.isConfirmOk.style.display = "none";
 					}
@@ -232,6 +314,7 @@ export default {
 				if((this.user.password !== '') && (this.confirm !== '' )){
 					if(this.user.password !== this.confirm){
 						this.$refs.isConfirmOk.style.display = "block";
+						return false;
 					} else {
 						this.$refs.isConfirmOk.style.display = "none";
 					}
@@ -243,28 +326,10 @@ export default {
 		deep:true,
        	immediate:true,
 		},
-		'user.userName':{
-			handler:function(newVal,oldVal){
-				// 2~20자까지의 한글, 영문 이름만 입력 가능
-				const regName = /^[가-힣a-zA-Z]{2,20}$/; 
-				const uName = this.user.userName.replace(/(\s*)/g, "");
-				// 이름을 입력한 상태에서만 유효성 체크
-				if(this.user.userName !== ''){
-					// 공백을 제거한 후에 유효성 체크
-					if(regName.test(uName)){
-						this.$refs.isNameOk.style.display = "none";
-					}else{
-						this.$refs.isNameOk.style.display = "block";
-					}
-				} else {
-					this.$refs.isNameOk.style.display = "none";
-				}
-			}
-		},
-		deep:true,
-		immediate:true,
 		
-}
+		
+		
+	}
 </script>
 
 <style scoped>
