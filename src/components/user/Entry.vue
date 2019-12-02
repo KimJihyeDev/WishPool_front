@@ -101,59 +101,102 @@ export default {
 				nickName:'',
 				birth:'2019-01-01', // 달력 추가 후 변경
 				entryType:'wish',
-				},
-				confirm:''
+			},
+			confirm:'',
+			validated:{
+				uId: false,
+				uName: false,
+				uEmail:false,
+				uPwd:false,
+				uPhone:false,
+				uNickName:false,
+				// 생일은 나중에 체크
 			}
-		},
+		}
+	},
 	methods:{
 		entry:function(){
-			// 값을 넘기기 전에 null 체크하기
+			// 값을 넘기기 전에 아이디 체크
 			if(this.user.userId === '' ){
-				alert('아이디입력');
+				alert('아이디입력');this.$refs.inputId.focus();
 				this.$refs.inputId.focus();
 				return false;
-			} else{
-				// uId를 인식할 수 없음 
-				// uId를 인식할 수 있게 하려면?
-				if(uId){
-					return ture;
-				} else {
-					alert('아이디 형식에 맞게 입력해주세요')
+			} else {
+				if(!(this.validated.uId)){
+					alert('아이디 형식에 맞게 입력해주세요');
 					return false;
-				}
+				} 
 			}
-
+			// 값을 넘기기 전에 이름 체크
 			if(this.user.userName === '' ){
 				alert('이름');
 				this.$refs.inputName.focus();
 				return false;
+			} else {
+				if(!(this.validated.uName)){
+					alert('이름 형식에 맞게 입력해주세요');
+					return false;
+				} 
 			}
+			// 값을 넘기기 전에 이메일 체크
 			if(this.user.email === '' ){
-				alert('이메일');
+				alert('email입력');
 				this.$refs.inputEmail.focus();
 				return false;
+			} else {
+				if(!(this.validated.uEmail)){
+					alert('email 형식에 맞게 입력해주세요');
+					return false;
+				} 
 			}
+			
+			// 값을 넘기기 전에 패스워드 체크
 			if(this.user.password === '' ){
-				alert('비번');
+				alert('pwd입력');
 				this.$refs.inputPwd.focus();
 				return false;
+			} else {
+				if(!(this.validated.uPwd)){
+					alert('pwd 형식에 맞게 입력해주세요');
+					return false;
+				} 
 			}
+			// 값을 넘기기 전에 패스워드 확인을 입력했는지 체크
 			if(this.confirm === '' ){
-				alert('비번재입력');
+				alert('pwd 확인 입력');
 				this.$refs.inputConfirmPwd.focus();
 				return false;
+			} else {
+				if(this.user.password !== this.confirm){
+					alert('pwd가 일치하지 않음');
+					return false;
+				} 
 			}
-			if(this.user.nickName === '' ){
-				alert('닉네임');
-				this.$refs.inputNickName.focus();
-				return false;
-			}
+			
+			// 값을 넘기기 전에 전화번호 체크
 			if(this.user.phone === '' ){
-				alert('폰');
+				alert('phone 입력');
 				this.$refs.inputPhone.focus();
 				return false;
+			} else {
+				if(!(this.validated.uPhone)){
+					alert('phone 형식에 맞게 입력해주세요');
+					return false;
+				} 
 			}
-
+			
+			// 값을 넘기기 전에 닉네임 체크
+			if(this.user.nickName === '' ){
+				alert('nickname 입력');
+				this.$refs.inputNickName.focus();
+				return false;
+			} else {
+				if(!(this.validated.uNickName)){
+					alert('nickname 형식에 맞게 입력해주세요');
+					return false;
+				} 
+			}
+			
 			// 회원 가입 처리
 			this.$http.post(this.$serverUrl + '/users',this.user)
 			.then(function(response){
@@ -163,40 +206,18 @@ export default {
 				console.error(err);
 			})    
 		},
-		// null 값 여부는 폼 제출시에 체크하기
-		checkPwd:function(){
-			// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
-			const regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$/;
-			// const uPwd = this.user.password.replace(/(\s*)/g, "");
-			const uPwd = regPwd.test(this.user.password.replace(/(\s*)/g, ""));
-			
-			// 비밀번호를 입력한 상태에서만 유효성 체크
-			// 공백 제거
-			if(this.user.password !== ''){
-				if(!uPwd){
-					this.$refs.isPwdOk.style.display = "block";
-					return false;
-				} else {
-					this.$refs.isPwdOk.style.display = "none";
-				}
-			} else {
-					this.$refs.isPwdOk.style.display = "none";
-			}
-		},
 	},
 	watch:{
 		'user.userId':{
 			handler:function(newVal,oldVal){
 				// 3~20자까지의 영문,숫자만 입력 가능
-				const regId =  /^[A-za-z]{3,20}/g;
-				// const uId = this.user.userId.replace(/(\s*)/g, "");
-				const uId = regId.test(this.user.userId.replace(/(\s*)/g, ""));
+				const regId =  /^[0-9A-za-z]{3,20}/g;
+				this.validated.uId = regId.test(this.user.userId.replace(/(\s*)/g, ""));
 				// 아이디를 입력한 상태에서만 공백체크
 				if(this.user.userId !== ''){
-					if(uId){
+					if(this.validated.uId){
 						this.$refs.isIdOk.style.display = "none";
 					}else{
-						console.log(uId);
 						this.$refs.isIdOk.style.display = "block";
 						return false;
 					}
@@ -211,11 +232,11 @@ export default {
 			handler:function(newVal,oldVal){
 				// 2~20자까지의 한글, 영문 이름만 입력 가능
 				const regName = /^[가-힣a-zA-Z]{2,20}$/; 
-				const uName = this.user.userName.replace(/(\s*)/g, "");
+				this.validated.uName = regName.test(this.user.userName.replace(/(\s*)/g, ""));
 				// 이름을 입력한 상태에서만 유효성 체크
 				if(this.user.userName !== ''){
 					// 공백을 제거한 후에 유효성 체크
-					if(regName.test(uName)){
+					if(this.validated.uName){
 						this.$refs.isNameOk.style.display = "none";
 					}else{
 						this.$refs.isNameOk.style.display = "block";
@@ -232,14 +253,14 @@ export default {
 			handler:function(newVal,oldVal){
 				// 이메일 유효성 체크
 				const regEmail =  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-				const uEmail = this.user.email.replace(/(\s*)/g, "");
+				this.validated.uEmail = regEmail.test(this.user.email.replace(/(\s*)/g, ""));
 
 				if(this.user.email !== ''){
-					if(!(regEmail.test(uEmail))){
+					if(this.validated.uEmail){
+						this.$refs.isEmailOk.style.display = "none";
+					} else {
 						this.$refs.isEmailOk.style.display = "block";
 						return false;
-					} else {
-						this.$refs.isEmailOk.style.display = "none";
 					}
 				} else {
 					this.$refs.isEmailOk.style.display = "none";
@@ -252,15 +273,15 @@ export default {
 			handler:function(newVal,oldVal){
 				// 핸드폰 전화번호만 입력 받는다.
 				const regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
-				const uPhone = this.user.phone.replace(/(\s*)/g, "");
+				this.validated.uPhone = regPhone.test(this.user.phone.replace(/(\s*)/g, ""));
 
 				// 010,016,018,019 로 시작하는 핸드폰 번호만 유효
 				if(this.user.phone !== ''){
-					if(!(regPhone.test(uPhone))){
+					if(this.validated.uPhone){
+						this.$refs.isPhoneOk.style.display = "none";
+					} else {
 						this.$refs.isPhoneOk.style.display = "block";
 						return false;
-					} else {
-						this.$refs.isPhoneOk.style.display = "none";
 					}
 				} else {
 					this.$refs.isPhoneOk.style.display = "none";
@@ -271,12 +292,12 @@ export default {
 		immediate:true,
 		'user.nickName':{
 			handler:function(newVal,oldVal){
-				// 2자 ~ 20 자인 한글, 영문, 숫자만 유효
+				// 1자 ~ 20 자인 한글, 영문, 숫자만 유효
 				const regNickName = /^([가-힣a-zA-Z0-9]{1,20})$/;
-				const uNickName = this.user.nickName.replace(/(\s*)/g, "");
+				this.validated.uNickName = regNickName.test(this.user.nickName.replace(/(\s*)/g, ""));
 
 				if(this.user.nickName !== ''){
-					if(regNickName.test(uNickName)){
+					if(this.validated.uNickName){
 						this.$refs.isNickNameOk.style.display = "none";
 					} else {
 						this.$refs.isNickNameOk.style.display = "block";
@@ -311,6 +332,24 @@ export default {
 		// 비밀번호를 입력값을 수정하였을 경우 감시
 		'user.password':{
 			handler:function(newVal,oldVal){
+				// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
+				const regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$/;
+				this.validated.uPwd = regPwd.test(this.user.password.replace(/(\s*)/g, ""));
+				
+				// 비밀번호를 입력한 상태에서만 유효성 체크
+				if(this.user.password !== ''){
+					if(this.validated.uPwd){
+						this.$refs.isPwdOk.style.display = "none";
+					} else {
+						this.$refs.isPwdOk.style.display = "block";
+						return false;
+					}
+				} else {
+						this.$refs.isPwdOk.style.display = "none";
+				}
+
+
+
 				if((this.user.password !== '') && (this.confirm !== '' )){
 					if(this.user.password !== this.confirm){
 						this.$refs.isConfirmOk.style.display = "block";
