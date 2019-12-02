@@ -72,6 +72,7 @@
 			</div>
 		</div>
 	</div>
+	</div>
 </template>
 
 <script scr="/assets/js/star.js"></script>
