@@ -109,6 +109,13 @@ export default {
 		entry:function(){
 			// 값을 넘기기 전에 null 체크하기
 		
+			if(this.user.userName === '' ){
+				alert('아이디입력');
+				this.$refs.inputIdd.focus();
+				return false;
+			}
+			
+
 
 			// 회원 가입 처리
 			this.$http.post(this.$serverUrl + '/users',this.user)
