@@ -33,13 +33,13 @@
 									</div>
 									<div class="form-group label-floating">
 										<label>이름</label>
-										<input class="form-control input-center" v-on:blur="checkName" v-model="user.userName">
+										<input class="form-control input-center" v-model="user.userName">
 										<p style="display:none">이름을 입력해주세요</p>
 										<p ref="isNameOk" style="display:none">이름은 20자 이내의 한글, 영문만 가능합니다.</p>
 									</div>
 									<div class="form-group label-floating">
 										<label>닉네임</label>
-										<input class="form-control input-center" v-on:blur="checkNickName" v-model="user.nickName" />
+										<input class="form-control input-center" v-model="user.nickName" />
 										<p style="display:none">닉네임을 입력해주세요</p>
 										<p ref="isNickNameOk" style="display:none">닉네임은 1자~20자 이내의 한글, 영문, 숫자만 가능합니다.</p>
 									</div>
@@ -52,7 +52,7 @@
 						
 									<div class="form-group label-floating">
 										<label>전화번호</label>
-										<input class="form-control input-center"  v-on:blur="checkPhone" v-model="user.phone" />
+										<input class="form-control input-center" v-model="user.phone" />
 										<p style="display:none">전화번호를 입력해주세요</p>
 										<p ref="isPhoneOk" style="display:none">전화번호의 형식이 맞지 않습니다.</p>
 									</div>
@@ -135,22 +135,6 @@ export default {
 
 		},
 		// null 값 여부는 폼 제출시에 체크하기
-		checkName:function(){
-			// 2~20자까지의 한글, 영문 이름만 입력 가능
-			const regName = /^[가-힣a-zA-Z]{2,20}$/; 
-			const uName = this.user.userName.replace(/(\s*)/g, "");
-			// 이름을 입력한 상태에서만 유효성 체크
-			if(this.user.userName !== ''){
-				// 공백을 제거한 후에 유효성 체크
-				if(regName.test(uName)){
-					this.$refs.isNameOk.style.display = "none";
-				}else{
-					this.$refs.isNameOk.style.display = "block";
-				}
-			} else {
-				this.$refs.isNameOk.style.display = "none";
-			}
-		},
 		checkPwd:function(){
 			// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
 			const regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$/;
@@ -202,19 +186,19 @@ export default {
 		},
 		checkNickName:function(){
 			 // 2자 ~ 20 자인 한글, 영문, 숫자만 유효
-			const regNickName = /^([가-힣a-zA-Z0-9]{1,20})$/;
-			const uNickName = this.user.nickName.replace(/(\s*)/g, "");
+			// const regNickName = /^([가-힣a-zA-Z0-9]{1,20})$/;
+			// const uNickName = this.user.nickName.replace(/(\s*)/g, "");
 
-			if(this.user.nickName !== ''){
-				if(regNickName.test(uNickName)){
-					console.log(uNickName);
-					this.$refs.isNickNameOk.style.display = "none";
-				} else {
-					this.$refs.isNickNameOk.style.display = "block";
-				}
-			} else {
-					this.$refs.isNickNameOk.style.display = "none";
-			}
+			// if(this.user.nickName !== ''){
+			// 	if(regNickName.test(uNickName)){
+			// 		console.log(uNickName);
+			// 		this.$refs.isNickNameOk.style.display = "none";
+			// 	} else {
+			// 		this.$refs.isNickNameOk.style.display = "block";
+			// 	}
+			// } else {
+			// 		this.$refs.isNickNameOk.style.display = "none";
+			// }
 		}
 	},
 	watch:{
@@ -233,7 +217,6 @@ export default {
 				}
 			}
 		},
-		
 		deep:true,
        	immediate:true,
 		// 비밀번호를 입력값을 수정하였을 경우 감시
@@ -252,7 +235,28 @@ export default {
 		},
 		deep:true,
        	immediate:true,
-	},
+		},
+		'user.userName':{
+			handler:function(newVal,oldVal){
+				// 2~20자까지의 한글, 영문 이름만 입력 가능
+				const regName = /^[가-힣a-zA-Z]{2,20}$/; 
+				const uName = this.user.userName.replace(/(\s*)/g, "");
+				// 이름을 입력한 상태에서만 유효성 체크
+				if(this.user.userName !== ''){
+					// 공백을 제거한 후에 유효성 체크
+					if(regName.test(uName)){
+						this.$refs.isNameOk.style.display = "none";
+					}else{
+						this.$refs.isNameOk.style.display = "block";
+					}
+				} else {
+					this.$refs.isNameOk.style.display = "none";
+				}
+			}
+		},
+		deep:true,
+		immediate:true,
+		
 }
 </script>
 
