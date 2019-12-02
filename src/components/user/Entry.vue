@@ -17,7 +17,7 @@
 										<label>아이디</label>
 										<input class="form-control input-center" ref="inputId" v-model="user.userId">
 										<p ref="isNameNull" style="display:none">아이디를 입력해주세요</p>
-										<p style="display:none">아이디는 20자 이내의 영문,숫자만 가능합니다.</p>
+										<p ref="isIdOk" style="display:none">아이디는 20자 이내의 영문,숫자만 가능합니다.</p>
 									</div>
 						
 									<div class="form-group label-floating">
@@ -126,6 +126,21 @@ export default {
 				console.error(err);
 			})    
 		},
+		checkId:function(){
+			const regId = /^[A-za-z0-9]/g;
+			const uId = this.user.userId.replace(/(\s*)/g, "");
+
+			if(this.user.userId !== ''){
+					if(regName.test(uId)){
+					this.$refs.isIdOk.style.display = "none";
+				}else{
+					this.$refs.isIdOk.style.display = "block";
+				}
+			} else {
+				this.$refs.isIdOk.style.display = "none";
+			}
+
+		},
 		// null 값 여부는 폼 제출시에 체크하기
 		checkName:function(){
 			// 2~20자까지의 한글, 영문 이름만 입력 가능
@@ -142,7 +157,6 @@ export default {
 			} else {
 				this.$refs.isNameOk.style.display = "none";
 			}
-		
 		},
 		checkPwd:function(){
 			// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
@@ -215,7 +229,7 @@ export default {
 		'confirm':{
 			handler:function(newVal,oldVal){
 	
-				if(!(this.user.password === '') && !(this.confirm === '' )){
+				if((this.user.password !== '') && (this.confirm !== '' )){
 					if(this.user.password !== this.confirm){
 						this.$refs.isConfirmOk.style.display = "block";
 					} else {
@@ -226,12 +240,13 @@ export default {
 				}
 			}
 		},
+		
 		deep:true,
        	immediate:true,
 		// 비밀번호를 입력값을 수정하였을 경우 감시
 		'user.password':{
 			handler:function(newVal,oldVal){
-				if(!(this.user.password === '') && !(this.confirm === '' )){
+				if((this.user.password !== '') && (this.confirm !== '' )){
 					if(this.user.password !== this.confirm){
 						this.$refs.isConfirmOk.style.display = "block";
 					} else {
