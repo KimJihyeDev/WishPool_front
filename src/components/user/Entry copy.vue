@@ -24,7 +24,7 @@
 												<input class="form-control" placeholder="" type="text" :class="validateUser" v-model="user.userId">
                                                 <span v-if="hasTypedUserId && !isValidUserId" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        Phone Number is required
+                                                        아이디는 3자~20자 이내의 영문,숫자만 가능합니다.
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -35,7 +35,7 @@
 												<input class="form-control" placeholder="" type="password" :class="validatePassword" v-model="user.password">
                                                 <span v-if="hasTypedPassword && !isValidPassword" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        Phone Number is required
+                                                        비밀번호는 8자~50자, 특수문자와 숫자를 반드시 포함시켜야 합니다.
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -43,10 +43,10 @@
 										<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group label-floating is-empty" >
 												<label class="control-label">비밀번호 확인</label>
-												<input class="form-control" placeholder="" type="password" :class="validatePasswordConfirm" v-model="user.passwordConfirm">
+												<input class="form-control" placeholder="" type="password" :class="validatePasswordConfirm" v-model="passwordConfirm">
                                                 <span v-if="hasTypedPasswordConfirm && !isValidPasswordConfirm" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        Phone Number is required
+                                                    	비밀번호와 같게 입력해주세요.
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -57,7 +57,7 @@
 												<input class="form-control" placeholder="" type="text" :class="validateUserName" v-model="user.userName">
                                                 <span v-if="hasTypedUserName && !isValidUserName" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        Phone Number is required
+                                                        이름은 20자 이내의 한글, 영문만 가능합니다.
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -68,7 +68,7 @@
 												<input class="form-control" placeholder="" type="text" :class="validateNickName" v-model="user.nickName">
                                                 <span v-if="hasTypedNickName && !isValidNickName" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        Phone Number is required
+                                                        닉네임은 1자~20자 이내의 한글, 영문, 숫자만 가능합니다.
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -79,7 +79,7 @@
 												<input class="form-control" placeholder="" type="text" :class="validatePhone" v-model="user.phone">
                                                 <span v-if="hasTypedPhone && !isValidPhone" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        Phone Number is required
+                                                        전화번호 형식에 맞게 입력해주세요.
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -90,7 +90,7 @@
 												<input class="form-control" placeholder="" type="text" :class="validateEmail" v-model="user.email">
                                                 <span v-if="hasTypedEmail && !isValidEmail" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        Phone Number is required
+                                                        이메일 형식에 맞게 입력해주세요.
                                                     </span>
                                                 </span>
 											<span class="material-input"></span>
@@ -100,7 +100,7 @@
 												<input name="datetimepicker" style="padding-top:30px" value="YYYY/MM/DD" :class="validateBirth" v-model="user.birth">
                                                 <span v-if="hasTypedBirth && !isValidBirth" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        Phone Number is required
+                                                        생년월일 형식에 맞게 입력해주세요.
                                                     </span>
                                                 </span>
 												<span class="input-group-addon">
@@ -119,7 +119,7 @@
 												</div>
 											</div>
 					
-											<a href="#" class="btn btn-purple btn-lg full-width" style="font-size:1.1rem">회원가입 완료</a>
+											<a href="#" class="btn btn-purple btn-lg full-width" style="font-size:1.1rem" v-on:click="entry">회원가입 완료</a>
 										</div>
 									</div>
 								</form>
@@ -132,6 +132,48 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Window-popup Restore Password -->
+
+		<div class="modal fade" id="restore-password" tabindex="-1" role="dialog" aria-labelledby="restore-password" aria-hidden="true">
+			<div class="modal-dialog window-popup restore-password-popup" role="document">
+				<div class="modal-content">
+					<a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
+						<svg class="olymp-close-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
+					</a>
+
+					<div class="modal-header">
+						<h6 class="title">Restore your Password</h6>
+					</div>
+
+					<div class="modal-body">
+						<form method="get">
+							<p>Enter your email and click the send code button. You’ll receive a code in your email. Please use that
+								code below to change the old password for a new one.
+							</p>
+							<div class="form-group label-floating">
+								<label class="control-label">Your Email</label>
+								<input class="form-control" placeholder="" type="email" value="james-spiegel@yourmail.com">
+							<span class="material-input"></span></div>
+							<button class="btn btn-purple btn-lg full-width">Send me the Code</button>
+							<div class="form-group label-floating is-empty">
+								<label class="control-label">Enter the Code</label>
+								<input class="form-control" placeholder="" type="text" value="">
+							<span class="material-input"></span></div>
+							<div class="form-group label-floating">
+								<label class="control-label">Your New Password</label>
+								<input class="form-control" placeholder="" type="password" value="olympus">
+							<span class="material-input"></span></div>
+							<button class="btn btn-primary btn-lg full-width">Change your Password!</button>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ... end Window-popup Restore Password -->
+
 
 		<!-- Window Popup Main Search -->
 
@@ -231,7 +273,6 @@
 	</div>
 </template>
 <script>
-
 export default {
 	name: 'Register_ResetPassword',
     data(){
@@ -241,12 +282,16 @@ export default {
 				userName:'',
 				email:'',
 				password:'',
-				passwordConfirm:'',
 				phone:'',
 				nickName:'',
+				// 달력 생성 후에 수정하기
+				// 더미 데이터
 				birth:'',
 				entryType:'w',
-            },
+			},
+			// 비번 재입력
+			passwordConfirm:'',
+			// 입력값 널값 체크
             hasTypedUserId:false,
             hasTypedUserName:false,
             hasTypedEmail:false,
@@ -254,62 +299,226 @@ export default {
             hasTypedPasswordConfirm:false,
             hasTypedPhone:false,
             hasTypedNickName:false,
-            hasTypedBirth:false,
-
+			hasTypedBirth:false,
+			// 입력값 유효성 체크
+			isValidUserId:false,
+			isValidUserName:false,
+			isValidEmail:false,
+			isValidtPassword:false,
+			isValidPasswordConfirm:false,
+			isValidPhone:false,
+			isValidNickName:false,
+			isValidBirth:false,
 		}
-    },
-    watch:{
-        'user.userId':function(){
-            return this.hasTypedUserId = true;
-        },
-        'user.userName'(){
-            return this.hasTypedUserName = true;
-        },
-        'user.email'(){
-            return this.hasTypedEmail = true;
-        },
-        'user.password'(){
-            return this.hasTypedPassword = true;
-        },
-        'user.passwordConfirm'(){
-            return this.hasTypedPasswordConfirm = true;
-        },
-        'user.phone'(){
-            return this.hasTypedPhone = true;
-        },
-        'user.nickName'(){
-            return this.hasTypedNickName = true;
-        },
-        'user.birth'(){
-            return this.hasTypedBirth = true;
-        },
-    },
+	},
+	methods:{
+		entry(){
+			this.$http.post(serverUrl +'/users', this.user)
+			.then((result)=>{
+				console.log(result);
+			})
+			.catch((err)=>{
+				console.error(err);
+			})
+		}
+	},
+	watch:{
+		'user.userId':{
+			handler:function(){
+				// 3~20자까지의 영문,숫자만 입력 가능
+				const regId =  /^[0-9A-za-z]{3,20}$/g;
+				const validate = regId.test(this.user.userId.replace(/(\s*)/g, ""));
+				// 아이디를 입력한 상태에서만 공백체크
+				if(this.user.userId !== ''){
+					if(validate){
+						this.hasTypedUserId = true
+						this.isValidUserId = true
+					}else{
+						this.hasTypedUserId = true;
+						this.isValidUserId = false;
+					}
+				}else{
+					return this.hasTypedUserId = false;
+				}
+			}
+		},//
+		'user.userName':{
+			handler:function(){
+				// 2~20자까지의 한글, 영문 이름만 입력 가능
+				const regName = /^[가-힣a-zA-Z]{2,20}$/; 
+				const validate = regName.test(this.user.userName.replace(/(\s*)/g, ""));
+				// 이름을 입력한 상태에서만 유효성 체크
+				if(this.user.userName !== ''){
+					if(validate){
+						this.hasTypedUserName = true;
+						this.isValidUserName = true;
+					}else{
+						this.hasTypedUserName = true;
+						this.isValidUserName = false;
+					}
+				} else {
+					return this.hasTypedUserName = false;
+				}
+			}
+		},
+		'user.email':{
+			handler:function(){
+				// 이메일 유효성 체크
+				const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+				const validate = regEmail.test(this.user.email.replace(/(\s*)/g, ""));
+
+				if(this.user.email !== ''){
+					if(validate){
+						this.hasTypedEmail = true;
+						this.isValidEmail = true;
+					} else {
+						this.hasTypedEmail = true;
+						this.isValidEmail = false;
+					}
+				} else {
+					return this.hasTypedEmail = false;
+				}
+			}
+		},
+		'user.phone':{
+			handler:function(){
+				// 핸드폰 전화번호만 입력 받는다.
+				const regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+				const validate = regPhone.test(this.user.phone.replace(/(\s*)/g, ""));
+
+				// 010,016,018,019 로 시작하는 핸드폰 번호만 유효
+				if(this.user.phone !== ''){
+					if(validate){
+						this.hasTypedPhone = true;
+						this.isValidPhone = true;
+					} else {
+						this.hasTypedPhone = true;
+						this.isValidPhone = false;
+					}
+				} else {
+					this.hasTypedPhone = false;
+				}
+			}
+		},
+		'user.nickName':{
+			handler:function(){
+				// 1자 ~ 20 자인 한글, 영문, 숫자만 유효
+				const regNickName = /^([가-힣a-zA-Z0-9]{1,20})$/;
+				const validate = regNickName.test(this.user.nickName.replace(/(\s*)/g, ""));
+
+				if(this.user.nickName !== ''){
+					if(validate){
+						this.hasTypedNickName = true;
+						this.isValidNickName = true;
+					} else {
+						this.hasTypedNickName = true;
+						this.isValidNickName = false;
+					}
+				} else {
+					this.hasTypedNickName = false;
+				}
+			}
+		},
+		'user.password':{
+			handler:function(){
+				// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
+				const regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$/;
+				const validate = regPwd.test(this.user.password.replace(/(\s*)/g, ""));
+				if(this.user.password !== ''){
+					if(validate){
+						this.hasTypedPassword = true
+						this.isValidPassword = true
+					}else{
+						this.hasTypedPassword = true;
+						this.isValidPassword = false;
+					}
+				}else{
+					return this.hasTypedPassword = false;
+				}
+			}
+		},
+		'passwordConfirm':{
+			handler:function(){
+				//유효성검사 : user.password와 일치 여부
+				var validate = false;
+				if(this.user.password === this.passwordConfirm){
+					validate = true;
+				}else{
+					validate = false;
+				}
+				if(this.passwordConfirm !== ''){
+					if(validate){
+						this.hasTypedPasswordConfirm = true
+						this.isValidPasswordConfirm = true
+					}else{
+						this.hasTypedPasswordConfirm = true;
+						this.isValidPasswordConfirm = false;
+					}
+				}else{
+					return this.hasTypedPasswordConfirm = false;
+				}
+			}
+		},
+		'user.birth':{
+			handler:function(){
+				//  
+				const year = this.user.birth.substr(0,4);
+				const month = this.user.birth.substr(4,2);
+				const day = this.user.birth.substr(6,2);
+				const today = new Date();
+				const thisYear = today.getFullYear();
+
+				if(this.user.birth !== '' ){
+				// 생년월일 입력값의 길이가 8이 아닐 경우 false 반환
+					if (this.user.birth.length == 8) {
+						//
+						if (1900 > year || thisYear < year){
+							this.hasTypedBirth = true;
+							this.isValidBirth = false;
+						}else if (month < 1 || month > 12) {
+							this.hasTypedBirth = true;
+							this.isValidBirth = false;
+						}else if (day < 1 || day > 31) {
+							this.hasTypedBirth = true;
+							this.isValidBirth = false;
+						}else if ((month==4 || month==6 || month==9 || month==11) && day==31) {
+							this.hasTypedBirth = true;
+							this.isValidBirth = false;
+					
+						}else if (month == 2) {
+					
+							const isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+					
+							if (day>29 || (day==29 && !isleap)) {
+								
+								this.hasTypedBirth = true;
+								this.isValidBirth = false;
+							}else{
+								this.hasTypedBirth = true;
+								this.isValidBirth = true;
+							}//end of if (day>29 || (day==29 && !isleap))
+					
+						}else{
+							this.hasTypedBirth = true;
+							this.isValidBirth = true;
+						} //
+				
+					}else{
+						this.hasTypedBirth = true;
+						this.isValidBirth = false;
+					}
+
+
+
+				}else{
+						this.hasTypedBirth = false;
+				}	
+			}
+		}
+
+	},
+   
     computed:{
-        isValidUserId(){
-            //userId 유효성검증
-            return false;
-        },
-        isValidUserName(){
-            return true;
-        },
-        isValidEmail(){
-            return true;
-        },
-        isValidPassword(){
-            return true;
-        },
-        isValidPasswordConfirm(){
-            return true;
-        },
-        isValidPhone(){
-            return true;
-        },
-        isValidNickName(){
-            return true;
-        },
-        isValidBirth(){
-            return true;
-        },
         validateUser(){
             return {
                 'was-validated' : this.user.userId && this.isValidUserId,
@@ -336,8 +545,8 @@ export default {
         },
         validatePasswordConfirm(){
             return {
-                'was-validated' : this.user.passwordConfirm && this.isValidPasswordConfirm,
-                'not-validated' : this.user.passwordConfirm && !this.isValidPasswordConfirm
+                'was-validated' : this.passwordConfirm && this.isValidPasswordConfirm,
+                'not-validated' : this.passwordConfirm && !this.isValidPasswordConfirm
             }
         },
         validatePhone(){

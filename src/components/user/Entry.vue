@@ -97,7 +97,8 @@
 											</div>
 											<div class="form-group date-time-picker label-floating" >
 												<label class="control-label">생년월일</label>
-												<input name="datetimepicker" style="padding-top:30px" value="YYYY/MM/DD" :class="validateBirth" v-model="user.birth">
+												<!-- v-model="user.birth" -->
+												<input name="datetimepicker" style="padding-top:30px" value="YYYY/MM/DD" :class="validateBirth" v-model="birthConfirm" >
                                                 <span v-if="hasTypedBirth && !isValidBirth" class="invalid-feedback">
                                                     <span class="error-box">
                                                         생년월일 형식에 맞게 입력해주세요.
@@ -118,8 +119,7 @@
                                                     </label>
 												</div>
 											</div>
-					
-											<a href="#" class="btn btn-purple btn-lg full-width" style="font-size:1.1rem">회원가입 완료</a>
+											<a href="#" class="btn btn-purple btn-lg full-width" style="font-size:1.1rem" v-on:click="entry">회원가입 완료</a>
 										</div>
 									</div>
 								</form>
@@ -284,13 +284,13 @@ export default {
 				password:'',
 				phone:'',
 				nickName:'',
-				// 달력 생성 후에 수정하기
-				// 더미 데이터
 				birth:'',
 				entryType:'w',
 			},
 			// 비번 재입력
 			passwordConfirm:'',
+			// 생일 확인용
+			birthConfirm:'',
 			// 입력값 널값 체크
             hasTypedUserId:false,
             hasTypedUserName:false,
@@ -309,6 +309,72 @@ export default {
 			isValidPhone:false,
 			isValidNickName:false,
 			isValidBirth:false,
+		}
+	},
+	methods:{
+		entry(){
+			// 널값, 유효성 체크
+			if(!this.hasTypedUserId){
+
+				return false;
+			}else if(!this.isValidUserId){
+				return false;
+			}
+
+			if(!this.hasTypedPassword){
+				return false;
+			}else if(!this.isValidPassword){
+				return false;
+			}
+
+			if(!this.hasTypedPasswordConfirm){
+				return false;
+			}else if(!this.isValidPasswordConfirm){
+				return false;
+			}
+
+			if(!this.hasTypedUserName){
+				return false;
+			}else if(!this.isValidUserName){
+				return false;
+			}
+
+			if(!this.hasTypedNickName){
+				return false;
+			}else if(!this.isValidNickName){
+				return false;
+
+			}
+			if(!this.hasTypedPhone){
+				return false;
+			}else if(!this.isValidPhone){
+				return false;
+			}
+			
+			if(!this.hasTypedEmail){
+				return false;
+			}else if(!this.isValidEmail){
+				return false;
+			}
+
+			if(!this.hasTypedBirth){
+				return false;
+			}else if(!this.isValidBirth){
+				return false;
+			}
+
+
+
+
+
+
+			this.$http.post(this.$serverUrl +'/users', this.user)
+			.then((result)=>{
+				console.log(result);
+			})
+			.catch((err)=>{
+				console.error(err);
+			})
 		}
 	},
 	watch:{
@@ -448,38 +514,40 @@ export default {
 				}
 			}
 		},
-		'user.birth':{
+		'birthConfirm':{
 			handler:function(){
-				//  
-				const year = this.user.birth.substr(0,4);
-				const month = this.user.birth.substr(4,2);
-				const day = this.user.birth.substr(6,2);
+				const year = this.birthConfirm.substr(0,4);
+				const month = this.birthConfirm.substr(4,2);
+				const day = this.birthConfirm.substr(6,2);
 				const today = new Date();
 				const thisYear = today.getFullYear();
 
-				if(this.user.birth !== '' ){
+				if(this.birthConfirm !== '' ){
 				// 생년월일 입력값의 길이가 8이 아닐 경우 false 반환
-					if (this.user.birth.length == 8) {
-						//
+					if (this.birthConfirm.length == 8) {
 						if (1900 > year || thisYear < year){
+							   
 							this.hasTypedBirth = true;
 							this.isValidBirth = false;
 						}else if (month < 1 || month > 12) {
+							   
 							this.hasTypedBirth = true;
 							this.isValidBirth = false;
 						}else if (day < 1 || day > 31) {
+							   
 							this.hasTypedBirth = true;
 							this.isValidBirth = false;
 						}else if ((month==4 || month==6 || month==9 || month==11) && day==31) {
 							this.hasTypedBirth = true;
 							this.isValidBirth = false;
+							   
 					
 						}else if (month == 2) {
-					
+							   
 							const isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 					
 							if (day>29 || (day==29 && !isleap)) {
-								
+								   
 								this.hasTypedBirth = true;
 								this.isValidBirth = false;
 							}else{
@@ -490,7 +558,9 @@ export default {
 						}else{
 							this.hasTypedBirth = true;
 							this.isValidBirth = true;
-						} //
+							// 모든 조건을 만족한 경우 user.birth 에 값을 바인딩
+							this.user.birth = year + '-' + month + '-' + day;
+						} 
 				
 					}else{
 						this.hasTypedBirth = true;
@@ -500,7 +570,8 @@ export default {
 
 
 				}else{
-						this.hasTypedBirth = false;
+					   
+					this.hasTypedBirth = false;
 				}	
 			}
 		}
@@ -552,8 +623,10 @@ export default {
         },
         validateBirth(){
             return {
-                'was-validated' : this.user.birth && this.isValidBirth,
-                'not-validated' : this.user.birth && !this.isValidBirth
+                // 'was-validated' : this.user.birth && this.isValidBirth,
+                // 'not-validated' : this.user.birth && !this.isValidBirth
+                'was-validated' : this.birthConfirm && this.isValidBirth,
+                'not-validated' : this.birthConfirm && !this.isValidBirth
             }
         }
     }
