@@ -23,11 +23,11 @@
 									<div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
 										<div class="form-group label-floating is-empty">
 											<label class="control-label">아이디</label>
-											<input class="form-control" placeholder="" type="text">
+											<input class="form-control" placeholder="" type="text" v-model="user.userId">
 										<span class="material-input"></span></div>
 										<div class="form-group label-floating is-empty">
 											<label class="control-label">비밀번호</label>
-											<input class="form-control" placeholder="" type="password">
+											<input class="form-control" placeholder="" type="password" v-model="user.password">
 										<span class="material-input"></span></div>
 				
 										<div class="remember">
@@ -49,7 +49,7 @@
 											
 										</div>
 				
-										<a href="#" style="font-size:1rem" class="btn btn-lg btn-primary full-width">로그인</a>
+										<a href="#" style="font-size:1rem" class="btn btn-lg btn-primary full-width" v-on:click="login">로그인</a>
 				
 										<div class="or"></div>
 				
@@ -109,7 +109,10 @@ export default {
     name: 'Login',
     data(){
         return{
-            
+            user:{
+				userId:'',
+				password:''
+			}
         }
 	},
 	components:{
@@ -121,6 +124,11 @@ export default {
 		// 	console.log(el.classList);
 		// 	el.classList.remove('show');
 		// }
+		login:function(){
+			this.$http.post()
+				.then()
+				.catch
+		}
 	}
 }
 </script>                  
