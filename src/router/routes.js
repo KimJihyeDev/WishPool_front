@@ -5,7 +5,7 @@ import ItemModify from '../components/item/ItemModify.vue'
 import Entry from '../components/user/Entry'
 import ItemDetail from '../components/item/ItemDetail.vue'
 import Item from '../components/item/Item.vue'
-import Register_ResetPassword from '../components/user/Register_ResetPassword.vue'
+import ResetPassword from '../components/user/ResetPassword.vue'
 import Login from '../components/user/Login.vue'
 
 // 웹소캣 연습용 컴포턴트 (나중에 삭제하기)
@@ -22,7 +22,7 @@ export default [
     { path:'/item',component:Item},
     { path:'/item/detail/:itemId',component:ItemDetail},
     { path:'/item/modify/:itemId',component:ItemModify},
-    { path:'/user/register', component: Register_ResetPassword},
+    { path:'/user/register', component: ResetPassword},
     { path:'/user/login', component: Login}
     
 ]
