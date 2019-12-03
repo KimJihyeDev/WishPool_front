@@ -6,7 +6,8 @@
         <div class="container">
             <div class="row">
                 <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
-                    <div class="ui-block">
+                    
+                    <!-- <div class="ui-block">
                         <div class="ui-block-title">
                             <h4 class="title">간편 아이템 입력</h4>
                         </div>
@@ -15,14 +16,15 @@
                                 <div class="form-group with-button is-empty">
                                     <input class="form-control" type="text" placeholder="아이템을 간단하게 입력하세요" v-model="item.itemName">
                                     <button @click="addItem">
-                                        <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
+                                        <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg>
                                         <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
                                     </button>
                                 <span class="material-input"></span></div>
                             </form>
                             
                         </div>
-                    </div>
+                    </div>  -->
+                    <item-input v-on:getItemName="setItemName"/>
                     <div class="ui-block" style="margin-bottom:0px;">  
                         <!-- <div class="ui-block-title">
                             <h4 class="title">위시 아이템 리스트</h4>
@@ -150,7 +152,8 @@
 </template>
 <script>
     import Item from './Item.vue';
-    import ItemAdd from './ItemAdd.vue'
+    import ItemAdd from './ItemAdd.vue';
+    import ItemInput from './ItemInput.vue'
         // Vuex
 		// import { mapActions, mapState } from 'vuex';
 
@@ -171,7 +174,8 @@
 				});
 
 				//Vuex
-				// this.fetchItemList();
+                // this.fetchItemList();
+                console.log(ItemInput);
 			},
             data() {
                 return {
@@ -226,7 +230,8 @@
             },
             components: {
                 'item': Item,
-                'item-add': ItemAdd
+                'item-add': ItemAdd,
+                'item-input': ItemInput
 			},
 			computed:{
 				unPurchasedList(){
@@ -267,6 +272,10 @@
                     });
                     this.$router.push({path:'/item/list'});
                     // location.href=this.$url+'item/list';
+                },
+                setItemName(val){
+                    this.item.itemName = val;
+                    console.log(this.item.itemName);
                 }
 				// Vuex
 				// ...mapActions(['fetchItemList'])
