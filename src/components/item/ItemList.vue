@@ -12,9 +12,10 @@
                         <div class="ui-block-content">
                             <form class="w-search">
                                 <div class="form-group with-button is-empty">
-                                    <input class="form-control" type="text" placeholder="아이템을 간단하게 입력하세요">
-                                    <button>
-                                        <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg>
+                                    <input class="form-control" type="text" placeholder="아이템을 간단하게 입력하세요" v-model="item.itemName">
+                                    <button @click="addItem">
+                                        <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
+                                        <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
                                     </button>
                                 <span class="material-input"></span></div>
                             </form>
@@ -177,7 +178,15 @@ import Item from './Item.vue';
 							itemPrice: '1234원',
 							purchasedBy: ''
 						}
-					]
+                    ],
+                    item:{
+                        itemName: '',
+                        itemPrice: '',
+                        itemLink: '',
+                        itemRank: '',
+                        visibleTo: 0,
+                        itemMemo: ''
+                    }
 				}
             },
             components: {
@@ -203,7 +212,26 @@ import Item from './Item.vue';
 					console.log('purchase canceled.'+id);
 					const index = this.items.findIndex(item=> item._id === id);
 					this.items[index].purchasedBy = "";
-				},
+                },
+                moveToAdd(){
+                    this.$router.push({path:'/item/add'});
+                },
+                addItem(){
+                    console.log(this.$serverUrl+this.$route.path);
+                    this.$http.post(this.$serverUrl+this.$route.path, this.item)
+                    .then(res=>{
+                        if(res.data.code == 200){
+                            console.log('정상 : '+res.data.msg);
+                            this.$socket.emit('reqList');
+                        }else if(res.data.code == 500){
+                            console.log('서버오류 : '+res.data.msg);
+                        }
+                    }).catch(e=>{
+                        console.error(e);
+                    });
+                    this.$router.push({path:'/item/list'});
+                    // location.href=this.$url+'item/list';
+                }
 				// Vuex
 				// ...mapActions(['fetchItemList'])
 			},
@@ -230,5 +258,9 @@ import Item from './Item.vue';
         width: 100%;
         text-align: center;
         font-size: 1.1rem;
+    }
+    .form-group.with-button button{
+        width: 45px;
+        background: #ff5e3a;
     }
 </style>
