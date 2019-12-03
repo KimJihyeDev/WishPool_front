@@ -13,7 +13,6 @@
 			<div class="modal-body">
                 <label class="control-label">카테고리 선택</label>
 				<div class="form-group label-floating is-select">
-					
 					<div class="btn-group bootstrap-select form-control">
                         <select class="selectpicker form-control" tabindex="-98">
                             <option value="MA">카테고리 1</option>
@@ -24,10 +23,10 @@
 
                 <label class="control-label">아이템명</label>
 				<div class="form-group label-floating">
-					<input class="form-control" style="font-size:medium;" placeholder="" value="" type="text">
+					<input class="form-control" v-model="item.itemName" style="padding-top:1rem; padding-bottom:1rem;font-size:medium;" placeholder="" value="" type="text">
 				<span class="material-input"></span></div>
                 <label>가격</label>
-				<div class="form-group label-floating is-empty" style="display:flex;">
+				<div class="form-group label-floating is-empty" style="display:flex; align-items:center">
                     <div class="btn-group bootstrap-select form-control" style="height: 100%; width: 20%; margin-right:10px;">
                     <select class="selectpicker form-control"  style="width: 20%; height:100%;">
                         <option class="option-item" value="" selected>w</option>
@@ -35,14 +34,18 @@
                     </select>
                     </div>
 					<label id="price-label" class="control-label">숫자만 입력하세요</label>
-					<input style="display:inline; width:80%; font-size:medium; " class="form-control" placeholder="" value="" type="text">
+					<input v-model="item.itemPrice" style="display:inline; width:80%; font-size:medium;padding: 1.9rem 1.1rem 0.5rem; margin-top:-1px;" class="form-control" placeholder="" value="" type="text">
 				    <span class="material-input"></span>
                 </div>
+                <label class="control-label">링크</label>
+				<div class="form-group label-floating">
+					<input class="form-control" v-model="item.itemLink" style="padding-top:1rem; padding-bottom:1rem;font-size:medium;" placeholder="" value="" type="text">
+				<span class="material-input"></span></div>
                 <label class="control-label">공개범위</label>
                 <div class="form-group label-floating is-select">
 					
 					<div class="btn-group bootstrap-select form-control">
-                        <select class="selectpicker form-control">
+                        <select class="selectpicker form-control" v-model="item.visibleTo">
                             <option value="t">공개</option>
                             <option value="f">비공개</option>
                         </select>
@@ -50,10 +53,10 @@
 				<span class="material-input"></span></div>
                 <label class="control-label">위시메모</label>
 				<div class="form-group">
-					<textarea class="form-control" placeholder=""></textarea>
+					<textarea v-model="item.itemMemo" class="form-control" style="font-size:small" placeholder=""></textarea>
 				<span class="material-input"></span></div>
 
-				<button class="btn btn-breez btn-lg full-width">Create Event</button>
+				<button class="btn btn-breez btn-lg full-width" style="font-size:small" v-on:click="addItem">등록</button>
 
 			</div>
 		</div>
@@ -61,11 +64,36 @@
 <script>
 export default {
     name: 'ItemAdd',
-    data(){
-        return{
-
-        }
-    }
+	data(){
+		return {
+			item:{
+				itemName: '',
+				itemPrice: '',
+				itemLink: '',
+				itemRank: '',
+				visibleTo: 0,
+				itemMemo: ''
+			}
+		}
+	},
+	methods:{
+		addItem(){
+			console.log(this.$serverUrl+this.$route.path);
+			this.$http.post(this.$serverUrl+this.$route.path, this.item)
+			.then(res=>{
+				if(res.data.code == 200){
+					console.log('정상 : '+res.data.msg);
+					this.$socket.emit('reqList');
+				}else if(res.data.code == 500){
+					console.log('서버오류 : '+res.data.msg);
+				}
+			}).catch(e=>{
+				console.error(e);
+			});
+			this.$router.push({path:'/item/list'});
+			// location.href=this.$url+'item/list';
+		}
+	}
 }
 </script>
 <style scoped>
@@ -94,13 +122,15 @@ export default {
     right:5px;
 }
 .modal-content{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 .label-floating .form-control, .label-floating input, .label-floating select{
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    line-height: 1;
 }
 #input-num{
     padding:0.5rem;
+}
+.btn-group, .bootstrap-select, .form-control{
+    margin-top:4px
 }
 </style>
