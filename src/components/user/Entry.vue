@@ -101,7 +101,7 @@
 												<input name="datetimepicker" style="padding-top:30px" value="YYYY/MM/DD" :class="validateBirth" v-model="birthConfirm" >
                                                 <span v-if="hasTypedBirth && !isValidBirth" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        생년월일을 숫자만 입력해주세요.
+                                                        생년월일 8자리를 숫자만 입력해주세요.
                                                     </span>
                                                 </span>
 												<span class="input-group-addon">
