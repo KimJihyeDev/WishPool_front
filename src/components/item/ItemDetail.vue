@@ -115,8 +115,13 @@
                             
                             <!-- ... end Today Events -->
                             <div class="btn-list">
+                                <div class="list1">
                                     <button class="btn btn-breez btn-lg full-width" v-on:click="modify">수정</button>
                                     <button class="btn btn-primary btn-lg full-width" v-on:click="doDelete">삭제</button>
+                                </div>
+                            <div class="list2">
+                                <button class="btn btn-secondary btn-lg" v-on:click="returnList">목록으로</button>
+                            </div>
                                 </div>
                         </div>
                     </div>
@@ -791,7 +796,10 @@ export default {
 				console.error(e);
 			});
 			this.$router.push({path:'/item/list/'});
-		}
+        },
+        returnList(){
+            this.$router.push({path:'/item/list'});
+        }
     }
 }
 </script>
@@ -810,12 +818,23 @@ export default {
     display: flex;
     justify-content: space-between;
     margin: 1.5rem 4rem;
+    align-items: center;
+    flex-direction:column;
 }
 .btn-list button{
-    flex: 1;
     margin-left : 1rem;
     margin-right: 1rem;
     font-size: 0.9rem;
     padding:0.7rem 0.2rem;
+    flex-direction:row;
+}
+.btn-list .list1{
+    display:flex;
+    flex-direction: row;
+    width:100%;
+}
+.btn-list .list2 button{
+    margin-top: 2rem;
+    padding: 0.7rem 1.3rem;
 }
 </style>
