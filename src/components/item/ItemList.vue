@@ -1,4 +1,5 @@
 <template>
+<div class="">
     <div class="page-has-left-panels page-has-right-panels" style="cursor: url(&quot;undefined&quot;), default;">
 
 
@@ -7,7 +8,7 @@
                 <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
                     <div class="ui-block">
                         <div class="ui-block-title">
-                            <h6 class="title">간편 아이템 입력</h6>
+                            <h4 class="title">간편 아이템 입력</h4>
                         </div>
                         <div class="ui-block-content">
                             <form class="w-search">
@@ -19,10 +20,13 @@
                                     </button>
                                 <span class="material-input"></span></div>
                             </form>
+                            
                         </div>
                     </div>
-                    <div class="ui-block">  
-                        
+                    <div class="ui-block" style="margin-bottom:0px;">  
+                        <!-- <div class="ui-block-title">
+                            <h4 class="title">위시 아이템 리스트</h4>
+                        </div> -->
                         <div class="top-header top-header-favorit">
 					
                             <div class="profile-section with-social-menu-tabs">
@@ -45,6 +49,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
 				        </div>
                        
                     </div>
@@ -53,15 +58,29 @@
             </div>
         </div>
         <!-- Tab panes -->
+        
         <div class="tab-content">
             <!-- Wishes(미완료 리스트) -->
+            
             <div class="tab-pane active" id="home" role="tabpanel">
                 <div class="container">
                     <div class="ui-block">
                         <div class="ui-block-title">
-                            <h6 class="title">아이템 리스트</h6>
+                            
+                            <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
+                                <!-- <a href="#" class="btn btn-control bg-breez" data-toggle="modal" data-target="#create-event">
+										<div class="ripple-container"></div></a> -->
+				                <!-- <router-link to="/item/add" ><a href="javascript:void(0)" class="btn btn-primary btn-lg full-width" data-toggle="modal" data-target="#create-event"> 상세 아이템 추가</a></router-link> -->
+                                <a href="#" class="btn btn-primary btn-lg full-width" data-toggle="modal" data-target="#create-event">상세 아이템 추가</a>
+                                <!-- <div class="control-block-button"> -->
+									<!-- <a href="#" class="btn btn-control bg-breez" data-toggle="modal" data-target="#create-event">
+										<svg class="olymp-plus-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
+									<div class="ripple-container"></div></a> -->
+								<!-- </div> -->
+                                <!-- <div class="modal-backdrop fade"></div> -->
+			                </div>
                         </div>
-
+                        
                         <!-- 위시아이템 -->
                         
                         <ul class="widget w-friend-pages-added notification-list friend-requests">
@@ -85,8 +104,13 @@
                 <div class="container">
                     <div class="ui-block">
                         <div class="ui-block-title">
-                            <h6 class="title">완료 아이템 리스트</h6>
+                            <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
+				                <router-link to="/item/add" ><a href="javascript:void(0)" class="btn btn-primary btn-lg full-width"> 상세 아이템 추가</a></router-link>
+			                </div>
                         </div>
+                        <!-- <div class="ui-block-title">
+                            <h6 class="title">완료 아이템 리스트</h6>
+                        </div> -->
                 
                         <!-- 위시아이템 -->
                             
@@ -112,11 +136,22 @@
             
         </div>
 
-    </div>    
+    </div>
+            <!-- Window-popup Create Event -->
+
+<div class="modal fade" id="create-event" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog window-popup create-event" role="document">
+        <item-add />
+	</div>
+</div>
+
+<!-- ... end Window-popup Create Event -->
+    </div>
 </template>
 <script>
-import Item from './Item.vue';
-		// Vuex
+    import Item from './Item.vue';
+    import ItemAdd from './ItemAdd.vue'
+        // Vuex
 		// import { mapActions, mapState } from 'vuex';
 
         export default {
@@ -129,11 +164,11 @@ import Item from './Item.vue';
 				// })
 
 				/*웹소켓으로 데이터 가져오기*/
-				// const self = this;
-				// this.$socket.emit('reqList');
-				// this.$socket.on('resList', function(data){
-				// 	self.items = data;
-				// });
+				const self = this;
+				this.$socket.emit('reqList');
+				this.$socket.on('resList', function(data){
+					self.items = data;
+				});
 
 				//Vuex
 				// this.fetchItemList();
@@ -142,42 +177,42 @@ import Item from './Item.vue';
                 return {
 					//Vuex로 할경우 items는 주석처리해야함
 					items: [
-						{	
-							_id: 0,
-							itemName: '고양이 마우스 장난감',
-							itemPrice: '10000원',
-							purchasedBy: 'me'
-						},
-						{	
-							_id: 1,
-							itemName: 'vue.js 책',
-							itemPrice: '230000원',
-							purchasedBy: 'you'
-						},
-						{	
-							_id: 2,
-							itemName: 'starbuck 기프티콘',
-							itemPrice: '1234원',
-							purchasedBy: 'he'
-						},
-												{	
-							_id: 3,
-							itemName: '텀블러',
-							itemPrice: '10000원',
-							purchasedBy: ''
-						},
-						{	
-							_id: 4,
-							itemName: '정수기',
-							itemPrice: '230000원',
-							purchasedBy: ''
-						},
-						{	
-							_id: 5,
-							itemName: '루이비통',
-							itemPrice: '1234원',
-							purchasedBy: ''
-						}
+						// {	
+						// 	_id: 0,
+						// 	itemName: '고양이 마우스 장난감',
+						// 	itemPrice: '10000원',
+						// 	purchasedBy: 'me'
+						// },
+						// {	
+						// 	_id: 1,
+						// 	itemName: 'vue.js 책',
+						// 	itemPrice: '230000원',
+						// 	purchasedBy: 'you'
+						// },
+						// {	
+						// 	_id: 2,
+						// 	itemName: 'starbuck 기프티콘',
+						// 	itemPrice: '1234원',
+						// 	purchasedBy: 'he'
+						// },
+						// 						{	
+						// 	_id: 3,
+						// 	itemName: '텀블러',
+						// 	itemPrice: '10000원',
+						// 	purchasedBy: ''
+						// },
+						// {	
+						// 	_id: 4,
+						// 	itemName: '정수기',
+						// 	itemPrice: '230000원',
+						// 	purchasedBy: ''
+						// },
+						// {	
+						// 	_id: 5,
+						// 	itemName: '루이비통',
+						// 	itemPrice: '1234원',
+						// 	purchasedBy: ''
+						// }
                     ],
                     item:{
                         itemName: '',
@@ -190,7 +225,8 @@ import Item from './Item.vue';
 				}
             },
             components: {
-                'item': Item
+                'item': Item,
+                'item-add': ItemAdd
 			},
 			computed:{
 				unPurchasedList(){
@@ -217,8 +253,8 @@ import Item from './Item.vue';
                     this.$router.push({path:'/item/add'});
                 },
                 addItem(){
-                    console.log(this.$serverUrl+this.$route.path);
-                    this.$http.post(this.$serverUrl+this.$route.path, this.item)
+                    // console.log(this.$serverUrl+'/item/add');
+                    this.$http.post(this.$serverUrl+'/item/add', this.item)
                     .then(res=>{
                         if(res.data.code == 200){
                             console.log('정상 : '+res.data.msg);
@@ -262,5 +298,8 @@ import Item from './Item.vue';
     .form-group.with-button button{
         width: 45px;
         background: #ff5e3a;
+    }
+    .ui-block-title .btn {
+        margin-bottom: 10px;
     }
 </style>

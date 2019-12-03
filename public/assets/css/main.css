@@ -6060,7 +6060,9 @@ figure {
     .create-event .bootstrap-select.style-2 > .dropdown-toggle:after {
       display: none; }
   .create-event .form-group.label-floating .bootstrap-select.btn-group .dropdown-toggle .filter-option {
-    color: #08ddc1; }
+    color: #08ddc1;
+    font-size: 1.05rem;
+   }
   .create-event .bootstrap-select.style-2 .dropdown-menu {
     top: auto;
     bottom: -100%;
@@ -12095,7 +12097,7 @@ select.selectpicker {
 
 .dropdown-toggle::after {
   border-top-color: #888da8;
-  right: 20px;
+  right: 10px;
   top: -2px;
   position: relative; }
 
