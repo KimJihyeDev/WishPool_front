@@ -284,6 +284,8 @@ export default {
 				password:'',
 				phone:'',
 				nickName:'',
+				// 달력 생성 후에 수정하기
+				// 더미 데이터
 				birth:'',
 				entryType:'w',
 			},
@@ -406,37 +408,106 @@ export default {
 				}
 			}
 		},
-	
-		
+		'user.password':{
+			handler:function(){
+				// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
+				const regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$/;
+				const validate = regPwd.test(this.user.password.replace(/(\s*)/g, ""));
+				if(this.user.password !== ''){
+					if(validate){
+						this.hasTypedPassword = true
+						this.isValidPassword = true
+					}else{
+						this.hasTypedPassword = true;
+						this.isValidPassword = false;
+					}
+				}else{
+					return this.hasTypedPassword = false;
+				}
+			}
+		},
+		'passwordConfirm':{
+			handler:function(){
+				//유효성검사 : user.password와 일치 여부
+				var validate = false;
+				if(this.user.password === this.passwordConfirm){
+					validate = true;
+				}else{
+					validate = false;
+				}
+				if(this.passwordConfirm !== ''){
+					if(validate){
+						this.hasTypedPasswordConfirm = true
+						this.isValidPasswordConfirm = true
+					}else{
+						this.hasTypedPasswordConfirm = true;
+						this.isValidPasswordConfirm = false;
+					}
+				}else{
+					return this.hasTypedPasswordConfirm = false;
+				}
+			}
+		},
+		'user.birth':{
+			handler:function(){
+				//  
+				const year = this.user.birth.substr(0,4);
+				const month = this.user.birth.substr(4,2);
+				const day = this.user.birth.substr(6,2);
+				const today = new Date();
+				const thisYear = today.getFullYear();
+
+				if(this.user.birth !== '' ){
+				// 생년월일 입력값의 길이가 8이 아닐 경우 false 반환
+					if (this.user.birth.length == 8) {
+						//
+						if (1900 > year || thisYear < year){
+							this.hasTypedBirth = true;
+							this.isValidBirth = false;
+						}else if (month < 1 || month > 12) {
+							this.hasTypedBirth = true;
+							this.isValidBirth = false;
+						}else if (day < 1 || day > 31) {
+							this.hasTypedBirth = true;
+							this.isValidBirth = false;
+						}else if ((month==4 || month==6 || month==9 || month==11) && day==31) {
+							this.hasTypedBirth = true;
+							this.isValidBirth = false;
+					
+						}else if (month == 2) {
+					
+							const isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+					
+							if (day>29 || (day==29 && !isleap)) {
+								
+								this.hasTypedBirth = true;
+								this.isValidBirth = false;
+							}else{
+								this.hasTypedBirth = true;
+								this.isValidBirth = true;
+							}//end of if (day>29 || (day==29 && !isleap))
+					
+						}else{
+							this.hasTypedBirth = true;
+							this.isValidBirth = true;
+						} //
+				
+					}else{
+						this.hasTypedBirth = true;
+						this.isValidBirth = false;
+					}
+
+
+
+				}else{
+						this.hasTypedBirth = false;
+				}	
+			}
+		}
 
 	},
    
     computed:{
-        // isValidUserId(){
-        //     //userId 유효성검증
-        //     return false;
-        // },
-        // isValidUserName(){
-        //     return true;
-        // },
-        // isValidEmail(){
-        //     return true;
-        // },
-        // isValidPassword(){
-        //     return true;
-        // },
-        // isValidPasswordConfirm(){
-        //     return true;
-        // },
-        // isValidPhone(){
-        //     return true;
-        // },
-        // isValidNickName(){
-        //     return true;
-        // },
-        // isValidBirth(){
-        //     return true;
-        // },
         validateUser(){
             return {
                 'was-validated' : this.user.userId && this.isValidUserId,
@@ -463,8 +534,8 @@ export default {
         },
         validatePasswordConfirm(){
             return {
-                'was-validated' : this.user.passwordConfirm && this.isValidPasswordConfirm,
-                'not-validated' : this.user.passwordConfirm && !this.isValidPasswordConfirm
+                'was-validated' : this.passwordConfirm && this.isValidPasswordConfirm,
+                'not-validated' : this.passwordConfirm && !this.isValidPasswordConfirm
             }
         },
         validatePhone(){

@@ -24,7 +24,7 @@
 												<input class="form-control" placeholder="" type="text" :class="validateUser" v-model="user.userId">
                                                 <span v-if="hasTypedUserId && !isValidUserId" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        아이디는 3자~20자 이내의 영문,숫자만 가능합니다.
+                                                        Phone Number is required
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -35,7 +35,7 @@
 												<input class="form-control" placeholder="" type="password" :class="validatePassword" v-model="user.password">
                                                 <span v-if="hasTypedPassword && !isValidPassword" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        비밀번호는 8자~50자, 특수문자와 숫자를 반드시 포함시켜야 합니다.
+                                                        Phone Number is required
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -46,7 +46,7 @@
 												<input class="form-control" placeholder="" type="password" :class="validatePasswordConfirm" v-model="user.passwordConfirm">
                                                 <span v-if="hasTypedPasswordConfirm && !isValidPasswordConfirm" class="invalid-feedback">
                                                     <span class="error-box">
-                                                    	비밀번호와 같게 입력해주세요.
+                                                        Phone Number is required
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -57,7 +57,7 @@
 												<input class="form-control" placeholder="" type="text" :class="validateUserName" v-model="user.userName">
                                                 <span v-if="hasTypedUserName && !isValidUserName" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        이름은 20자 이내의 한글, 영문만 가능합니다.
+                                                        Phone Number is required
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -68,7 +68,7 @@
 												<input class="form-control" placeholder="" type="text" :class="validateNickName" v-model="user.nickName">
                                                 <span v-if="hasTypedNickName && !isValidNickName" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        닉네임은 1자~20자 이내의 한글, 영문, 숫자만 가능합니다.
+                                                        Phone Number is required
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -79,7 +79,7 @@
 												<input class="form-control" placeholder="" type="text" :class="validatePhone" v-model="user.phone">
                                                 <span v-if="hasTypedPhone && !isValidPhone" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        전화번호 형식에 맞게 입력해주세요.
+                                                        Phone Number is required
                                                     </span>
                                                 </span>
 											<span class="material-input"></span></div>
@@ -90,7 +90,7 @@
 												<input class="form-control" placeholder="" type="text" :class="validateEmail" v-model="user.email">
                                                 <span v-if="hasTypedEmail && !isValidEmail" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        이메일 형식에 맞게 입력해주세요.
+                                                        Phone Number is required
                                                     </span>
                                                 </span>
 											<span class="material-input"></span>
@@ -100,7 +100,7 @@
 												<input name="datetimepicker" style="padding-top:30px" value="YYYY/MM/DD" :class="validateBirth" v-model="user.birth">
                                                 <span v-if="hasTypedBirth && !isValidBirth" class="invalid-feedback">
                                                     <span class="error-box">
-                                                        생년월일 형식에 맞게 입력해주세요.
+                                                        Phone Number is required
                                                     </span>
                                                 </span>
 												<span class="input-group-addon">
@@ -132,48 +132,6 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- Window-popup Restore Password -->
-
-		<div class="modal fade" id="restore-password" tabindex="-1" role="dialog" aria-labelledby="restore-password" aria-hidden="true">
-			<div class="modal-dialog window-popup restore-password-popup" role="document">
-				<div class="modal-content">
-					<a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
-						<svg class="olymp-close-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
-					</a>
-
-					<div class="modal-header">
-						<h6 class="title">Restore your Password</h6>
-					</div>
-
-					<div class="modal-body">
-						<form method="get">
-							<p>Enter your email and click the send code button. You’ll receive a code in your email. Please use that
-								code below to change the old password for a new one.
-							</p>
-							<div class="form-group label-floating">
-								<label class="control-label">Your Email</label>
-								<input class="form-control" placeholder="" type="email" value="james-spiegel@yourmail.com">
-							<span class="material-input"></span></div>
-							<button class="btn btn-purple btn-lg full-width">Send me the Code</button>
-							<div class="form-group label-floating is-empty">
-								<label class="control-label">Enter the Code</label>
-								<input class="form-control" placeholder="" type="text" value="">
-							<span class="material-input"></span></div>
-							<div class="form-group label-floating">
-								<label class="control-label">Your New Password</label>
-								<input class="form-control" placeholder="" type="password" value="olympus">
-							<span class="material-input"></span></div>
-							<button class="btn btn-primary btn-lg full-width">Change your Password!</button>
-						</form>
-
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- ... end Window-popup Restore Password -->
-
 
 		<!-- Window Popup Main Search -->
 
@@ -273,6 +231,7 @@
 	</div>
 </template>
 <script>
+
 export default {
 	name: 'Register_ResetPassword',
     data(){
@@ -287,8 +246,7 @@ export default {
 				nickName:'',
 				birth:'',
 				entryType:'w',
-			},
-			// 입력값 널값 체크
+            },
             hasTypedUserId:false,
             hasTypedUserName:false,
             hasTypedEmail:false,
@@ -296,231 +254,62 @@ export default {
             hasTypedPasswordConfirm:false,
             hasTypedPhone:false,
             hasTypedNickName:false,
-			hasTypedBirth:false,
-			// 입력값 유효성 체크
-			isValidUserId:false,
-			isValidUserName:false,
-			isValidEmail:false,
-			isValidtPassword:false,
-			isValidPasswordConfirm:false,
-			isValidPhone:false,
-			isValidNickName:false,
-			isValidBirth:false,
+            hasTypedBirth:false,
+
 		}
-	},
-	watch:{
-		
-		'user.userId':{
-			handler:function(){
-				// 3~20자까지의 영문,숫자만 입력 가능
-				const regId =  /^[0-9A-za-z]{3,20}$/g;
-				const validate = regId.test(this.user.userId.replace(/(\s*)/g, ""));
-				// 아이디를 입력한 상태에서만 공백체크
-				if(this.user.userId !== ''){
-					if(validate){
-						return (this.hasTypedUserId = true) && (this.isValidUserId = true) ;
-					}else{
-						return (this.hasTypedUserId = true) && (this.isValidUserId = false);
-					}
-				}else{
-						return this.hasTypedUserId = false;
-				}
-			}
-		},//
-		'user.userName':{
-			handler:function(){
-				// 2~20자까지의 한글, 영문 이름만 입력 가능
-				const regName = /^[가-힣a-zA-Z]{2,20}$/; 
-				const validate = regName.test(this.user.userName.replace(/(\s*)/g, ""));
-				// 이름을 입력한 상태에서만 유효성 체크
-				if(this.user.userName !== ''){
-					if(validate){
-						return this.isValidUserName = true 
-					}else{
-						return this.isValidUserName = false 
-					}
-				} else {
-					return this.hasTypedUserName = false;
-				}
-			}
-		},
-		deep:true,
-		immediate:true,
-		
-		// 'user.email':{
-		// 	handler:function(){
-		// 		// 이메일 유효성 체크
-		// 		const regEmail =  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-		// 		this.validated.uEmail = regEmail.test(this.user.email.replace(/(\s*)/g, ""));
-
-		// 		if(this.user.email !== ''){
-		// 			if(this.validated.uEmail){
-		// 				this.$refs.isEmailOk.style.display = "none";
-		// 			} else {
-		// 				this.$refs.isEmailOk.style.display = "block";
-		// 				return false;
-		// 			}
-		// 		} else {
-		// 			this.$refs.isEmailOk.style.display = "none";
-		// 		}
-		// 		// 이메일 널값 확인 메시지
-		// 		if(this.vShow.isEmailNull){
-		// 			// 한 글자라도 들어가면 메시지 안 보이게 처리
-		// 			if(this.user.email.length !== 0){
-		// 				this.vShow.isEmailNull = false;
-		// 			}
-		// 		}
-		// 	}
-		// },
-		// 'user.phone':{
-		// 	handler:function(){
-		// 		// 핸드폰 전화번호만 입력 받는다.
-		// 		const regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
-		// 		this.validated.uPhone = regPhone.test(this.user.phone.replace(/(\s*)/g, ""));
-
-		// 		// 010,016,018,019 로 시작하는 핸드폰 번호만 유효
-		// 		if(this.user.phone !== ''){
-		// 			if(this.validated.uPhone){
-		// 				this.$refs.isPhoneOk.style.display = "none";
-		// 			} else {
-		// 				this.$refs.isPhoneOk.style.display = "block";
-		// 				return false;
-		// 			}
-		// 		} else {
-		// 			this.$refs.isPhoneOk.style.display = "none";
-		// 		}
-		// 		// 전화번호 널값 확인 메시지
-		// 		if(this.vShow.isPhoneNull){
-		// 			if(this.user.phone !==''){
-		// 				this.vShow.isPhoneNull = false;
-		// 			}
-		// 		}
-		// 	}
-		// },
-		// deep:true,
-		// immediate:true,
-		// 'user.nickName':{
-		// 	handler:function(newVal,oldVal){
-		// 		// 1자 ~ 20 자인 한글, 영문, 숫자만 유효
-		// 		const regNickName = /^([가-힣a-zA-Z0-9]{1,20})$/;
-		// 		this.validated.uNickName = regNickName.test(this.user.nickName.replace(/(\s*)/g, ""));
-
-		// 		if(this.user.nickName !== ''){
-		// 			if(this.validated.uNickName){
-		// 				this.$refs.isNickNameOk.style.display = "none";
-		// 			} else {
-		// 				this.$refs.isNickNameOk.style.display = "block";
-		// 				return false;
-		// 			}
-		// 		} else {
-		// 				this.$refs.isNickNameOk.style.display = "none";
-		// 		}
-		// 		// 닉네임 널값 확인 메시지
-		// 		if(this.vShow.isNickNameNull){
-		// 			if(this.user.nickName !==''){
-		// 				this.vShow.isNickNameNull= false;
-		// 			}
-		// 		}
-				
-		// 	}
-		// },
-		// deep:true,
-		// immediate:true,
-		
-		// // 비밀번호 재입력의 변화를 감시
-		// 'confirm':{
-		// 	handler:function(newVal,oldVal){
-	
-		// 		if((this.user.password !== '') && (this.confirm !== '' )){
-		// 			if(this.user.password !== this.confirm){
-		// 				this.$refs.isConfirmOk.style.display = "block";
-		// 				return false;
-		// 			} else {
-		// 				this.$refs.isConfirmOk.style.display = "none";
-		// 			}
-		// 		} else {
-		// 			this.$refs.isConfirmOk.style.display = "none";
-		// 		}
-		// 		// 비밀번호 재확인 널값 확인 메시지
-		// 		if(this.vShow.isConfirmNull){
-		// 			if(this.confirm !==''){
-		// 				this.vShow.isConfirmNull= false;
-		// 			}
-		// 		}
-				
-		// 	}
-		// },
-		// deep:true,
-       	// immediate:true,
-		// // 비밀번호를 입력값을 수정하였을 경우 감시
-		// 'user.password':{
-		// 	handler:function(newVal,oldVal){
-		// 		// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
-		// 		const regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$/;
-		// 		this.validated.uPwd = regPwd.test(this.user.password.replace(/(\s*)/g, ""));
-				
-		// 		// 비밀번호를 입력한 상태에서만 유효성 체크
-		// 		if(this.user.password !== ''){
-		// 			if(this.validated.uPwd){
-		// 				this.$refs.isPwdOk.style.display = "none";
-		// 			} else {
-		// 				this.$refs.isPwdOk.style.display = "block";
-		// 				return false;
-		// 			}
-		// 		} else {
-		// 			this.$refs.isPwdOk.style.display = "none";
-		// 		}
-
-		// 		if((this.user.password !== '') && (this.confirm !== '' )){
-		// 			if(this.user.password !== this.confirm){
-		// 				this.$refs.isConfirmOk.style.display = "block";
-		// 				return false;
-		// 			} else {
-		// 				this.$refs.isConfirmOk.style.display = "none";
-		// 			}
-		// 		} else {
-		// 			this.$refs.isConfirmOk.style.display = "none";
-		// 		}
-		// 		// 비밀번호 널값 확인 메시지
-		// 		if(this.vShow.isPwdNull){
-		// 			if(this.user.password !==''){
-		// 				this.vShow.isPwdNull= false;
-		// 			}
-		// 		}
-				
-		// 	}
-		// },
-		// deep:true,
-       	// immediate:true,
-
-	},
-   
+    },
+    watch:{
+        'user.userId':function(){
+            return this.hasTypedUserId = true;
+        },
+        'user.userName'(){
+            return this.hasTypedUserName = true;
+        },
+        'user.email'(){
+            return this.hasTypedEmail = true;
+        },
+        'user.password'(){
+            return this.hasTypedPassword = true;
+        },
+        'user.passwordConfirm'(){
+            return this.hasTypedPasswordConfirm = true;
+        },
+        'user.phone'(){
+            return this.hasTypedPhone = true;
+        },
+        'user.nickName'(){
+            return this.hasTypedNickName = true;
+        },
+        'user.birth'(){
+            return this.hasTypedBirth = true;
+        },
+    },
     computed:{
-        // isValidUserId(){
-        //     //userId 유효성검증
-        //     return false;
-        // },
-        // isValidUserName(){
-        //     return true;
-        // },
-        // isValidEmail(){
-        //     return true;
-        // },
-        // isValidPassword(){
-        //     return true;
-        // },
-        // isValidPasswordConfirm(){
-        //     return true;
-        // },
-        // isValidPhone(){
-        //     return true;
-        // },
-        // isValidNickName(){
-        //     return true;
-        // },
-        // isValidBirth(){
-        //     return true;
-        // },
+        isValidUserId(){
+            //userId 유효성검증
+            return false;
+        },
+        isValidUserName(){
+            return true;
+        },
+        isValidEmail(){
+            return true;
+        },
+        isValidPassword(){
+            return true;
+        },
+        isValidPasswordConfirm(){
+            return true;
+        },
+        isValidPhone(){
+            return true;
+        },
+        isValidNickName(){
+            return true;
+        },
+        isValidBirth(){
+            return true;
+        },
         validateUser(){
             return {
                 'was-validated' : this.user.userId && this.isValidUserId,

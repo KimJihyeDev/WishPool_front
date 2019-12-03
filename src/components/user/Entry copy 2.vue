@@ -43,7 +43,7 @@
 										<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group label-floating is-empty" >
 												<label class="control-label">비밀번호 확인</label>
-												<input class="form-control" placeholder="" type="password" :class="validatePasswordConfirm" v-model="user.passwordConfirm">
+												<input class="form-control" placeholder="" type="password" :class="validatePasswordConfirm" v-model="passwordConfirm">
                                                 <span v-if="hasTypedPasswordConfirm && !isValidPasswordConfirm" class="invalid-feedback">
                                                     <span class="error-box">
                                                     	비밀번호와 같게 입력해주세요.
@@ -282,12 +282,15 @@ export default {
 				userName:'',
 				email:'',
 				password:'',
-				passwordConfirm:'',
 				phone:'',
 				nickName:'',
-				birth:'',
+				// 달력 생성 후에 수정하기
+				// 더미 데이터
+				birth:'2019-11-11',
 				entryType:'w',
 			},
+			// 비번 재입력
+			passwordConfirm:'',
 			// 입력값 널값 체크
             hasTypedUserId:false,
             hasTypedUserName:false,
@@ -309,21 +312,22 @@ export default {
 		}
 	},
 	watch:{
-		
 		'user.userId':{
 			handler:function(){
 				// 3~20자까지의 영문,숫자만 입력 가능
-				const regId =  /^[0-9A-za-z]{3,20}/g;
+				const regId =  /^[0-9A-za-z]{3,20}$/g;
 				const validate = regId.test(this.user.userId.replace(/(\s*)/g, ""));
 				// 아이디를 입력한 상태에서만 공백체크
 				if(this.user.userId !== ''){
 					if(validate){
-						return (this.hasTypedUserId = true) && (this.isValidUserId = true) ;
+						this.hasTypedUserId = true
+						this.isValidUserId = true
 					}else{
-						return (this.hasTypedUserId = true) && (this.isValidUserId = false);
+						this.hasTypedUserId = true;
+						this.isValidUserId = false;
 					}
 				}else{
-						return this.hasTypedUserId = false;
+					return this.hasTypedUserId = false;
 				}
 			}
 		},//
@@ -335,192 +339,120 @@ export default {
 				// 이름을 입력한 상태에서만 유효성 체크
 				if(this.user.userName !== ''){
 					if(validate){
-						return this.isValidUserName = true 
+						this.hasTypedUserName = true;
+						this.isValidUserName = true;
 					}else{
-						return this.isValidUserName = false 
+						this.hasTypedUserName = true;
+						this.isValidUserName = false;
 					}
 				} else {
 					return this.hasTypedUserName = false;
 				}
 			}
 		},
-		deep:true,
-		immediate:true,
+		'user.email':{
+			handler:function(){
+				// 이메일 유효성 체크
+				const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+				const validate = regEmail.test(this.user.email.replace(/(\s*)/g, ""));
+
+				if(this.user.email !== ''){
+					if(validate){
+						this.hasTypedEmail = true;
+						this.isValidEmail = true;
+					} else {
+						this.hasTypedEmail = true;
+						this.isValidEmail = false;
+					}
+				} else {
+					return this.hasTypedEmail = false;
+				}
+			}
+		},
+		'user.phone':{
+			handler:function(){
+				// 핸드폰 전화번호만 입력 받는다.
+				const regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+				const validate = regPhone.test(this.user.phone.replace(/(\s*)/g, ""));
+
+				// 010,016,018,019 로 시작하는 핸드폰 번호만 유효
+				if(this.user.phone !== ''){
+					if(validate){
+						this.hasTypedPhone = true;
+						this.isValidPhone = true;
+					} else {
+						this.hasTypedPhone = true;
+						this.isValidPhone = false;
+					}
+				} else {
+					this.hasTypedPhone = false;
+				}
+			}
+		},
+		'user.nickName':{
+			handler:function(){
+				// 1자 ~ 20 자인 한글, 영문, 숫자만 유효
+				const regNickName = /^([가-힣a-zA-Z0-9]{1,20})$/;
+				const validate = regNickName.test(this.user.nickName.replace(/(\s*)/g, ""));
+
+				if(this.user.nickName !== ''){
+					if(validate){
+						this.hasTypedNickName = true;
+						this.isValidNickName = true;
+					} else {
+						this.hasTypedNickName = true;
+						this.isValidNickName = false;
+					}
+				} else {
+					this.hasTypedNickName = false;
+				}
+			}
+		},
+		'user.password':{
+			handler:function(){
+				// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
+				const regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$/;
+				const validate = regPwd.test(this.user.password.replace(/(\s*)/g, ""));
+				if(this.user.password !== ''){
+					if(validate){
+						this.hasTypedPassword = true
+						this.isValidPassword = true
+					}else{
+						this.hasTypedPassword = true;
+						this.isValidPassword = false;
+					}
+				}else{
+					return this.hasTypedPassword = false;
+				}
+			}
+		},
+		'passwordConfirm':{
+			handler:function(){
+				//유효성검사 : user.password와 일치 여부
+				var validate = false;
+				if(this.user.password === this.passwordConfirm){
+					validate = true;
+				}else{
+					validate = false;
+				}
+				if(this.passwordConfirm !== ''){
+					if(validate){
+						this.hasTypedPasswordConfirm = true
+						this.isValidPasswordConfirm = true
+					}else{
+						this.hasTypedPasswordConfirm = true;
+						this.isValidPasswordConfirm = false;
+					}
+				}else{
+					return this.hasTypedPasswordConfirm = false;
+				}
+			}
+		},
 		
-		// 'user.email':{
-		// 	handler:function(){
-		// 		// 이메일 유효성 체크
-		// 		const regEmail =  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-		// 		this.validated.uEmail = regEmail.test(this.user.email.replace(/(\s*)/g, ""));
-
-		// 		if(this.user.email !== ''){
-		// 			if(this.validated.uEmail){
-		// 				this.$refs.isEmailOk.style.display = "none";
-		// 			} else {
-		// 				this.$refs.isEmailOk.style.display = "block";
-		// 				return false;
-		// 			}
-		// 		} else {
-		// 			this.$refs.isEmailOk.style.display = "none";
-		// 		}
-		// 		// 이메일 널값 확인 메시지
-		// 		if(this.vShow.isEmailNull){
-		// 			// 한 글자라도 들어가면 메시지 안 보이게 처리
-		// 			if(this.user.email.length !== 0){
-		// 				this.vShow.isEmailNull = false;
-		// 			}
-		// 		}
-		// 	}
-		// },
-		// 'user.phone':{
-		// 	handler:function(){
-		// 		// 핸드폰 전화번호만 입력 받는다.
-		// 		const regPhone = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
-		// 		this.validated.uPhone = regPhone.test(this.user.phone.replace(/(\s*)/g, ""));
-
-		// 		// 010,016,018,019 로 시작하는 핸드폰 번호만 유효
-		// 		if(this.user.phone !== ''){
-		// 			if(this.validated.uPhone){
-		// 				this.$refs.isPhoneOk.style.display = "none";
-		// 			} else {
-		// 				this.$refs.isPhoneOk.style.display = "block";
-		// 				return false;
-		// 			}
-		// 		} else {
-		// 			this.$refs.isPhoneOk.style.display = "none";
-		// 		}
-		// 		// 전화번호 널값 확인 메시지
-		// 		if(this.vShow.isPhoneNull){
-		// 			if(this.user.phone !==''){
-		// 				this.vShow.isPhoneNull = false;
-		// 			}
-		// 		}
-		// 	}
-		// },
-		// deep:true,
-		// immediate:true,
-		// 'user.nickName':{
-		// 	handler:function(newVal,oldVal){
-		// 		// 1자 ~ 20 자인 한글, 영문, 숫자만 유효
-		// 		const regNickName = /^([가-힣a-zA-Z0-9]{1,20})$/;
-		// 		this.validated.uNickName = regNickName.test(this.user.nickName.replace(/(\s*)/g, ""));
-
-		// 		if(this.user.nickName !== ''){
-		// 			if(this.validated.uNickName){
-		// 				this.$refs.isNickNameOk.style.display = "none";
-		// 			} else {
-		// 				this.$refs.isNickNameOk.style.display = "block";
-		// 				return false;
-		// 			}
-		// 		} else {
-		// 				this.$refs.isNickNameOk.style.display = "none";
-		// 		}
-		// 		// 닉네임 널값 확인 메시지
-		// 		if(this.vShow.isNickNameNull){
-		// 			if(this.user.nickName !==''){
-		// 				this.vShow.isNickNameNull= false;
-		// 			}
-		// 		}
-				
-		// 	}
-		// },
-		// deep:true,
-		// immediate:true,
-		
-		// // 비밀번호 재입력의 변화를 감시
-		// 'confirm':{
-		// 	handler:function(newVal,oldVal){
-	
-		// 		if((this.user.password !== '') && (this.confirm !== '' )){
-		// 			if(this.user.password !== this.confirm){
-		// 				this.$refs.isConfirmOk.style.display = "block";
-		// 				return false;
-		// 			} else {
-		// 				this.$refs.isConfirmOk.style.display = "none";
-		// 			}
-		// 		} else {
-		// 			this.$refs.isConfirmOk.style.display = "none";
-		// 		}
-		// 		// 비밀번호 재확인 널값 확인 메시지
-		// 		if(this.vShow.isConfirmNull){
-		// 			if(this.confirm !==''){
-		// 				this.vShow.isConfirmNull= false;
-		// 			}
-		// 		}
-				
-		// 	}
-		// },
-		// deep:true,
-       	// immediate:true,
-		// // 비밀번호를 입력값을 수정하였을 경우 감시
-		// 'user.password':{
-		// 	handler:function(newVal,oldVal){
-		// 		// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
-		// 		const regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$/;
-		// 		this.validated.uPwd = regPwd.test(this.user.password.replace(/(\s*)/g, ""));
-				
-		// 		// 비밀번호를 입력한 상태에서만 유효성 체크
-		// 		if(this.user.password !== ''){
-		// 			if(this.validated.uPwd){
-		// 				this.$refs.isPwdOk.style.display = "none";
-		// 			} else {
-		// 				this.$refs.isPwdOk.style.display = "block";
-		// 				return false;
-		// 			}
-		// 		} else {
-		// 			this.$refs.isPwdOk.style.display = "none";
-		// 		}
-
-		// 		if((this.user.password !== '') && (this.confirm !== '' )){
-		// 			if(this.user.password !== this.confirm){
-		// 				this.$refs.isConfirmOk.style.display = "block";
-		// 				return false;
-		// 			} else {
-		// 				this.$refs.isConfirmOk.style.display = "none";
-		// 			}
-		// 		} else {
-		// 			this.$refs.isConfirmOk.style.display = "none";
-		// 		}
-		// 		// 비밀번호 널값 확인 메시지
-		// 		if(this.vShow.isPwdNull){
-		// 			if(this.user.password !==''){
-		// 				this.vShow.isPwdNull= false;
-		// 			}
-		// 		}
-				
-		// 	}
-		// },
-		// deep:true,
-       	// immediate:true,
 
 	},
    
     computed:{
-        // isValidUserId(){
-        //     //userId 유효성검증
-        //     return false;
-        // },
-        // isValidUserName(){
-        //     return true;
-        // },
-        // isValidEmail(){
-        //     return true;
-        // },
-        // isValidPassword(){
-        //     return true;
-        // },
-        // isValidPasswordConfirm(){
-        //     return true;
-        // },
-        // isValidPhone(){
-        //     return true;
-        // },
-        // isValidNickName(){
-        //     return true;
-        // },
-        // isValidBirth(){
-        //     return true;
-        // },
         validateUser(){
             return {
                 'was-validated' : this.user.userId && this.isValidUserId,
@@ -547,8 +479,8 @@ export default {
         },
         validatePasswordConfirm(){
             return {
-                'was-validated' : this.user.passwordConfirm && this.isValidPasswordConfirm,
-                'not-validated' : this.user.passwordConfirm && !this.isValidPasswordConfirm
+                'was-validated' : this.passwordConfirm && this.isValidPasswordConfirm,
+                'not-validated' : this.passwordConfirm && !this.isValidPasswordConfirm
             }
         },
         validatePhone(){
