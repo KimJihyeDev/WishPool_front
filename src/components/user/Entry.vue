@@ -406,37 +406,51 @@ export default {
 				}
 			}
 		},
-	
+		'user.password':{
+			handler:function(){
+				// 비밀번호에 특수문자 숫자가 들어가도록 체크(8자~50자까지 허용)
+				const regPwd = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,50}$/;
+				const validate = regPwd.test(this.user.password.replace(/(\s*)/g, ""));
+				if(this.user.password !== ''){
+					if(validate){
+						this.hasTypedPassword = true
+						this.isValidPassword = true
+					}else{
+						this.hasTypedPassword = true;
+						this.isValidPassword = false;
+					}
+				}else{
+					return this.hasTypedPassword = false;
+				}
+			}
+		},
+		'passwordConfirm':{
+			handler:function(){
+				//유효성검사 : user.password와 일치 여부
+				var validate = false;
+				if(this.user.password === this.passwordConfirm){
+					validate = true;
+				}else{
+					validate = false;
+				}
+				if(this.passwordConfirm !== ''){
+					if(validate){
+						this.hasTypedPasswordConfirm = true
+						this.isValidPasswordConfirm = true
+					}else{
+						this.hasTypedPasswordConfirm = true;
+						this.isValidPasswordConfirm = false;
+					}
+				}else{
+					return this.hasTypedPasswordConfirm = false;
+				}
+			}
+		},
 		
 
 	},
    
     computed:{
-        // isValidUserId(){
-        //     //userId 유효성검증
-        //     return false;
-        // },
-        // isValidUserName(){
-        //     return true;
-        // },
-        // isValidEmail(){
-        //     return true;
-        // },
-        // isValidPassword(){
-        //     return true;
-        // },
-        // isValidPasswordConfirm(){
-        //     return true;
-        // },
-        // isValidPhone(){
-        //     return true;
-        // },
-        // isValidNickName(){
-        //     return true;
-        // },
-        // isValidBirth(){
-        //     return true;
-        // },
         validateUser(){
             return {
                 'was-validated' : this.user.userId && this.isValidUserId,
@@ -463,8 +477,8 @@ export default {
         },
         validatePasswordConfirm(){
             return {
-                'was-validated' : this.user.passwordConfirm && this.isValidPasswordConfirm,
-                'not-validated' : this.user.passwordConfirm && !this.isValidPasswordConfirm
+                'was-validated' : this.passwordConfirm && this.isValidPasswordConfirm,
+                'not-validated' : this.passwordConfirm && !this.isValidPasswordConfirm
             }
         },
         validatePhone(){
