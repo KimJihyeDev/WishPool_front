@@ -17,7 +17,8 @@ export default [
     { path:'/item/add', component:ItemAdd},
     { path:'/item/modify',component:ItemModify},
     { path:'/user/entry',component:Entry},
-    { path:'/temp',component:Temp},
+    { path:'/temp',component:Temp}, //삭제
+    { path:'/item/detail', component:ItemDetail}, //배포시 삭제
     { path:'/item/detail/:itemId',component:ItemDetail},
     { path:'/item/modify/:itemId',component:ItemModify},
     { path:'/user/register', component: ResetPassword},

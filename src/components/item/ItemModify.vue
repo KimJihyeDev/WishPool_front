@@ -1,117 +1,114 @@
 <template>
+   <div class="modal-content">
+			
+			<div class="modal-header">
+				<h3 class="title" style="display:inline;">아이템 수정</h3>
+                <!-- modal close button -->
+                <a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
+				    <svg class="olymp-close-icon" style="fill:black;"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
+			    </a>
+                <!-- end modal close button -->
+			</div>
+            <div class="ui-block-content">
+            <form class="w-search">
+                <h4 class="control-label" id="first-h4">아이템 이름</h4>
+                <div class="form-group with-button is-empty">
+                    <input class="form-control" type="text" placeholder="아이템을 간단하게 입력하세요" v-model="item.itemName">
+                <span class="material-input"></span></div>
+            </form>
+            <form class="w-search">
+                <h4 class="control-label" id="first-h4">아이템 가격</h4>
+                <div class="form-group with-button is-empty">
+                    <input class="form-control" type="text" placeholder="가격을 입력하세요(숫자만 가능)" v-model="item.itemPrice">
+                <span class="material-input"></span></div>
+            </form>
+        </div>
+			<div class="modal-body">
+                <!-- <label class="control-label">카테고리 선택</label>
+				<div class="form-group label-floating is-select">
+					<div class="btn-group bootstrap-select form-control">
+                        <select class="selectpicker form-control" tabindex="-98">
+                            <option value="MA">카테고리 1</option>
+                            <option class="font-larger" value="FE">카테고리 2</option>
+                        </select>
+                     </div>
+				<span class="material-input" ></span></div> -->
 
-   <div class="container">
-	   {{message}}
-	<div class="row" >
-			<div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12" >
-				<div class="ui-block" >
-					<div class="ui-block-title">
-						<h6 class="title" style="text-align:center">아이템 추가</h6>
-					</div>
-					<div class="ui-block-content"  >
-						<!-- 아이템 정보 입력 폼 시작  -->
-						<form >
-							<div class="row">
-						
-								<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-									<div class="ui-block" style="border:0px;">
-										<article class="hentry has-post-thumbnail shared-photo">
-											<div class="post-thumb">
-												<button><img src="/assets/img/post-photo6.jpg" alt="photo"></button>
-											</div>
-										</article>
-									</div>
-									<div class="form-group label-floating is-select">
-										<!-- <label class="control-label">카테고리</label> -->
-											<select class=" form-control">
-												<option value="#" class="control-label">카테고리를 선택하세요</option>
-												<option value="MA">Male</option>
-												<option value="FE">Female</option>
-											</select>
-									</div>
-									<div class="form-group label-floating">
-										<label>아이템 이름</label>
-										<input class="form-control" v-model="item.itemName">
-									</div>
-						
-									<div class="form-group label-floating">
-										<label>가격(숫자만 입력하세요)</label>
-										<input class="form-control" v-model="item.itemPrice">
-									</div>
-						
-									<div class="form-group label-floating">
-										<label >링크</label>
-										<input class="form-control" v-model="item.itemLink" />
-									</div>
-									<div class="form-group label-floating">
-										<label>메모</label>
-										<input class="form-control" v-model="item.itemMemo" />
-									</div>
-
-									<div class="form-group label-floating">
-										<label>중요도</label>
-											<div>
-												<span class="star-input" style="margin-top: 0;margin-bottom:3%">
-													<span class="input">
-														<input type="radio" ref="star" id="p1" v-model="item.itemRank" />
-														<label for="p1">1</label>
-														<input type="radio" ref="star" id="p2" v-model="item.itemRank" />
-														<label for="p2">2</label>
-														<input type="radio" ref="star" id="p3" v-model="item.itemRank" />
-														<label for="p3">3</label>
-														<input type="radio" ref="star" id="p4" v-model="item.itemRank" />
-														<label for="p4">4</label>
-														<input type="radio" ref="star" id="p5" v-model="item.itemRank" />
-														<label for="p5">5</label>
-													</span>
-												<!-- <output for="star-input"><b>0</b>점</output>						 -->
-												</span>
-											</div>
-
-										<select class=" form-control" v-model="item.visibleTo">
-											<option value="#" class="control-label">공개 범위를 선택하세요</option>
-											<option value="t">공개</option>
-											<option value="f">비공개</option>
-											<!-- <option value="groupId">그룹공개</option> -->
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-								<button class="btn btn-secondary btn-lg full-width" v-on:click="doModify">수정완료</button>
-							</div>
-							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-								<button class="btn btn-primary btn-lg full-width">취소</button>
-							</div>
-						</form>
-						<!-- 아이템 입력 폼 끝 -->
-					</div>
-				</div>
+                <!-- <label class="control-label">아이템명</label>
+				<div class="form-group label-floating">
+					<input class="form-control" v-model="item.itemName" style="padding-top:1rem; padding-bottom:1rem;font-size:medium;" placeholder="" value="" type="text">
+				<span class="material-input"></span></div> -->
+                <!-- <label>가격</label>
+				<div class="form-group label-floating is-empty" style="display:flex; align-items:center">
+                    <div class="btn-group bootstrap-select form-control" style="height: 100%; width: 20%; margin-right:10px;">
+                    <select class="selectpicker form-control"  style="width: 20%; height:100%;">
+                        <option class="option-item" value="" selected>w</option>
+                        <option class="option-item">$</option>
+                    </select>
+                    </div>
+					<label id="price-label" class="control-label">숫자만 입력하세요</label>
+					<input v-model="item.itemPrice" style="display:inline; width:80%; font-size:medium;padding: 1.9rem 1.1rem 0.5rem; margin-top:-1px;" class="form-control" placeholder="" value="" type="text">
+				    <span class="material-input"></span>
+                </div> -->
+                <h4 class="control-label" id="first-h4">링크검색</h4>
+                <form class="w-search" style="margin-bottom:1rem">
+                <div class="form-group with-button is-empty">
+                    <input class="form-control" type="text" placeholder="원하는 아이템의 링크를 검색해보세요" v-model="linkQuery">
+                    <button v-on:click="findItem">
+                        <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg>
+                        <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
+                    </button>
+                    <span class="material-input"></span>
+                </div>
+                </form>
+                <h4 class="control-label">링크입력</h4>
+                <form class="w-search" style="margin-bottom:1rem">
+                <div class="form-group with-button is-empty">
+                    <input class="form-control" type="text" placeholder="" v-model="item.itemLink">
+                    <button v-on:click="pasteLink" style="font-size:x-small">
+                        paste
+                        <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
+                        <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
+                    </button>
+                    <span class="material-input"></span>
+                </div>
+                </form>
+                <!-- <div class="form-group label-floating">
+                    <input class="form-control" v-model="item.itemLink" style="padding-top:1rem; padding-bottom:1rem;font-size:medium;" placeholder="" value="" type="text">
+                <span class="material-input"></span></div> -->
+                <h4 class="control-label" style="margin-top:1.5rem;">공개범위</h4>
+                <div class="form-group label-floating is-select mb30">
+                    <div class="radio" style="margin-top:1.2rem;">
+                        <label>
+                            <input type="radio" name="optionsRadios" value="t" v-model="item.visibleTo"/>
+                            공개
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" value="f" v-model="item.visibleTo" />
+                            비공개
+                        </label>
+                    </div>
+                    <span class="material-input"></span>
+                </div>
+                <label class="control-label">위시메모</label>
+                <div class="form-group">
+                    <textarea v-model="item.itemMemo" class="form-control" style="font-size:small" placeholder=""></textarea>
+                    <span class="material-input"></span>
+                </div>
+                <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+                    <button class="btn btn-primary btn-lg full-width" v-on:click="doModify">수정완료</button>
+                </div>
+                <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+                    <button class="btn btn-secondary btn-lg full-width" v-on:click="goToList">취소</button>
+                </div>            
 			</div>
 		</div>
-	</div>
 </template>
-
-<!--<script scr="/assets/js/star.js"></script>
-<script>
- $(".star").on('click',function(){
-   var idx = $(this).index();
-   $(".star").removeClass("on");
-     for(var i=0; i<=idx; i++){
-        $(".star").eq(i).addClass("on");
-   }
- });
-  $(".star").on('click',function(){
-   var idx = $(this).index();
-   $(".star").removeClass("on");
-     for(var i=0; i<=idx; i++){
-        $(".star").eq(i).addClass("on");
-   }
- });
-</script>-->
 <script>
 export default {
-	name: 'ItemModify',
+    name: 'ItemModify',
 	created(){
         this.$http.get(this.$serverUrl+this.$route.path)
         .then(res=>{
@@ -125,9 +122,37 @@ export default {
 	data(){
 		return {
 			message:'',
-			item: {}
+			item: {},
+			linkQuery:'',
 		}
-	},
+    },
+    filters:{
+        visible(to){
+            if(to === 'f'){
+                return '비공개'
+            }else if(to === 't'){
+                return '공개'
+            }else{
+                return '그룹공개'
+            }
+        }
+    },
+    computed:{
+        isPublic(){
+            if(this.item.visibleTo === 't'){
+                return true;
+            }else if(this.item.visibleTo === 'f'){
+                return false;
+            }
+            return false;
+        },
+        isPrivate(){
+            if(this.item.visibleTo === 'f'){
+                return true;
+            }
+            return false;
+        }
+    },
 	methods:{
 		doModify(){
 			this.$http.patch(this.$serverUrl+this.$route.path, this.item)
@@ -139,30 +164,80 @@ export default {
 				console.error(e);
 			})
 			this.$router.push({path:'/item/list'})
-		}
+		},
+        findItem(){
+            //this.linkQuery로 새창 띄우기
+        },
+        pasteLink(){
+            //안드로이드 클립보드의 link값을 붙여넣기
+        },
+        toggleCollapse(){
+            this.collapseOption = !this.collapseOption;
+        },
+        goToList(){
+            this.$router.push({path:'/item/list'});
+        }
 	},
 }
 </script>
-
 <style scoped>
-.star-input>.input,
-.star-input>.input>label:hover,
-.star-input>.input>input:focus+label,
-.star-input>.input>input:checked+label{display: inline-block;vertical-align:middle;background:url('/assets/img/grade_img.png')no-repeat;}
-.star-input{display:inline-block; white-space:nowrap;width:225px;height:40px;padding:25px;line-height:30px;}
-.star-input>.input{display:inline-block;width:150px;background-size:150px;height:28px;white-space:nowrap;overflow:hidden;position: relative;}
-.star-input>.input>input{position:absolute;width:1px;height:1px;opacity:0;}
-star-input>.input.focus{outline:1px dotted #ddd;}
-.star-input>.input>label{width:30px;height:0;padding:28px 0 0 0;overflow: hidden;float:left;cursor: pointer;position: absolute;top: 0;left: 0;}
-.star-input>.input>label:hover,
-.star-input>.input>input:focus+label,
-.star-input>.input>input:checked+label{background-size: 150px;background-position: 0 bottom;}
-.star-input>.input>label:hover~label{background-image: none;}
-.star-input>.input>label[for="p1"]{width:30px;z-index:5;}
-.star-input>.input>label[for="p2"]{width:60px;z-index:4;}
-.star-input>.input>label[for="p3"]{width:90px;z-index:3;}
-.star-input>.input>label[for="p4"]{width:120px;z-index:2;}
-.star-input>.input>label[for="p5"]{width:150px;z-index:1;}
-.star-input>output{display:inline-block;width:60px; font-size:18px;text-align:right; vertical-align:middle;}
-
+.icon-close{
+    padding:0;
+    right:unset;
+    margin-right:unset;
+    position: relative;
+    top:unset;
+}
+@media (max-width: 768ox){
+    .icon-close{
+        right:unset;
+        margin-right:unset;
+    }
+}
+#price-label{
+    margin-left: 5rem;
+}
+#price-select{
+    display:inline;
+    width:20%;
+    margin-right:10px;
+}
+.dropdown-toggle::after{
+    right:5px;
+}
+.modal-content{
+    font-size: 1.1rem;
+}
+.label-floating .form-control, .label-floating input, .label-floating select{
+    line-height: 1;
+}
+#input-num{
+    padding:0.5rem;
+}
+.btn-group, .bootstrap-select, .form-control{
+    margin-top:4px
+}
+.w-search{
+    width:100%;
+}
+.form-group.with-button button{
+    width: 45px;
+    background: #ff5e3a;
+}
+h4{
+    margin-top:2rem;
+}
+#first-h4{
+    margin-top:0;
+}
+.modal-body{
+    padding-top:4px;
+}
+.card-header .collapsed i, .card-header .collapsed svg {
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg); 
+    }
+    .card-header{
+        border:unset;
+    }
 </style>

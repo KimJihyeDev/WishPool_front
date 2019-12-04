@@ -1,54 +1,84 @@
 <template>
-    <div>
-        <button v-if="show" @click="request">클릭</button>
-        <button @click="makePurchase">완료</button>
-        <p v-for="li in list" v-bind:key="li.id">{{li}}</p>
+    <div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Collapsible Group Item #1
+        </button>
+      </h5>
     </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Collapsible Group Item #2
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Collapsible Group Item #3
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+</div>
+
 </template>
 <script>
 
 export default {
-    mounted(){
-        var self = this;
-        this.$socket.on('news', function(data){
-            console.log(self.show);
-            self.show=data;
-        });
-    },
-    data(){
-        return {
-            show: true,
-            list:[
-                {id:0, text:'사과'},
-                 {id:1, text:'사과'},
-                  {id:2, text:'사과'},
-            ]
-        }
-    },
-    watch:{
-        show: function(newVal, oldVal){
-            console.log('watch'+oldVal);
-            return newVal;
-        }
-    },
-    methods:{
-        request(){
-            this.$http.get('http://localhost:3000/temp')
-            .then(res=>{
-                console.log(res.data);
-            })
-        },
-        makePurchase(){
-                
-        //         this.$socket.emit('reply', {
-        //         purchasedBy: 'me'
-        // })
-        console.log('소켓 보내기전: '+this.show)
-           this.$socket.emit('reply', this.show);
-        },
-        change(data){
-            this.show = data;
-        }
-    }
+    name: 'Temp',
+	data(){
+		return {
+			item:{
+				itemName: '',
+				itemPrice: '',
+				itemLink: '',
+				itemRank: '',
+				visibleTo: 0,
+				itemMemo: ''
+			}
+		}
+	},
+	methods:{
+		addItem(){
+			console.log(this.$serverUrl+this.$route.path);
+			this.$http.post(this.$serverUrl+this.$route.path, this.item)
+			.then(res=>{
+				if(res.data.code == 200){
+					console.log('정상 : '+res.data.msg);
+					this.$socket.emit('reqList');
+				}else if(res.data.code == 500){
+					console.log('서버오류 : '+res.data.msg);
+				}
+			}).catch(e=>{
+				console.error(e);
+			});
+			this.$router.push({path:'/item/list'});
+			// location.href=this.$url+'item/list';
+		}
+	}
 }
 </script>
