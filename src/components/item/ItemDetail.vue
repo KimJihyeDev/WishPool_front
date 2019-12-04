@@ -120,7 +120,7 @@
                                     <button class="btn btn-primary btn-lg full-width" v-on:click="doDelete">삭제</button>
                                 </div>
                             <div class="list2">
-                                <button class="btn btn-secondary btn-lg" v-on:click="returnList">목록으로</button>
+                                <button class="btn btn-secondary btn-lg" v-on:click="goToList">목록으로</button>
                             </div>
                                 </div>
                         </div>
@@ -770,17 +770,19 @@ export default {
 				itemPrice: '20000',
 				itemLink: 'http://localhost/3000',
 				itemRank: '',
-				visibleTo: 0,
+				visibleTo: 'f',
 				itemMemo: '메모를입력한내용메모메모메모를입력한내용메모메모메모를입력한내용메모메모메모를입력한내용메모메모메모를입력한내용메모메모'
             }
         }
     },
     filters:{
         visible(to){
-            if(to == 0){
+            if(to === 'f'){
                 return '비공개'
-            }else if(to == 1){
+            }else if(to === 't'){
                 return '공개'
+            }else{
+                return '그룹공개'
             }
         }
     },
@@ -797,7 +799,7 @@ export default {
 			});
 			this.$router.push({path:'/item/list/'});
         },
-        returnList(){
+        goToList(){
             this.$router.push({path:'/item/list'});
         }
     }

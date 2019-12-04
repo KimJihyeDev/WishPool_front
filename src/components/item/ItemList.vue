@@ -50,21 +50,12 @@
             <div class="tab-pane active" id="home" role="tabpanel">
                 <div class="container">
                     <div class="ui-block">
-                        <div class="ui-block-title">
-                            
+                        <!-- 상세 아이템 추가 버튼 -->
+                        <!-- <div class="ui-block-title">
                             <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
-                                <!-- <a href="#" class="btn btn-control bg-breez" data-toggle="modal" data-target="#create-event">
-										<div class="ripple-container"></div></a> -->
-				                <!-- <router-link to="/item/add" ><a href="javascript:void(0)" class="btn btn-primary btn-lg full-width" data-toggle="modal" data-target="#create-event"> 상세 아이템 추가</a></router-link> -->
                                 <a href="#" class="btn btn-primary btn-lg full-width" data-toggle="modal" data-target="#create-event">상세 아이템 추가</a>
-                                <!-- <div class="control-block-button"> -->
-									<!-- <a href="#" class="btn btn-control bg-breez" data-toggle="modal" data-target="#create-event">
-										<svg class="olymp-plus-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
-									<div class="ripple-container"></div></a> -->
-								<!-- </div> -->
-                                <!-- <div class="modal-backdrop fade"></div> -->
 			                </div>
-                        </div>
+                        </div> -->
                         
                         <!-- 위시아이템 -->
                         
@@ -74,6 +65,7 @@
 							:name="item.itemName"
 							:price="item.itemPrice" 
 							:id="item._id"
+                            :visibleTo="item.visibleTo"
 							isCompleted="완료"
 							v-on:makePurchase="makePurchase"
 							v-on:cancelPurchase="cancelPurchase"
@@ -88,11 +80,12 @@
             <div class="tab-pane" id="about" role="tabpanel">
                 <div class="container">
                     <div class="ui-block">
-                        <div class="ui-block-title">
+                        <!-- 상세 아이템 추가버튼 -->
+                        <!-- <div class="ui-block-title">
                             <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
 				                <router-link to="/item/add" ><a href="javascript:void(0)" class="btn btn-primary btn-lg full-width"> 상세 아이템 추가</a></router-link>
 			                </div>
-                        </div>
+                        </div> -->
                         <!-- <div class="ui-block-title">
                             <h6 class="title">완료 아이템 리스트</h6>
                         </div> -->
@@ -104,6 +97,7 @@
 							:key="item._id"
 							:name="item.itemName"
 							:price="item.itemPrice"
+                            :visibleTo="item.visibleTo"
 							:id="item._id"
 							isCompleted="취소" 
 							v-on:makePurchase="makePurchase"
@@ -206,7 +200,7 @@
                         itemPrice: '',
                         itemLink: '',
                         itemRank: '',
-                        visibleTo: 0,
+                        visibleTo: 'f',
                         itemMemo: ''
                     }
 				}

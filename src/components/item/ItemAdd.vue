@@ -9,7 +9,10 @@
 			    </a>
                 <!-- end modal close button -->
 			</div>
-            <item-input v-on:getInputItem="addItem"/>
+            <item-input 
+                v-on:getInputItem="addItem"
+                inputMode="a"
+            />
 			<div class="modal-body">
                 <!-- <label class="control-label">카테고리 선택</label>
 				<div class="form-group label-floating is-select">
@@ -52,55 +55,59 @@
                             </div>
 
                             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
-                            </div>
-                            
-                <h4 class="control-label" id="first-h4">링크검색</h4>
-                <form class="w-search" style="margin-bottom:1rem">
-                <div class="form-group with-button is-empty">
-                    <input class="form-control" type="text" placeholder="원하는 아이템의 링크를 검색해보세요" v-model="linkQuery">
-                    <button v-on:click="findItem">
-                        <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg>
-                        <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
-                    </button>
-                <span class="material-input"></span></div>
-            </form>
-                <h4 class="control-label">링크입력</h4>
-                <form class="w-search" style="margin-bottom:1rem">
-                <div class="form-group with-button is-empty">
-                    <input class="form-control" type="text" placeholder="" v-model="item.itemLink">
-                    <button v-on:click="pasteLink" style="font-size:x-small">
-                        paste
-                        <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
-                        <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
-                    </button>
-                <span class="material-input"></span></div>
-            </form>
-				<!-- <div class="form-group label-floating">
-					<input class="form-control" v-model="item.itemLink" style="padding-top:1rem; padding-bottom:1rem;font-size:medium;" placeholder="" value="" type="text">
-				<span class="material-input"></span></div> -->
-                <h4 class="control-label" style="margin-top:1.5rem;">공개범위</h4>
-                <div class="form-group label-floating is-select mb30">
-							<div class="radio" style="margin-top:1.2rem;">
-								<label>
-									<input type="radio" name="optionsRadios" >
-									공개
-								</label>
-							</div>
-							<div class="radio">
-								<label>
-									<input type="radio" name="optionsRadios" checked>
-									비공개
-								</label>
-							</div>
-				<span class="material-input"></span></div>
-                <label class="control-label">위시메모</label>
-				<div class="form-group">
-					<textarea v-model="item.itemMemo" class="form-control" style="font-size:small" placeholder=""></textarea>
-				<span class="material-input"></span></div>
+                                <div class="card-body">
+                                <h4 class="control-label" id="first-h4">링크검색</h4>
+                                <form class="w-search" style="margin-bottom:1rem">
+                                <div class="form-group with-button is-empty">
+                                    <input class="form-control" type="text" placeholder="원하는 아이템의 링크를 검색해보세요" v-model="linkQuery">
+                                    <button v-on:click="findItem">
+                                        <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg>
+                                        <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
+                                    </button>
+                                    <span class="material-input"></span>
+                                </div>
+                                </form>
+                                <h4 class="control-label">링크입력</h4>
+                                <form class="w-search" style="margin-bottom:1rem">
+                                <div class="form-group with-button is-empty">
+                                    <input class="form-control" type="text" placeholder="" v-model="item.itemLink">
+                                    <button v-on:click="pasteLink" style="font-size:x-small">
+                                        paste
+                                        <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
+                                        <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
+                                    </button>
+                                    <span class="material-input"></span>
+                                </div>
+                                </form>
+                                <!-- <div class="form-group label-floating">
+                                    <input class="form-control" v-model="item.itemLink" style="padding-top:1rem; padding-bottom:1rem;font-size:medium;" placeholder="" value="" type="text">
+                                <span class="material-input"></span></div> -->
+                                <h4 class="control-label" style="margin-top:1.5rem;">공개범위</h4>
+                                <div class="form-group label-floating is-select mb30">
+                                    <div class="radio" style="margin-top:1.2rem;">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" >
+                                            공개
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="optionsRadios" checked>
+                                            비공개
+                                        </label>
+                                    </div>
+                                    <span class="material-input"></span>
+                                </div>
+                                <label class="control-label">위시메모</label>
+                                <div class="form-group">
+                                    <textarea v-model="item.itemMemo" class="form-control" style="font-size:small" placeholder=""></textarea>
+                                    <span class="material-input"></span>
+                                </div>
 
-				<button class="btn btn-breez btn-lg full-width" style="font-size:small" v-on:click="addItem">등록</button>
-</div>
+                                <button class="btn btn-breez btn-lg full-width" style="font-size:small" v-on:click="addItem">등록</button>
+                                </div>
+                                
+                            </div>
                         </div>
                     </div>
 			</div>
@@ -117,7 +124,7 @@ export default {
 				itemPrice: '',
 				itemLink: '',
 				itemRank: '',
-				visibleTo: 0,
+				visibleTo: 'f',
 				itemMemo: ''
             },
             linkQuery:'',
