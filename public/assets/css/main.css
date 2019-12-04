@@ -2572,8 +2572,8 @@ p {
   margin-top: 4px; }
 
 .card-header .collapsed i, .card-header .collapsed svg {
-  -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg); }
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg); }
 
 .card-header .collapsed .event-status-icon i, .card-header .collapsed .event-status-icon svg {
   -webkit-transform: rotate(0);

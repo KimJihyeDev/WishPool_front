@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
                    
-                    <item-input v-on:getItemName="setItemName"/>
+                    <item-input v-on:getInputItem="addItem" />
                     <div class="ui-block" style="margin-bottom:0px;">  
                         <!-- <div class="ui-block-title">
                             <h4 class="title">위시 아이템 리스트</h4>
@@ -240,8 +240,11 @@
                 moveToAdd(){
                     this.$router.push({path:'/item/add'});
                 },
-                addItem(){
-                    // console.log(this.$serverUrl+'/item/add');
+                addItem(val){
+                    if(val){
+                        this.item.itemName = val.itemName;
+                        this.item.itemPrice = val.itemPrice;
+                    }
                     this.$http.post(this.$serverUrl+'/item/add', this.item)
                     .then(res=>{
                         if(res.data.code == 200){
@@ -256,8 +259,9 @@
                     this.$router.push({path:'/item/list'});
                     // location.href=this.$url+'item/list';
                 },
-                setItemName(val){
-                    this.item.itemName = val;
+                setInputItem(val){
+                    this.item.itemName = val.itemName;
+                    this.item.itemPrice = val.itemPrice;
                     console.log(val);
                     this.$http.post(this.$serverUrl+'/item/add', this.item)
                     .then(res=>{
@@ -287,7 +291,7 @@
         flex-wrap: nowrap;
     }
     .w-search {
-        width: auto;
+        width: 100%;
         margin-bottom: 1rem;
     }
     .nav-link{
@@ -306,6 +310,6 @@
         margin-bottom: 10px;
     }
     .ui-block{
-        width:95%;
+        width:100%;
     }
 </style>

@@ -6,14 +6,22 @@
         <div class="ui-block-content">
             <form class="w-search">
                 <div class="form-group with-button is-empty">
-                    <input id="addInput" class="form-control" type="text" placeholder="아이템을 간단하게 입력하세요" v-model="itemName">
+                    <input class="form-control" type="text" placeholder="아이템을 간단하게 입력하세요" v-model="inputItem.itemName">
                     <button @click="sendItem">
                         <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
                         <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
                     </button>
                 <span class="material-input"></span></div>
             </form>
-            
+            <form class="w-search">
+                <div class="form-group with-button is-empty">
+                    <input class="form-control" type="text" placeholder="가격을 입력하세요(숫자만 가능)" v-model="inputItem.itemPrice">
+                    <button id="addInput">
+                        <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
+                        <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
+                    </button>
+                <span class="material-input"></span></div>
+            </form>
         </div>
     </div>
 </template>
@@ -22,23 +30,30 @@ export default {
     name: 'ItemInput',
     data(){
         return{
-            itemName:''
+            inputItem :{
+                itemName:'',
+                itemPrice: ''
+            }
         }
     },
     methods:{
         sendItem(){
-            this.$emit('getItemName', this.itemName);
-            
+            this.$emit('getInputItem', this.inputItem);
         }
     }
 }
 </script>
 <style scoped>
     .w-search {
-        width: auto;
+        width: 100%;
     }
     .form-group.with-button button{
         width: 45px;
         background: #ff5e3a;
+    }
+    #addInput{
+        background: white;
+        border: none;
+        border-left: 1px solid #e6ecf5;
     }
 </style>

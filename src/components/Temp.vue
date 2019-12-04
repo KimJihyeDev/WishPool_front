@@ -1,93 +1,49 @@
 <template>
-    <div class="container">
-	<div class="row" >
-			<div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12" >
-				<div class="ui-block" >
-					<div class="ui-block-title">
-						<h6 class="title" style="text-align:center">아이템 추가</h6>
-					</div>
-					<div class="ui-block-content"  >
-						<!-- 아이템 정보 입력 폼 시작  -->
-						<form >
-							<div class="row">
-						
-								<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-									<div class="ui-block" style="border:0px;">
-										<article class="hentry has-post-thumbnail shared-photo">
-											<div class="post-thumb">
-												<button><img src="/assets/img/post-photo6.jpg" alt="photo"></button>
-											</div>
-										</article>
-									</div>
-									<div class="form-group label-floating is-select">
-										<!-- <label class="control-label">카테고리</label> -->
-											<select class=" form-control">
-												<option value="#" class="control-label">카테고리를 선택하세요</option>
-												<option value="MA">Male</option>
-												<option value="FE">Female</option>
-											</select>
-									</div>
-									<div class="form-group label-floating">
-										<label>아이템 이름</label>
-										<input class="form-control" placeholder="" type="text" v-model="item.itemName">
-									</div>
-						
-									<div class="form-group label-floating">
-										<label>가격(숫자만 입력하세요)</label>
-										<input class="form-control" placeholder="" type="text" v-model="item.itemPrice">
-									</div>
-						
-									<div class="form-group label-floating">
-										<label >링크</label>
-										<input class="form-control" v-model="item.itemLink" />
-									</div>
-									<div class="form-group label-floating">
-										<label>메모</label>
-										<input class="form-control" v-model="item.itemMemo" />
-									</div>
+    <div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Collapsible Group Item #1
+        </button>
+      </h5>
+    </div>
 
-									<div class="form-group label-floating">
-										<label>중요도</label>
-											<div>
-												<span class="star-input" style="margin-top: 0;margin-bottom:3%">
-													<span class="input">
-														<input type="radio" name="star-input" value="1" id="p1" v-model="item.itemRank" />
-														<label for="p1">1</label>
-														<input type="radio" name="star-input" value="2" id="p2" v-model="item.itemRank" />
-														<label for="p2">2</label>
-														<input type="radio" name="star-input" value="3" id="p3" v-model="item.itemRank" />
-														<label for="p3">3</label>
-														<input type="radio" name="star-input" value="4" id="p4" v-model="item.itemRank" />
-														<label for="p4">4</label>
-														<input type="radio" name="star-input" value="5" id="p5" v-model="item.itemRank" />
-														<label for="p5">5</label>
-													</span>
-												<!-- <output for="star-input"><b>0</b>점</output>						 -->
-												</span>
-											</div>
-
-										<select class=" form-control" v-model="item.visibleTo">
-											<option value="0" class="control-label">공개 범위를 선택하세요</option>
-											<option value="t">공개</option>
-											<option value="f">비공개</option>
-											<!-- <option value="groupId">그룹공개</option> -->
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-								<button class="btn btn-secondary btn-lg full-width" v-on:click="addItem">등록</button>
-							</div>
-							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-								<button class="btn btn-primary btn-lg full-width">취소</button>
-							</div>
-						</form>
-						<!-- 아이템 입력 폼 끝 -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Collapsible Group Item #2
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Collapsible Group Item #3
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+</div>
 
 </template>
 <script>
