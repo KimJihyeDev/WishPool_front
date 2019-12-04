@@ -125,46 +125,25 @@ export default {
 		// 	el.classList.remove('show');
 		// }
 		login:function(){
-			// this.$http.post(this.$serverUrl + '/users/login',this.user)
-			// 	.then((response)=>{
+			this.$http.post(this.$serverUrl + '/users/login',this.user)
+				.then((response)=>{
 					
-			// 		console.log(response);
+					console.log(response);
 					
-			// 		if(response.data.code === 200){
-			// 			localStorage.setItem('wishToken',response.data.result);
+					if(response.data.code === 200){
+						localStorage.setItem('wishToken',response.data.result);
+						// 이후에 메인 페이지로 이동하게끔 추가
+						// 메인이 안 정해졌으므로 주석처리 
+						// this.$router.push('');
 
-			// 		}
+					}
 
 
-			// 	})
-			// 	.catch((err)=>{
-			// 		console.log(err);
-				// })
-			//브라우저 로컬스토리지에 저장된 토큰값을 조회한다.
-            var token = localStorage.getItem('webzineToken');
-
-            //프로파일 oepn api호출시 로컬에 저장된 토큰을
-            //httpRequest 헤더영역에 authorization속성에 값을 토큰을 저장해 전달한다.
-        
-            this.$axios.get('/users/profile',{ headers:{ authorization:token }})
-            .then(function (response) {
-                console.log(response.data);
-
-                if(response.data.code == "200"){
-
-                    //로그인 사용자의 개인정보 바인딩
-                    this.user = response.data.result;
-                    
-                }else{
-
-                    //서버에러 메시지 출력
-                    alert(response.data.message);
-                }
-
-            }.bind(this))
-            .catch(function (err) {
-                console.log(err);
-            })
+				})
+				.catch((err)=>{
+					console.log(err);
+				})
+// 
   
 
 
