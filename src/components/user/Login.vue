@@ -125,9 +125,30 @@ export default {
 		// 	el.classList.remove('show');
 		// }
 		login:function(){
-			this.$http.post()
-				.then()
-				.catch
+			this.$http.post(this.$serverUrl + '/users/login',this.user)
+				.then((response)=>{
+					
+					console.log(response);
+					
+					if(response.data.code === 200){
+						localStorage.setItem('wishToken',response.data.result);
+						// 이후에 메인 페이지로 이동하게끔 추가
+						// 메인이 안 정해졌으므로 주석처리 
+						// this.$router.push('');
+
+					}
+
+
+				})
+				.catch((err)=>{
+					console.log(err);
+				})
+// 
+  
+
+
+// 
+
 		}
 	}
 }

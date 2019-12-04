@@ -364,11 +364,7 @@ export default {
 			}
 
 
-
-
-
-
-			this.$http.post(this.$serverUrl +'/users', this.user)
+			this.$http.post(this.$serverUrl +'/users/entry', this.user)
 			.then((result)=>{
 				console.log(result);
 			})
