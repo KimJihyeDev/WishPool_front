@@ -6,7 +6,7 @@
         <div class="ui-block-content">
             <form class="w-search">
                 <div class="form-group with-button is-empty">
-                    <input class="form-control" type="text" placeholder="아이템을 간단하게 입력하세요" v-model="itemName">
+                    <input id="addInput" class="form-control" type="text" placeholder="아이템을 간단하게 입력하세요" v-model="itemName">
                     <button @click="sendItem">
                         <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
                         <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
@@ -27,19 +27,18 @@ export default {
     },
     methods:{
         sendItem(){
-            //this.$emit('getItemName', this.itemName);
-            this.$http.post(this.$serverUrl+'/item/add', this.item)
-                    .then(res=>{
-                        if(res.data.code == 200){
-                            console.log('정상 : '+res.data.msg);
-                            this.$socket.emit('reqList');
-                        }else if(res.data.code == 500){
-                            console.log('서버오류 : '+res.data.msg);
-                        }
-                    }).catch(e=>{
-                        console.error(e);
-                    });
+            this.$emit('getItemName', this.itemName);
+            
         }
     }
 }
 </script>
+<style scoped>
+    .w-search {
+        width: auto;
+    }
+    .form-group.with-button button{
+        width: 45px;
+        background: #ff5e3a;
+    }
+</style>

@@ -6,24 +6,7 @@
         <div class="container">
             <div class="row">
                 <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
-                    
-                    <!-- <div class="ui-block">
-                        <div class="ui-block-title">
-                            <h4 class="title">간편 아이템 입력</h4>
-                        </div>
-                        <div class="ui-block-content">
-                            <form class="w-search">
-                                <div class="form-group with-button is-empty">
-                                    <input class="form-control" type="text" placeholder="아이템을 간단하게 입력하세요" v-model="item.itemName">
-                                    <button @click="addItem">
-                                        <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg>
-                                        <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
-                                    </button>
-                                <span class="material-input"></span></div>
-                            </form>
-                            
-                        </div>
-                    </div>  -->
+                   
                     <item-input v-on:getItemName="setItemName"/>
                     <div class="ui-block" style="margin-bottom:0px;">  
                         <!-- <div class="ui-block-title">
@@ -175,7 +158,7 @@
 
 				//Vuex
                 // this.fetchItemList();
-                console.log(ItemInput);
+                
 			},
             data() {
                 return {
@@ -275,7 +258,18 @@
                 },
                 setItemName(val){
                     this.item.itemName = val;
-                    console.log(this.item.itemName);
+                    console.log(val);
+                    this.$http.post(this.$serverUrl+'/item/add', this.item)
+                    .then(res=>{
+                        if(res.data.code == 200){
+                            console.log('정상 : '+res.data.msg);
+                            this.$socket.emit('reqList');
+                        }else if(res.data.code == 500){
+                            console.log('서버오류 : '+res.data.msg);
+                        }
+                    }).catch(e=>{
+                        console.error(e);
+                    });
                 }
 				// Vuex
 				// ...mapActions(['fetchItemList'])
@@ -310,5 +304,8 @@
     }
     .ui-block-title .btn {
         margin-bottom: 10px;
+    }
+    .ui-block{
+        width:95%;
     }
 </style>
