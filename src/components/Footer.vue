@@ -1,4 +1,5 @@
 <template>
+<div class="navbar fixed-bottom">
     <div class="footer-list">
         <ul class="nav nav-tabs mobile-app-tabs" role="tablist">
 	<li class="nav-item">
@@ -50,6 +51,7 @@
 
 </ul>
     </div>
+    </div>
 </template>
 
 <script>
@@ -96,6 +98,9 @@ export default {
     .nav-link{
         width:100%;
         flex-direction: row;
+    }
+    .nav-link, .navbar {
+    padding: 0;
     }
     .control-icon, .has-items{
         display:flex;
