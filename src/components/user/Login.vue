@@ -42,8 +42,8 @@
 												</label>
 											</div>
 											<div style="display:inline-flex; float:right; align-items:center;">
-												<div style="display:inline; margin-right:2px;"><i class="fas fa-question-circle"></i></div>
-											<a href="#" id="pwd" class="forgot" data-toggle="modal" data-target="#restore-password">
+												<div style="display:inline; color: #ff5e3a; margin-right:2px;"><i class="fas fa-question-circle"></i></div>
+											<a href="javascript:void(0)" id="pwd" class="forgot" data-toggle="modal" data-target="#restore-password">
 												 비밀번호 찾기</a>
 											</div>
 											
@@ -100,7 +100,6 @@
 			</div>
 		</div>
 	</div>
-
 	</div>
 </template>
 <script>
@@ -144,6 +143,7 @@ export default {
 	}
 	#pwd{
 		font-size:0.9rem;
+		color:#ff5e3a;
 		text-decoration: underline;
 	}
 	.window-popup .form-group {

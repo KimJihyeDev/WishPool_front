@@ -9,6 +9,8 @@ import Login from '../components/user/Login.vue'
 import SearchId from '../components/follow/SearchId.vue'
 import SearchPhone from '../components/follow/SearchPhone.vue'
 import FollowList from '../components/follow/FollowList.vue'
+import Notification from '../components/notification/Notification.vue'
+import Settings from '../components/settings/Settings.vue'
 
 // 웹소캣 연습용 컴포턴트 (나중에 삭제하기)
 import Temp from '../components/Temp.vue'
@@ -28,5 +30,7 @@ export default [
     { path:'/user/login', component: Login},
     { path:'/follow/follow', component: FollowList},
     { path:'/follow/searchId', component: SearchId},
-    { path:'/follow/searchPhone', component: SearchPhone}
+    { path:'/follow/searchPhone', component: SearchPhone},
+    { path:'/noti', component: Notification},
+    { path:'/settings', component: Settings}
 ]

@@ -748,7 +748,7 @@
             </div>
         </div>
     </div> -->
-
+    <div style="margin-top:4rem;"></div>
     </div>
 </template>
 <script>
@@ -762,6 +762,8 @@ export default {
             console.error(e);
 		})
 		
+    },
+    components:{
     },
     data(){
         return {

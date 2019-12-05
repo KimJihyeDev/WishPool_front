@@ -125,12 +125,13 @@
 </div>
 
 <!-- ... end Window-popup Create Event -->
+<div style="margin-top:2.5rem;"></div>
     </div>
 </template>
 <script>
     import Item from './Item.vue';
     import ItemAdd from './ItemAdd.vue';
-    import ItemInput from './ItemInput.vue'
+    import ItemInput from './ItemInput.vue';
         // Vuex
 		// import { mapActions, mapState } from 'vuex';
 
@@ -208,7 +209,7 @@
             components: {
                 'item': Item,
                 'item-add': ItemAdd,
-                'item-input': ItemInput
+                'item-input': ItemInput,
 			},
 			computed:{
 				unPurchasedList(){

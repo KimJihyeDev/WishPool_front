@@ -61,8 +61,8 @@ export default {
         gotoFollowList(){ this.$router.push({path:'/follow/follow'}) },
         gotoItemList(){ this.$router.push({path:'/item/list'}) },
         gotoItemAdd(){ this.$router.push({path:'/item/add'}) },
-        gotoNotification(){  },
-        gotoSettings(){  },
+        gotoNotification(){ this.$router.push({path:'/noti'}) },
+        gotoSettings(){ this.$router.push({path:'/settings'}) },
     }
 }
 </script>

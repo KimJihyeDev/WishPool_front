@@ -113,10 +113,11 @@
                     </div>
 			</div>
 		</div>
+        <div style="margin-top:6rem;"></div>
         </div>
 </template>
 <script>
-import ItemInput from './ItemInput.vue'
+import ItemInput from './ItemInput.vue';
 export default {
     name: 'ItemAdd',
 	data(){
@@ -134,7 +135,7 @@ export default {
 		}
     },
     components:{
-        'item-input': ItemInput
+        'item-input': ItemInput,
     },
 	methods:{
 		addItem(val){
