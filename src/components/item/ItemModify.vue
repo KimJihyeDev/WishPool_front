@@ -104,11 +104,10 @@
                     <button class="btn btn-secondary btn-lg full-width" v-on:click="goToList">취소</button>
                 </div>            
 			</div>
-            <blank-space />
+            <div style="margin-top:2.5rem;"></div>
 		</div>
 </template>
 <script>
-import BlankSpace from '../BlankSpace.vue';
 export default {
     name: 'ItemModify',
 	created(){
