@@ -6,6 +6,8 @@ import Entry from '../components/user/Entry'
 import ItemDetail from '../components/item/ItemDetail.vue'
 import ResetPassword from '../components/user/ResetPassword.vue'
 import Login from '../components/user/Login.vue'
+import FollowerList from '../components/follow/FollowerList.vue'
+import FollowList from '../components/follow/FollowList.vue'
 
 // 웹소캣 연습용 컴포턴트 (나중에 삭제하기)
 import Temp from '../components/Temp.vue'
@@ -22,6 +24,8 @@ export default [
     { path:'/item/detail/:itemId',component:ItemDetail},
     { path:'/item/modify/:itemId',component:ItemModify},
     { path:'/user/register', component: ResetPassword},
-    { path:'/user/login', component: Login}
+    { path:'/user/login', component: Login},
+    { path:'/follow/follow', component: FollowList},
+    { path:'/follow/follower', component: FollowerList}
     
 ]
