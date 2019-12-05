@@ -59,7 +59,7 @@
                         
                         <!-- 위시아이템 -->
                         
-                        <ul class="widget w-friend-pages-added notification-list friend-requests">
+                        <ul v-if="!isWishEmpty" class="widget w-friend-pages-added notification-list friend-requests">
                             <item v-for="item in unPurchasedList"
 							:key="item._id"
 							:name="item.itemName"
@@ -71,7 +71,7 @@
 							v-on:cancelPurchase="cancelPurchase"
 							/>                 
                         </ul>
-                            
+                        <item-empty v-if="isWishEmpty" />
                             <!-- .. end 위시아이템 -->
                         </div>
                 </div>
@@ -92,7 +92,7 @@
                 
                         <!-- 위시아이템 -->
                             
-                        <ul class="widget w-friend-pages-added notification-list friend-requests">
+                        <ul v-if="!isCompletedEmpty" class="widget w-friend-pages-added notification-list friend-requests">
                             <item v-for="item in purchasedList"
 							:key="item._id"
 							:name="item.itemName"
@@ -104,6 +104,9 @@
 							v-on:cancelPurchase="cancelPurchase"
 							/>                  
                         </ul>
+                        <item-empty v-if="isCompletedEmpty" />
+                            <!-- .. end 위시아이템 -->
+                        </div>
                     
                             <!-- .. end 위시아이템 -->
                     </div>
@@ -114,9 +117,7 @@
 
             
         </div>
-
-    </div>
-            <!-- Window-popup Create Event -->
+  <!-- Window-popup Create Event -->
 
 <div class="modal fade" id="create-event" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
 	<div class="modal-dialog window-popup create-event" role="document">
@@ -132,6 +133,7 @@
     import Item from './Item.vue';
     import ItemAdd from './ItemAdd.vue';
     import ItemInput from './ItemInput.vue';
+    import ItemEmpty from './ItemEmpty.vue'
         // Vuex
 		// import { mapActions, mapState } from 'vuex';
 
@@ -148,7 +150,9 @@
 				const self = this;
 				this.$socket.emit('reqList');
 				this.$socket.on('resList', function(data){
-					self.items = data;
+                    self.items = data;
+                    self.wishList = self.items.find(item=> item.purchasedBy !== '');
+                    console.log(self.wishList);
 				});
 
 				//Vuex
@@ -203,13 +207,15 @@
                         itemRank: '',
                         visibleTo: 'f',
                         itemMemo: ''
-                    }
+                    },
+                    wishList: []
 				}
             },
             components: {
                 'item': Item,
                 'item-add': ItemAdd,
                 'item-input': ItemInput,
+                'item-empty': ItemEmpty
 			},
 			computed:{
 				unPurchasedList(){
@@ -219,7 +225,20 @@
 					return this.items.filter(item => item.purchasedBy !== '')
 				},
 				// Vuex
-				// ...mapState(['items'])
+                // ...mapState(['items'])
+                isWishEmpty(){
+                    if(this.unPurchasedList.length != 0){
+                        return true;
+                    }
+                    return false;
+
+                },
+                isCompletedEmpty(){
+                    if(this.purchasedList.length != 0){
+                        return false;
+                    }
+                    return true;
+                }
 			},
 			methods:{
 				makePurchase(id){
