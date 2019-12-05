@@ -50,7 +50,7 @@
             <div class="tab-pane active" id="home" role="tabpanel">
                 <div class="container">
                     <div class="ui-block">
-                        <!-- 상세 아이템 추가 버튼 -->
+                        <!-- 상세 아이템 추가 버튼(절대 삭제 금지) -->
                         <!-- <div class="ui-block-title">
                             <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
                                 <a href="#" class="btn btn-primary btn-lg full-width" data-toggle="modal" data-target="#create-event">상세 아이템 추가</a>
@@ -125,12 +125,13 @@
 </div>
 
 <!-- ... end Window-popup Create Event -->
+<div style="margin-top:2.5rem;"></div>
     </div>
 </template>
 <script>
     import Item from './Item.vue';
     import ItemAdd from './ItemAdd.vue';
-    import ItemInput from './ItemInput.vue'
+    import ItemInput from './ItemInput.vue';
         // Vuex
 		// import { mapActions, mapState } from 'vuex';
 
@@ -208,7 +209,7 @@
             components: {
                 'item': Item,
                 'item-add': ItemAdd,
-                'item-input': ItemInput
+                'item-input': ItemInput,
 			},
 			computed:{
 				unPurchasedList(){

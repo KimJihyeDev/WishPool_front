@@ -1,12 +1,13 @@
 <template>
+    <div class="container">
    <div class="modal-content">
 			
 			<div class="modal-header">
 				<h3 class="title" style="display:inline;">아이템 추가하기</h3>
-                <!-- modal close button -->
-                <a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
+                <!-- modal close button(절대 삭제하지 말것) -->
+                <!-- <a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
 				    <svg class="olymp-close-icon" style="fill:black;"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
-			    </a>
+			    </a> -->
                 <!-- end modal close button -->
 			</div>
             <item-input 
@@ -112,9 +113,11 @@
                     </div>
 			</div>
 		</div>
+        <div style="margin-top:6rem;"></div>
+        </div>
 </template>
 <script>
-import ItemInput from './ItemInput.vue'
+import ItemInput from './ItemInput.vue';
 export default {
     name: 'ItemAdd',
 	data(){
@@ -132,7 +135,7 @@ export default {
 		}
     },
     components:{
-        'item-input': ItemInput
+        'item-input': ItemInput,
     },
 	methods:{
 		addItem(val){
@@ -224,7 +227,10 @@ h4{
   -webkit-transform: rotate(-180deg);
           transform: rotate(-180deg); 
     }
-    .card-header{
-        border:unset;
-    }
+.card-header{
+    border:unset;
+}
+.card-body{
+    padding:0;
+}
 </style>
