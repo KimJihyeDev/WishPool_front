@@ -22,10 +22,12 @@ export default {
     created:function(){
 			const token = localStorage.getItem('wishToken');
 			console.log(token);
-            this.$http.get(this.$serverUrl+ '/users/logout',{headers:{authorization:token}})
+            this.$http.get(this.$serverUrl+ '/users/profile',{headers:{authorization:token}})
             .then((response)=>{
 				console.log(response);
-				localStorage.removeItem('wishToken');
+				this.user = response.data.result;
+
+
             })
             .catch((err)=>{
                 console.error(err);

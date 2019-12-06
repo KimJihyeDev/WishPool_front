@@ -118,27 +118,25 @@ export default {
 		'resetPassword': ResetPassword,
 	},
 	methods:{
-		// dismiss(){
-		// 	var el = document.getElementById('restore-password');
-		// 	console.log(el.classList);
-		// 	el.classList.remove('show');
-		// }
 		login:function(){
 			this.$http.post(this.$serverUrl + '/users/login',this.user)
-				.then((response)=>{
-					
-					console.log(response);
-					
-					if(response.data.code === 200){
-						localStorage.setItem('wishToken',response.data.result);
-
-					}
-
-
-				})
-				.catch((err)=>{
-					console.log(err);
-				})
+			.then((response)=>{
+				console.log(response);
+				
+				if(response.data.code === 200){
+					localStorage.setItem('wishToken',response.data.result);
+					this.$router.push('/item/list');
+				}
+			})
+			.catch((err)=>{
+				console.error(err);
+			})
+		}
+	},
+	created:function(){
+		const token = localStorage.getItem('wishToken');
+		if(token){
+			this.$router.push('/item/list');
 		}
 	}
 }
