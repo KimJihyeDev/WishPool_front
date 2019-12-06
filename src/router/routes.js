@@ -6,7 +6,7 @@ import Entry from '../components/user/Entry'
 import ItemDetail from '../components/item/ItemDetail.vue'
 import ResetPassword from '../components/user/ResetPassword.vue'
 import Login from '../components/user/Login.vue'
-import Profile from '../components/user/Profile.vue'
+// import Profile from '../components/user/Profile.vue'
 import FollowList from '../components/follow/FollowList.vue'
 import NotiList from '../components/notification/NotiList.vue'
 import Settings from '../components/settings/Settings.vue'
@@ -27,7 +27,7 @@ export default [
     { path:'/item/modify/:itemId',component:ItemModify},
     { path:'/user/register', component: ResetPassword},
     { path:'/user/login', component: Login},
-    { path:'/user/profile/:userId', component: Profile},
+    // { path:'/user/profile/:userId', component: Profile},
     { path:'/follow/follow', component: FollowList},
     { path:'/noti', component: NotiList},
     { path:'/settings', component: Settings}
