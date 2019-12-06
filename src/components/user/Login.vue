@@ -118,6 +118,14 @@ export default {
 	components:{
 		'resetPassword': ResetPassword,
 	},
+	created:function(){
+		const token = localStorage.getItem('wishToken');
+    	if(token){
+    		// 임시 코드(메인 페이지가 생기면 메인 페이지로 수정하기)
+			// 토큰이 있으면 메인 페이지로 이동하기
+    		this.$router.push('item');
+		}
+	},
 	methods:{
 		// dismiss(){
 		// 	var el = document.getElementById('restore-password');
@@ -125,47 +133,47 @@ export default {
 		// 	el.classList.remove('show');
 		// }
 		login:function(){
-			// this.$http.post(this.$serverUrl + '/users/login',this.user)
-			// 	.then((response)=>{
+			this.$http.post(this.$serverUrl + '/users/login',this.user)
+				.then((response)=>{
 					
-			// 		console.log(response);
+					console.log(response);
 					
-			// 		if(response.data.code === 200){
-			// 			localStorage.setItem('wishToken',response.data.result);
+					if(response.data.code === 200){
+						localStorage.setItem('wishToken',response.data.result);
 
-			// 		}
+					}
 
 
-			// 	})
-			// 	.catch((err)=>{
-			// 		console.log(err);
-				// })
+				})
+				.catch((err)=>{
+					console.log(err);
+				})
 			//브라우저 로컬스토리지에 저장된 토큰값을 조회한다.
-            var token = localStorage.getItem('webzineToken');
+            // var token = localStorage.getItem('Token');
 
             //프로파일 oepn api호출시 로컬에 저장된 토큰을
             //httpRequest 헤더영역에 authorization속성에 값을 토큰을 저장해 전달한다.
-        
-            this.$axios.get('/users/profile',{ headers:{ authorization:token }})
-            .then(function (response) {
-                console.log(response.data);
-
-                if(response.data.code == "200"){
+			//
+            // this.$axios.get('/users/profile',{ headers:{ authorization:token }})
+            // .then(function (response) {
+            //     console.log(response.data);
+			//
+            //     if(response.data.code == "200"){
 
                     //로그인 사용자의 개인정보 바인딩
-                    this.user = response.data.result;
+                    // this.user = response.data.result;
                     
-                }else{
+                // }else{
 
                     //서버에러 메시지 출력
-                    alert(response.data.message);
-                }
-
-            }.bind(this))
-            .catch(function (err) {
-                console.log(err);
-            })
-  
+            //         alert(response.data.message);
+            //     }
+			//
+            // }.bind(this))
+            // .catch(function (err) {
+            //     console.log(err);
+            // })
+			//
 
 
 // 
