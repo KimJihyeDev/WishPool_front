@@ -10,7 +10,7 @@
         </div>
 
         <div class="more">
-            <a href="javascript:void(0)" v-on:click="deleteThis">
+            <a href="javascript:void(0)" v-on:click.stop="deleteThis">
             <svg class="olymp-little-delete"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-little-delete"></use></svg>
             </a>
         </div>
