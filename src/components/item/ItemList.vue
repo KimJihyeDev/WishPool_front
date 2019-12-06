@@ -59,7 +59,7 @@
                         
                         <!-- 위시아이템 -->
                         
-                        <ul class="widget w-friend-pages-added notification-list friend-requests">
+                        <ul v-if="!isWishEmpty" class="widget w-friend-pages-added notification-list friend-requests">
                             <item v-for="item in unPurchasedList"
 							:key="item._id"
 							:name="item.itemName"
@@ -71,7 +71,7 @@
 							v-on:cancelPurchase="cancelPurchase"
 							/>                 
                         </ul>
-                            
+                            <item-empty v-if="isWishEmpty" type="w" @btnPressed="addItem"/>
                             <!-- .. end 위시아이템 -->
                         </div>
                 </div>
@@ -92,7 +92,7 @@
                 
                         <!-- 위시아이템 -->
                             
-                        <ul class="widget w-friend-pages-added notification-list friend-requests">
+                        <ul v-if="!isCompletedEmpty" class="widget w-friend-pages-added notification-list friend-requests">
                             <item v-for="item in purchasedList"
 							:key="item._id"
 							:name="item.itemName"
@@ -104,7 +104,7 @@
 							v-on:cancelPurchase="cancelPurchase"
 							/>                  
                         </ul>
-                    
+                        <item-empty v-if="isCompletedEmpty" type="c" />  
                             <!-- .. end 위시아이템 -->
                     </div>
                 </div>
@@ -132,6 +132,8 @@
     import Item from './Item.vue';
     import ItemAdd from './ItemAdd.vue';
     import ItemInput from './ItemInput.vue';
+    import ItemEmpty from './ItemEmpty.vue';
+
         // Vuex
 		// import { mapActions, mapState } from 'vuex';
 
@@ -210,6 +212,7 @@
                 'item': Item,
                 'item-add': ItemAdd,
                 'item-input': ItemInput,
+                'item-empty': ItemEmpty
 			},
 			computed:{
 				unPurchasedList(){
@@ -217,7 +220,19 @@
 				},
 				purchasedList(){
 					return this.items.filter(item => item.purchasedBy !== '')
-				},
+                },
+                isWishEmpty(){
+                    if(this.unPurchasedList.length == 0){
+                        return true;
+                    }
+                    return false;
+                },
+                isCompletedEmpty(){
+                    if(this.purchasedList.length ==0 ){
+                        return true;
+                    }
+                    return false;
+                }
 				// Vuex
 				// ...mapState(['items'])
 			},

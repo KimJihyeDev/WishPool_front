@@ -75,7 +75,7 @@
 				<ul class="notification-list friend-requests">
 					<!-- <li>
 						<div class="author-thumb">
-							<img src="/assets/img/avatar15-sm.jpg" alt="author">
+							<img src="/assets//assets/img/avatar15-sm.jpg" alt="author">
 						</div>
 						<div class="notification-event" >
 							<a href="#" class="h6 notification-friend">Tamara Romanoff</a>
@@ -134,7 +134,83 @@
 			    </a>
                 <!-- end modal close button -->
 			</div>
-			<div class="modal-body">
+            <div class="modal-body">
+			<form class="form-group label-floating is-select is-empty">
+
+				<div class="btn-group bootstrap-select show-tick form-control style-2"><button type="button" class="btn dropdown-toggle btn-secondary" data-toggle="dropdown" role="button" title="Nothing selected"><span class="filter-option pull-left">Nothing selected</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox"><div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off" role="textbox" aria-label="Search"></div><ul class="dropdown-menu inner" role="listbox" aria-expanded="false"><li data-original-index="0"><a tabindex="0" class=" dropdown-item" style="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><div class="inline-items">
+										<div class="author-thumb">
+											<img src="/assets/img/avatar52-sm.jpg" alt="author">
+										</div>
+											<div class="h6 author-title">Green Goo Rock</div>
+
+										</div><span class="glyphicon glyphicon-ok check-mark"></span></a></li><li data-original-index="1"><a tabindex="0" class=" dropdown-item" style="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><div class="inline-items">
+											<div class="author-thumb">
+												<img src="/assets/img/avatar74-sm.jpg" alt="author">
+											</div>
+											<div class="h6 author-title">Mathilda Brinker</div>
+										</div><span class="glyphicon glyphicon-ok check-mark"></span></a></li><li data-original-index="2"><a tabindex="0" class=" dropdown-item" style="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><div class="inline-items">
+											<div class="author-thumb">
+												<img src="/assets/img/avatar48-sm.jpg" alt="author">
+											</div>
+											<div class="h6 author-title">Marina Valentine</div>
+										</div><span class="glyphicon glyphicon-ok check-mark"></span></a></li><li data-original-index="3"><a tabindex="0" class=" dropdown-item" style="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><div class="inline-items">
+											<div class="author-thumb">
+												<img src="/assets/img/avatar75-sm.jpg" alt="author">
+											</div>
+											<div class="h6 author-title">Dave Marinara</div>
+										</div><span class="glyphicon glyphicon-ok check-mark"></span></a></li><li data-original-index="4"><a tabindex="0" class=" dropdown-item" style="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><div class="inline-items">
+											<div class="author-thumb">
+												<img src="/assets/img/avatar76-sm.jpg" alt="author">
+											</div>
+											<div class="h6 author-title">Rachel Howlett</div>
+										</div><span class="glyphicon glyphicon-ok check-mark"></span></a></li></ul></div><select class="selectpicker form-control style-2 show-tick" multiple="" data-max-options="2" data-live-search="true" tabindex="-98">
+					<option title="Green Goo Rock" data-content="<div class=&quot;inline-items&quot;>
+										<div class=&quot;author-thumb&quot;>
+											<img src=&quot;/assets/img/avatar52-sm.jpg&quot; alt=&quot;author&quot;>
+										</div>
+											<div class=&quot;h6 author-title&quot;>Green Goo Rock</div>
+
+										</div>">Green Goo Rock
+					</option>
+
+					<option title="Mathilda Brinker" data-content="<div class=&quot;inline-items&quot;>
+											<div class=&quot;author-thumb&quot;>
+												<img src=&quot;/assets/img/avatar74-sm.jpg&quot; alt=&quot;author&quot;>
+											</div>
+											<div class=&quot;h6 author-title&quot;>Mathilda Brinker</div>
+										</div>">Mathilda Brinker
+					</option>
+
+					<option title="Marina Valentine" data-content="<div class=&quot;inline-items&quot;>
+											<div class=&quot;author-thumb&quot;>
+												<img src=&quot;/assets/img/avatar48-sm.jpg&quot; alt=&quot;author&quot;>
+											</div>
+											<div class=&quot;h6 author-title&quot;>Marina Valentine</div>
+										</div>">Marina Valentine
+					</option>
+
+					<option title="Dave Marinara" data-content="<div class=&quot;inline-items&quot;>
+											<div class=&quot;author-thumb&quot;>
+												<img src=&quot;/assets/img/avatar75-sm.jpg&quot; alt=&quot;author&quot;>
+											</div>
+											<div class=&quot;h6 author-title&quot;>Dave Marinara</div>
+										</div>">Dave Marinara
+					</option>
+
+					<option title="Rachel Howlett" data-content="<div class=&quot;inline-items&quot;>
+											<div class=&quot;author-thumb&quot;>
+												<img src=&quot;/assets/img/avatar76-sm.jpg&quot; alt=&quot;author&quot;>
+											</div>
+											<div class=&quot;h6 author-title&quot;>Rachel Howlett</div>
+										</div>">Rachel Howlett
+					</option>
+
+				</select></div>
+			<span class="material-input"></span><span class="material-input"></span></form>
+
+			<a href="#" class="btn btn-blue btn-lg full-width">Save Changes</a>
+		</div>
+			<!-- <div class="modal-body"> -->
                 <!-- 검색 백업 -->
                 <!-- <h4 class="control-label" id="first-h4">ID 검색</h4>
                 <form class="w-search" style="margin-bottom:1rem; margin-right:0; width:100%;">
@@ -158,13 +234,13 @@
                     <span class="material-input"></span>
                 </div>
                 </form> -->
-                    <div>
+                    <!-- <div>
                         <h4>검색결과: {{searchQuery}}</h4>
                         <ul>
                             <follow-user isPlus="true" />
                         </ul>
                     </div>        
-			</div>
+			</div> -->
 		</div>
         </div>
 	</div>

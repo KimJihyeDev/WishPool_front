@@ -11,17 +11,27 @@
          <div class="friend-item friend-groups create-group" data-mh="friend-groups-item" style="height:250px; margin: 20px 0px;">
          
             <a href="#" class="  full-block" data-toggle="modal" data-target="#create-friend-group-1"></a>
-            <div class="content" style="height:100%; display:flex; flex-direction:column; align-item:center; justify-content: center;">
-         
-               <a href="#" class="btn btn-control bg-blue" data-toggle="modal" data-target="#create-friend-group-1" style="">
-                  <svg class="olymp-plus-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
-               <div class="ripple-container"></div></a>
-         
-               <div class="author-content">
-                  <a href="#" class="h5 author-name">My Family</a>
-                  <div class="country">6 Friends in the Group</div>
+            <div class="content" id="empty-area">
+               <div v-if="isWish">
+                  <a href="javascript:void(0)" v-on:click="emitPlus" class="btn btn-control bg-blue" data-toggle="modal" data-target="#create-friend-group-1" style="">
+                     <svg class="olymp-plus-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
+                  <div class="ripple-container"></div></a>
+            
+                  <div class="author-content">
+                     <a href="#" class="h5 author-name">비었어요!</a>
+                     <div class="country">버튼을 눌러 새로운 아이템을 추가해 보세요!</div>
+                  </div>
                </div>
-         
+               <div v-if="!isWish">
+                  <a href="javascript:void(0)" v-on:click="emitPlus" class="btn btn-control bg-purple" data-toggle="modal" data-target="#create-friend-group-1" style="">
+                     <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                  <div class="ripple-container"></div></a>
+                  
+                  <div class="author-content">
+                     <a href="#" class="h5 author-name">비었어요!</a>
+                     <div class="country">아직 완료된 아이템이 없네요!</div>
+                  </div>
+               </div>
             </div>
          
          </div>
@@ -35,9 +45,32 @@
 </template>
 <script>
 export default {
-    name: 'ItemEmpty'
+    name: 'ItemEmpty',
+    props: ['type'],
+    computed:{
+       isWish(){
+          if(this.type==='w'){
+             return true;
+          }
+          return false;
+       }
+    },
+    methods:{
+       emitPlus(){
+          this.$emit('btnPressed')
+       }
+    }
 }
 </script>
 <style scoped>
-
+   #empty-area{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 25%;
+   }
 </style>
