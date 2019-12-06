@@ -270,10 +270,12 @@
 				</div>      
 			</div>
     	</div>
+		<div style="margin-top:2.5rem;"></div>
 	</div>
 </template>
 <script>
 export default {
+	
 	name: 'Register_ResetPassword',
     data(){
 		return{
@@ -573,7 +575,8 @@ export default {
 		}
 
 	},
-   
+	components:{
+	},
     computed:{
         validateUser(){
             return {

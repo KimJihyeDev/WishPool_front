@@ -1,85 +1,138 @@
 <template>
+<div class="">
+    <div class="page-has-left-panels page-has-right-panels" style="cursor: url(&quot;undefined&quot;), default;">
 
-    <div class="page-has-left-panels page-has-right-panels">
-
-        <!-- Main Header Birthday -->
-
-        <!-- <div class="main-header">
-            <div class="content-bg-wrap bg-birthday"></div>
-
-        </div> -->
-
-        <!-- ... end Main Header Birthday -->
-
-       
-
-        <!-- Main Content Birthday -->
 
         <div class="container">
-			 <!-- 아이템 추가 버튼 -->
-			<div class="col col-lg-3 col-md-6 col-sm-12 col-12">
-				<router-link to="/item/add" ><a href="javascript:void(0)" class="btn btn-primary btn-lg full-width">아이템 추가</a></router-link>
-			</div>
-			<!-- ... end 아이템 추가 버튼 -->
-			<!-- collapse -->
-			<div class="col">
-				<button class="btn form-group" type="button" data-toggle="collapse" data-target="#multiCollapseExample1" aria-expanded="true" aria-controls="multiCollapseExample1">
-					<span class="crumina-module crumina-heading with-title-decoration">
-						<h5 class="heading-title">Wishes&nbsp;&nbsp;<i class="fas fa-sort-down"></i></h5> <!--화살표방향 펼치고닫히고 바뀌어야-->
-					</span>
-				</button>
-				
-				<div class="col">
-					<div class="collapse multi-collapse show" id="multiCollapseExample1">
-						<div class="card card-body">
-							<item v-for="item in unPurchasedList"
+            <div class="row">
+                <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
+                   
+                    <item-input v-on:getInputItem="addItem" />
+                    <div class="ui-block" style="margin-bottom:0px;">  
+                        <!-- <div class="ui-block-title">
+                            <h4 class="title">위시 아이템 리스트</h4>
+                        </div> -->
+                        <div class="top-header top-header-favorit">
+					
+                            <div class="profile-section with-social-menu-tabs">
+                                <div class="row">
+                                    <div class="col col-xl-8 m-auto col-lg-8 col-md-12">
+                                        <ul class="nav nav-tabs social-menu-tabs" role="tablist">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#home" role="tab">
+                                                    <span class="nav-content">Wishes</span>
+                                                </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#about" role="tab">
+                                                    <span class="nav-content">Completed</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+				        </div>
+                       
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Tab panes -->
+        
+        <div class="tab-content">
+            <!-- Wishes(미완료 리스트) -->
+            
+            <div class="tab-pane active" id="home" role="tabpanel">
+                <div class="container">
+                    <div class="ui-block">
+                        <!-- 상세 아이템 추가 버튼(절대 삭제 금지) -->
+                        <!-- <div class="ui-block-title">
+                            <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
+                                <a href="#" class="btn btn-primary btn-lg full-width" data-toggle="modal" data-target="#create-event">상세 아이템 추가</a>
+			                </div>
+                        </div> -->
+                        
+                        <!-- 위시아이템 -->
+                        
+                        <ul class="widget w-friend-pages-added notification-list friend-requests">
+                            <item v-for="item in unPurchasedList"
 							:key="item._id"
 							:name="item.itemName"
 							:price="item.itemPrice" 
 							:id="item._id"
+                            :visibleTo="item.visibleTo"
 							isCompleted="완료"
 							v-on:makePurchase="makePurchase"
 							v-on:cancelPurchase="cancelPurchase"
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col">
-				<button class="btn form-group" style="margin-top:1.5rem" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="true" aria-controls="multiCollapseExample2">
-					<span class="crumina-module crumina-heading with-title-decoration">
-						<h5 class="heading-title">Completed&nbsp;&nbsp;<i class="fas fa-sort-down"></i></h5>
-					</span>
-				</button>
-				<div class="col">
-					<div class="collapse multi-collapse show" id="multiCollapseExample2">
-						<div class="card card-body">
-							<item v-for="item in purchasedList"
+							/>                 
+                        </ul>
+                            
+                            <!-- .. end 위시아이템 -->
+                        </div>
+                </div>
+            </div>
+            <!-- Completed(완료 리스트) -->
+            <div class="tab-pane" id="about" role="tabpanel">
+                <div class="container">
+                    <div class="ui-block">
+                        <!-- 상세 아이템 추가버튼 -->
+                        <!-- <div class="ui-block-title">
+                            <div class="col col-lg-3 col-md-6 col-sm-12 col-12">
+				                <router-link to="/item/add" ><a href="javascript:void(0)" class="btn btn-primary btn-lg full-width"> 상세 아이템 추가</a></router-link>
+			                </div>
+                        </div> -->
+                        <!-- <div class="ui-block-title">
+                            <h6 class="title">완료 아이템 리스트</h6>
+                        </div> -->
+                
+                        <!-- 위시아이템 -->
+                            
+                        <ul class="widget w-friend-pages-added notification-list friend-requests">
+                            <item v-for="item in purchasedList"
 							:key="item._id"
 							:name="item.itemName"
 							:price="item.itemPrice"
+                            :visibleTo="item.visibleTo"
 							:id="item._id"
 							isCompleted="취소" 
 							v-on:makePurchase="makePurchase"
 							v-on:cancelPurchase="cancelPurchase"
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
-			
+							/>                  
+                        </ul>
+                    
+                            <!-- .. end 위시아이템 -->
+                    </div>
+                </div>
+            </div>
+
+            
+
             
         </div>
 
-        <!-- ... end Main Content Birthday -->
-        <a class="back-to-top" href="#">
-            <img src="/assets/svg-icons/back-to-top.svg" alt="arrow" class="back-icon"></a>
+    </div>
+            <!-- Window-popup Create Event -->
 
-        </div>
-    </template>
-    <script>
-		import Item from './Item.vue';
-		// Vuex
+<div class="modal fade" id="create-event" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog window-popup create-event" role="document">
+        <item-add />
+	</div>
+</div>
+
+<!-- ... end Window-popup Create Event -->
+<div style="margin-top:2.5rem;"></div>
+    </div>
+</template>
+<script>
+    import Item from './Item.vue';
+    import ItemAdd from './ItemAdd.vue';
+    import ItemInput from './ItemInput.vue';
+        // Vuex
 		// import { mapActions, mapState } from 'vuex';
 
         export default {
@@ -99,7 +152,8 @@
 				});
 
 				//Vuex
-				// this.fetchItemList();
+                // this.fetchItemList();
+                
 			},
             data() {
                 return {
@@ -141,11 +195,21 @@
 						// 	itemPrice: '1234원',
 						// 	purchasedBy: ''
 						// }
-					]
+                    ],
+                    item:{
+                        itemName: '',
+                        itemPrice: '',
+                        itemLink: '',
+                        itemRank: '',
+                        visibleTo: 'f',
+                        itemMemo: ''
+                    }
 				}
             },
             components: {
-                'item': Item
+                'item': Item,
+                'item-add': ItemAdd,
+                'item-input': ItemInput,
 			},
 			computed:{
 				unPurchasedList(){
@@ -167,38 +231,80 @@
 					console.log('purchase canceled.'+id);
 					const index = this.items.findIndex(item=> item._id === id);
 					this.items[index].purchasedBy = "";
-				},
+                },
+                moveToAdd(){
+                    this.$router.push({path:'/item/add'});
+                },
+                addItem(val){
+                    if(val){
+                        this.item.itemName = val.itemName;
+                        this.item.itemPrice = val.itemPrice;
+                    }
+                    this.$http.post(this.$serverUrl+'/item/add', this.item)
+                    .then(res=>{
+                        if(res.data.code == 200){
+                            console.log('정상 : '+res.data.msg);
+                            this.$socket.emit('reqList');
+                        }else if(res.data.code == 500){
+                            console.log('서버오류 : '+res.data.msg);
+                        }
+                    }).catch(e=>{
+                        console.error(e);
+                    });
+                    this.$router.push({path:'/item/list'});
+                    // location.href=this.$url+'item/list';
+                },
+                setInputItem(val){
+                    this.item.itemName = val.itemName;
+                    this.item.itemPrice = val.itemPrice;
+                    console.log(val);
+                    this.$http.post(this.$serverUrl+'/item/add', this.item)
+                    .then(res=>{
+                        if(res.data.code == 200){
+                            console.log('정상 : '+res.data.msg);
+                            this.$socket.emit('reqList');
+                        }else if(res.data.code == 500){
+                            console.log('서버오류 : '+res.data.msg);
+                        }
+                    }).catch(e=>{
+                        console.error(e);
+                    });
+                }
 				// Vuex
 				// ...mapActions(['fetchItemList'])
 			},
         }
-    </script>
-    <style scoped>
-		.btn-group-lg>.btn, .btn-lg {
-			padding-top: 1rem;
-			padding-bottom: 1rem;
-			width: 100%;
-			font-size: 1.2rem;
-		}
-
-		.show > .btn-secondary.dropdown-toggle {
-			background-color: #e6ecf5;
-			border-color: #e6ecf5;
-		}
-
-		.bootstrap-select > .dropdown-toggle{
-			padding: 0;
-			font-size: 1rem;
-			font-weight: bold;
-		}
-		.heading-title{
-			text-align: left;
-			padding-bottom: 5px;
-		}
-		@media (max-width: 1080px){
-			.btn-lg {
-				padding: 1rem;
-			}
-		}
-		
-	</style>
+</script>
+<style scoped>
+    .ui-block-title{
+        padding: 13px 13px 5px;
+    }
+    h6{
+        font-size:1rem;
+    }
+    .nav, .navbar{
+        flex-wrap: nowrap;
+    }
+    .w-search {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .nav-link{
+        height:100%;
+    }
+    .nav-content{
+        width: 100%;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+    .form-group.with-button button{
+        width: 45px;
+        background: #ff5e3a;
+    }
+    .ui-block-title .btn {
+        margin-bottom: 10px;
+    }
+    .ui-block{
+        width:100%;
+    }
+</style>
