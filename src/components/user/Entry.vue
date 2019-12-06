@@ -21,7 +21,7 @@
 										<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group label-floating is-empty" >
 												<label class="control-label">아이디</label>
-												<input class="form-control" placeholder="" type="text" :class="validateUser" v-model="user.userId">
+												<input class="form-control" placeholder="" type="text" :class="validateUser" v-model="user.userId" required>
                                                 <span v-if="hasTypedUserId && !isValidUserId" class="invalid-feedback">
                                                     <span class="error-box">
                                                         아이디는 3자~20자 이내의 영문,숫자만 가능합니다.
@@ -32,7 +32,7 @@
 										<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group label-floating is-empty">
 												<label class="control-label">비밀번호</label>
-												<input class="form-control" placeholder="" type="password" :class="validatePassword" v-model="user.password">
+												<input class="form-control" placeholder="" type="password" :class="validatePassword" v-model="user.password" required>
                                                 <span v-if="hasTypedPassword && !isValidPassword" class="invalid-feedback">
                                                     <span class="error-box">
                                                         비밀번호는 8자~50자, 특수문자와 숫자를 반드시 포함시켜야 합니다.
@@ -43,7 +43,7 @@
 										<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group label-floating is-empty" >
 												<label class="control-label">비밀번호 확인</label>
-												<input class="form-control" placeholder="" type="password" :class="validatePasswordConfirm" v-model="passwordConfirm">
+												<input class="form-control" placeholder="" type="password" :class="validatePasswordConfirm" v-model="passwordConfirm" required>
                                                 <span v-if="hasTypedPasswordConfirm && !isValidPasswordConfirm" class="invalid-feedback">
                                                     <span class="error-box">
                                                     	비밀번호와 같게 입력해주세요.
@@ -54,7 +54,7 @@
 										<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group label-floating is-empty">
 												<label class="control-label">이름</label>
-												<input class="form-control" placeholder="" type="text" :class="validateUserName" v-model="user.userName">
+												<input class="form-control" placeholder="" type="text" :class="validateUserName" v-model="user.userName" required>
                                                 <span v-if="hasTypedUserName && !isValidUserName" class="invalid-feedback">
                                                     <span class="error-box">
                                                         이름은 20자 이내의 한글, 영문만 가능합니다.
@@ -65,7 +65,7 @@
 										<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group label-floating is-empty" >
 												<label class="control-label">닉네임</label>
-												<input class="form-control" placeholder="" type="text" :class="validateNickName" v-model="user.nickName">
+												<input class="form-control" placeholder="" type="text" :class="validateNickName" v-model="user.nickName" required>
                                                 <span v-if="hasTypedNickName && !isValidNickName" class="invalid-feedback">
                                                     <span class="error-box">
                                                         닉네임은 1자~20자 이내의 한글, 영문, 숫자만 가능합니다.
@@ -76,7 +76,7 @@
 										<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group label-floating is-empty" >
 												<label class="control-label">전화번호</label>
-												<input class="form-control" placeholder="" type="text" :class="validatePhone" v-model="user.phone">
+												<input class="form-control" placeholder="" type="text" :class="validatePhone" v-model="user.phone" required>
                                                 <span v-if="hasTypedPhone && !isValidPhone" class="invalid-feedback">
                                                     <span class="error-box">
                                                         전화번호 형식에 맞게 입력해주세요.
@@ -87,7 +87,7 @@
 										<div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
 											<div class="form-group label-floating is-empty" >
 												<label class="control-label">이메일</label>
-												<input class="form-control" placeholder="" type="text" :class="validateEmail" v-model="user.email">
+												<input class="form-control" placeholder="" type="text" :class="validateEmail" v-model="user.email" required>
                                                 <span v-if="hasTypedEmail && !isValidEmail" class="invalid-feedback">
                                                     <span class="error-box">
                                                         이메일 형식에 맞게 입력해주세요.
@@ -98,7 +98,7 @@
 											<div class="form-group date-time-picker label-floating" >
 												<label class="control-label">생년월일</label>
 												<!-- v-model="user.birth" -->
-												<input name="datetimepicker" style="padding-top:30px" value="YYYY/MM/DD" :class="validateBirth" v-model="birthConfirm" >
+												<input name="datetimepicker" style="padding-top:30px" value="YYYY/MM/DD" :class="validateBirth" v-model="birthConfirm" required>
                                                 <span v-if="hasTypedBirth && !isValidBirth" class="invalid-feedback">
                                                     <span class="error-box">
                                                         생년월일 8자리를 숫자만 입력해주세요.
@@ -270,10 +270,12 @@
 				</div>      
 			</div>
     	</div>
+		<div style="margin-top:2.5rem;"></div>
 	</div>
 </template>
 <script>
 export default {
+	
 	name: 'Register_ResetPassword',
     data(){
 		return{
@@ -363,10 +365,15 @@ export default {
 				return false;
 			}
 
-
+		
 			this.$http.post(this.$serverUrl +'/users/entry', this.user)
-			.then((result)=>{
-				console.log(result);
+			.then((response)=>{
+				console.log('토큰'+ response);
+
+				if(response.data.code === 200){
+					localStorage.setItem('wishToken',response.data.result);
+					this.$router.push('/item/list');
+				}
 			})
 			.catch((err)=>{
 				console.error(err);
@@ -554,26 +561,26 @@ export default {
 						}else{
 							this.hasTypedBirth = true;
 							this.isValidBirth = true;
+							// 임시코드. 달력 추가 후 변경할 것
 							// 모든 조건을 만족한 경우 user.birth 에 값을 바인딩
 							this.user.birth = year + '-' + month + '-' + day;
 						} 
-				
 					}else{
 						this.hasTypedBirth = true;
 						this.isValidBirth = false;
 					}
-
-
-
 				}else{
-					   
 					this.hasTypedBirth = false;
 				}	
 			}
 		}
-
 	},
-   
+	created:function(){
+		const token = localStorage.getItem('wishToken');
+		if(token){
+			this.$router.push('/item/list');
+		}
+	},
     computed:{
         validateUser(){
             return {

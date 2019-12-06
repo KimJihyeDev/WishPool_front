@@ -1,30 +1,6 @@
 <template>
-<div>
-    <li class="inline-items" v-on:click="goDetail">
-		<div class="item-detail">
-			<div class="author-thumb control-con">
-				<img src="/assets/img/avatar41-sm.jpg" alt="author">
-					
-				<div v-if=isPublic class="label-avatar bg-blue-light public">공개</div>
-				<div v-if=isPrivate class="label-avatar post-category bg-primary private">비공개</div>
-				<div v-if=isGroup class="label-avatar post-category bg-purple group">그룹공개</div>
-			</div>
-			<div class="notification-event">
-				<a href="#" class="h6 notification-friend">{{name}}</a>
-				<span class="chat-message-item">{{price}}</span>
-			</div>
-		</div>
-		<div class="more-btn">
-			<a href="javascript:void(0)" v-on:click.stop="copyLink" class="accept-request" style="border:1px solid #6cb6f5;">
-				<span class="without-text" style="color:#6cb6f5; font-size:x-small;">링크</span>
-			</a>
-			<a href="javascript:void(0)" v-on:click.stop="makePurchase" class="accept-request" style="border:1px solid #7c5ac2;">
-				<span class="without-text" style="color:#7c5ac2; font-size:x-small;">{{isCompleted}}</span>
-			</a>
-		</div>
-	</li>
-    <!-- 삭제 -->
-    <!-- <div class="col col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
+<div class="row">
+    <div class="col col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
 		<div class="ui-block">
 			<div class="half-block">
 				<a href="javascript:void(0)" v-on:click="goDetail">
@@ -50,7 +26,7 @@
 			</div>
 			
 		</div>
-	</div> -->
+	</div>
 </div>
 </template>
 <script>
@@ -60,7 +36,6 @@ export default {
 		'name', //아이템 이름
 		'price', //아이템 가격
 		'isCompleted',
-		'visibleTo',
 		'id'
 	],
 	created(){
@@ -70,28 +45,13 @@ export default {
             self.show=data;
         });
 	},
-	computed:{
-		isPublic(){
-			return this.visibleTo === "t" ? true :false;
-		},
-		isPrivate(){
-			return this.visibleTo === "f" ? true :false;
-		},
-		isGroup(){
-			if(this.isPublic || this.isPrivate){
-				return false;
-			}else{
-				return true;
-			}
-		}
-	},
 	methods:{
 		copyLink(){
 			console.log(this.$url+'/detail/'+this.id); //this.$route.params.detail....id?
 			// Android : this.$url+'/detail/'+this.id 을 안드로이드 폰에 복사해야함.
 		},
 		goDetail(){
-			console.log(this.id);
+			//console.log(this.id);
 			this.$router.push({path:'/item/detail/'+this.id})
 		},
 		goModify(){
@@ -164,39 +124,5 @@ export default {
 			width: 100%;
 			margin-top: 10px;
 		}
-	}
-	.label-avatar{
-		border-radius: 3px;
-		top:-6px;
-	}
-	.public{
-		width: 30px;
-		right: 16px;
-	}
-	.private{
-		width: 35px;
-		right: 12px;
-		padding: 0 0.5px;
-	}
-	.group{
-		width: 40px;
-		padding: 0 0.5px;
-		right: 9px;
-	}
-	.inline-items{
-		padding-right:1.2rem;
-	}
-	.item-detail{
-		display:inline-flex;
-		flex-direction: row;
-		width: 70%;
-	}
-	.more-btn{
-		display: inline;
-
-	}
-	.accept-request{
-		padding-right:8px; padding-left:8px;
-		background:transparent;
 	}
 </style>
