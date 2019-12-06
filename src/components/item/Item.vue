@@ -10,8 +10,8 @@
 				<div v-if=isGroup class="label-avatar post-category bg-purple group">그룹공개</div>
 			</div>
 			<div class="notification-event">
-				<a href="#" class="h6 notification-friend">{{name}}</a>
-				<span class="chat-message-item">{{price}}</span>
+				<a href="#" class="h6 notification-friend">{{item.itemName}}</a>
+				<span class="chat-message-item">{{item.itemPrice}}</span>
 			</div>
 		</div>
 		<div class="more-btn">
@@ -23,59 +23,18 @@
 			</a>
 		</div>
 	</li>
-    <!-- 삭제 -->
-    <!-- <div class="col col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12">
-		<div class="ui-block">
-			<div class="half-block">
-				<a href="javascript:void(0)" v-on:click="goDetail">
-			<div class="birthday-item inline-items">
-				<div class="author-thumb">
-					<img src="/assets/img/avatar7-sm.jpg" alt="author">
-				</div>
-				<div class="birthday-author-name">
-					<a href="javascript:void(0)" class="h6 author-name">{{name}} </a>
-					<div class="birthday-date">{{price}}</div>
-				</div>
-				
-			</div>
-			</a>
-			</div>
-			<div class="half-block2">
-				<div class="btn-list">
-					<a v-on:click.stop="voidClick" href="javascript:void(0)" class="btn btn-sm bg-blue">공개</a>
-					<a v-on:click.stop="copyLink" href="javascript:void(0)" class="btn btn-sm bg-blue">링크</a>
-					<a v-on:click.stop="goModify" href="javascript:void(0)" class="btn btn-sm bg-blue">수정</a>
-					<a v-on:click.stop="makePurchase" href="javascript:void(0)" class="btn btn-sm bg-blue">{{isCompleted}}</a>
-				</div>
-			</div>
-			
-		</div>
-	</div> -->
 </div>
 </template>
 <script>
 export default {
 	name: 'Item',
-	props: [
-		'name', //아이템 이름
-		'price', //아이템 가격
-		'isCompleted',
-		'visibleTo',
-		'id'
-	],
-	created(){
-		const self = this;
-		this.$socket.on('news', function(data){
-            console.log(self.show);
-            self.show=data;
-        });
-	},
+	props: [ 'item', 'isCompleted' ],
 	computed:{
 		isPublic(){
-			return this.visibleTo === "t" ? true :false;
+			return this.item.visibleTo === "t" ? true :false;
 		},
 		isPrivate(){
-			return this.visibleTo === "f" ? true :false;
+			return this.item.visibleTo === "f" ? true :false;
 		},
 		isGroup(){
 			if(this.isPublic || this.isPrivate){
@@ -87,29 +46,31 @@ export default {
 	},
 	methods:{
 		copyLink(){
-			console.log(this.$url+'/detail/'+this.id); //this.$route.params.detail....id?
-			// Android : this.$url+'/detail/'+this.id 을 안드로이드 폰에 복사해야함.
+			console.log(this.$url+'/detail/'+this.item._id); //this.$route.params.detail...._id?
+			// Android : this.$url+'/detail/'+this._id 을 안드로이드 폰에 복사해야함.
 		},
 		goDetail(){
-			console.log(this.id);
-			this.$router.push({path:'/item/detail/'+this.id})
+			console.log(this.item._id);
+			this.$router.push({path:'/item/detail/'+this.item._id})
 		},
 		goModify(){
-			this.$router.push({path:'/item/modify/'+this.id})
+			this.$router.push({path:'/item/modify/'+this.item._id})
 		},
 		voidClick(){
 			//공개 버튼 누를때는 아무 작동 하지 않도록 클릭 무효화
 			return false;
 		},
 		makePurchase(){
+			//만약 완료인 상태에서 눌렀다면
 			if(this.isCompleted =='완료'){
-				this.$emit('makePurchase', this.id);
-				this.$socket.emit('purchasedBy', 'me');
-				
+				//item의 구매자를 'me'로 설정하고,
+				this.item.purchasedBy = 'me';
+				//완료 이벤트를 itemList로 전달 - view단에서 먼저 처리해서 UX상 바로 처리되었다는 느낌 들게 한다.
 			}else if(this.isCompleted =='취소'){
-				this.$emit('cancelPurchase', this.id);
-				this.$socket.emit('purchasedBy', 'cancel');
+				this.item.purchasedBy =''
 			}
+			this.$emit('onPurchase', this.item);
+			
 		}
 	}
 }
