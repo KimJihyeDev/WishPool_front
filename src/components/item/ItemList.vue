@@ -190,7 +190,7 @@
                 //먼저 서버로 해당 아이템이 완료되었다는 수정 API를 호출한다.
                 (async()=>{
                     try{
-                        const res = await this.$http.patch(this.$serverUrl+'item/modify/'+payload._id, payload);
+                        const res = await this.$http.patch(this.$serverUrl+'item/modify/'+payload._id, payload.item);
                         if(res.data.code === "200"){
                             console.log('완료 처리');
                             //this.items배열의 수정될 객체의 인덱스를 찾아

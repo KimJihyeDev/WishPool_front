@@ -39,11 +39,11 @@ export default {
 		'id'
 	],
 	created(){
-		const self = this;
-		this.$socket.on('news', function(data){
-            console.log(self.show);
-            self.show=data;
-        });
+		// const self = this;
+		// this.$socket.on('news', function(data){
+        //     console.log(self.show);
+        //     self.show=data;
+        // });
 	},
 	methods:{
 		copyLink(){

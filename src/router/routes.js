@@ -22,11 +22,11 @@ export default [
     { path:'/item/list/:userId', component:ItemList, name:'itemList'}, //userId라는 변수에 아이디값 넣어주면 해당 아이디의 아이템리스트 이동가능
     { path:'/item/add', component:ItemAdd},
     { path:'/item/modify',component:ItemModify},
+    { path:'/item/modify/:itemId',component:ItemModify},
     { path:'/user/entry',component:Entry},
     { path:'/temp',component:Temp}, //삭제
     { path:'/item/detail', component:ItemDetail}, //배포시 삭제
     { path:'/item/detail/:itemId',component:ItemDetail},
-    { path:'/item/modify/:itemId',component:ItemModify},
     { path:'/user/register', component: ResetPassword},
     { path:'/user/login', component: Login},
     // { path:'/user/profile/:userId', component: Profile},

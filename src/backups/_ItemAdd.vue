@@ -1,7 +1,6 @@
 <template>
 
    <div class="container">
-	   {{message}}
 	<div class="row" >
 			<div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12" >
 				<div class="ui-block" >
@@ -31,12 +30,12 @@
 									</div>
 									<div class="form-group label-floating">
 										<label>아이템 이름</label>
-										<input class="form-control" v-model="item.itemName">
+										<input class="form-control" placeholder="" type="text" v-model="item.itemName">
 									</div>
 						
 									<div class="form-group label-floating">
 										<label>가격(숫자만 입력하세요)</label>
-										<input class="form-control" v-model="item.itemPrice">
+										<input class="form-control" placeholder="" type="text" v-model="item.itemPrice">
 									</div>
 						
 									<div class="form-group label-floating">
@@ -53,15 +52,15 @@
 											<div>
 												<span class="star-input" style="margin-top: 0;margin-bottom:3%">
 													<span class="input">
-														<input type="radio" ref="star" id="p1" v-model="item.itemRank" />
+														<input type="radio" name="star-input" value="1" id="p1" v-model="item.itemRank" />
 														<label for="p1">1</label>
-														<input type="radio" ref="star" id="p2" v-model="item.itemRank" />
+														<input type="radio" name="star-input" value="2" id="p2" v-model="item.itemRank" />
 														<label for="p2">2</label>
-														<input type="radio" ref="star" id="p3" v-model="item.itemRank" />
+														<input type="radio" name="star-input" value="3" id="p3" v-model="item.itemRank" />
 														<label for="p3">3</label>
-														<input type="radio" ref="star" id="p4" v-model="item.itemRank" />
+														<input type="radio" name="star-input" value="4" id="p4" v-model="item.itemRank" />
 														<label for="p4">4</label>
-														<input type="radio" ref="star" id="p5" v-model="item.itemRank" />
+														<input type="radio" name="star-input" value="5" id="p5" v-model="item.itemRank" />
 														<label for="p5">5</label>
 													</span>
 												<!-- <output for="star-input"><b>0</b>점</output>						 -->
@@ -69,7 +68,7 @@
 											</div>
 
 										<select class=" form-control" v-model="item.visibleTo">
-											<option value="#" class="control-label">공개 범위를 선택하세요</option>
+											<option value="0" class="control-label">공개 범위를 선택하세요</option>
 											<option value="t">공개</option>
 											<option value="f">비공개</option>
 											<!-- <option value="groupId">그룹공개</option> -->
@@ -78,7 +77,7 @@
 								</div>
 							</div>
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-								<button class="btn btn-secondary btn-lg full-width" v-on:click="doModify">수정완료</button>
+								<button class="btn btn-secondary btn-lg full-width" v-on:click="addItem">등록</button>
 							</div>
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
 								<button class="btn btn-primary btn-lg full-width">취소</button>
@@ -92,55 +91,49 @@
 	</div>
 </template>
 
-<!--<script scr="/assets/js/star.js"></script>
+<script scr="/assets/js/star.js"></script>
 <script>
  $(".star").on('click',function(){
    var idx = $(this).index();
-   $(".star").removeClass("on");
+   $(".star").removeClass("on");s
      for(var i=0; i<=idx; i++){
         $(".star").eq(i).addClass("on");
    }
  });
-  $(".star").on('click',function(){
-   var idx = $(this).index();
-   $(".star").removeClass("on");
-     for(var i=0; i<=idx; i++){
-        $(".star").eq(i).addClass("on");
-   }
- });
-</script>-->
+</script>
 <script>
 export default {
-	name: 'ItemModify',
-	created(){
-        this.$http.get(this.$serverUrl+this.$route.path)
-        .then(res=>{
-			console.log(res.data);
-			this.item = res.data;
-        }).catch(e=>{
-            console.error(e);
-		})
-		
-    },
+	name: 'ItemAdd',
 	data(){
 		return {
-			message:'',
-			item: {},
+			item:{
+				itemName: '',
+				itemPrice: '',
+				itemLink: '',
+				itemRank: '',
+				visibleTo: 0,
+				itemMemo: ''
+			}
 		}
 	},
 	methods:{
-		doModify(){
-			this.$http.patch(this.$serverUrl+this.$route.path, this.item)
-			.then(()=>{
-				// console.log(res.data);
-				//목록으로 이동하는 코드
-				this.$socket.emit('reqList', 'delete');
+		addItem(){
+			console.log(this.$serverUrl+this.$route.path);
+			this.$http.post(this.$serverUrl+this.$route.path, this.item)
+			.then(res=>{
+				if(res.data.code == 200){
+					console.log('정상 : '+res.data.msg);
+					// this.$socket.emit('reqList');
+				}else if(res.data.code == 500){
+					console.log('서버오류 : '+res.data.msg);
+				}
 			}).catch(e=>{
 				console.error(e);
-			})
-			this.$router.push({path:'/item/list'})
+			});
+			this.$router.push({path:'/item/list'});
+			// location.href=this.$url+'item/list';
 		}
-	},
+	}
 }
 </script>
 
@@ -164,5 +157,6 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 .star-input>.input>label[for="p4"]{width:120px;z-index:2;}
 .star-input>.input>label[for="p5"]{width:150px;z-index:1;}
 .star-input>output{display:inline-block;width:60px; font-size:18px;text-align:right; vertical-align:middle;}
+.label-floating .form-control, .label-floating input, .label-floating select{padding:1.1rem .5rem}
 
 </style>

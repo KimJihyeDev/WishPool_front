@@ -111,14 +111,14 @@
 export default {
     name: 'ItemModify',
 	created(){
-        this.$http.get(this.$serverUrl+this.$route.path)
-        .then(res=>{
-			console.log(res.data);
-			this.item = res.data;
-        }).catch(e=>{
-            console.error(e);
-		})
-		
+        (async()=>{
+            try{
+                const res = await this.$http.get(this.$serverUrl+this.$route.path);
+                this.item = res.data;
+            }catch(e){
+                console.error(e);
+            }
+        })();
     },
 	data(){
 		return {
@@ -156,15 +156,17 @@ export default {
     },
 	methods:{
 		doModify(){
-			this.$http.patch(this.$serverUrl+this.$route.path, this.item)
-			.then(()=>{
-				// console.log(res.data);
-				//목록으로 이동하는 코드
-				this.$socket.emit('reqList', 'delete');
-			}).catch(e=>{
-				console.error(e);
-			})
-			this.$router.push({path:'/item/list'})
+            (async()=>{
+                try {
+                    const res = await this.$http.patch(this.$serverUrl+this.$route.path, this.item);
+                    if(res.data.code == "200"){
+                        console.log(res.data.msg);
+                        this.$router.push({name:'itemList', params: {userId: this.$userId}});
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            })();
 		},
         findItem(){
             //this.linkQuery로 새창 띄우기
@@ -176,7 +178,7 @@ export default {
             this.collapseOption = !this.collapseOption;
         },
         goToList(){
-            this.$router.push({path:'/item/list'});
+            this.$router.push({name:'itemList', params: {userId: this.$userId}});
         }
 	},
 }

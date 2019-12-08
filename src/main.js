@@ -11,17 +11,19 @@ import VueRouter from 'vue-router'
 import Routes from './router/routes.js'
 // axios 추가
 import axios from 'axios'
+
 // 웹소켓 추가
 // import io from 'vue-socket.io';
 // const socket = io('http://localhost:3000');
 
-import io from 'socket.io-client'
-const socket = io('http://localhost:3001');
+// import io from 'socket.io-client'
+// const socket = io('http://localhost:3001');
 
 //Vuex
 // import store from './store';
 
-Vue.prototype.$socket = socket;
+//웹소켓 전역객체에 달기
+// Vue.prototype.$socket = socket;
 
 //뷰라이브러리에서 라우팅 사용할수 있게 설정
 Vue.use(VueRouter)
