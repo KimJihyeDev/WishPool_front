@@ -19,6 +19,7 @@ import Temp from '../components/Temp.vue'
 export default [
     { path:'/category/list', component:CategoryList },
     { path:'/item/list', component:ItemList},
+    { path:'/item/list/:userId', component:ItemList},
     { path:'/item/add', component:ItemAdd},
     { path:'/item/modify',component:ItemModify},
     { path:'/user/entry',component:Entry},
@@ -29,7 +30,7 @@ export default [
     { path:'/user/register', component: ResetPassword},
     { path:'/user/login', component: Login},
     // { path:'/user/profile/:userId', component: Profile},
-    { path:'/follow/follow', component: FollowList},
+    { path:'/follow/list', component: FollowList},
     { path:'/follow/detail/', component: FollowDetail},
     { path:'/follow/detail/:id', component: FollowDetail},
     { path:'/noti', component: NotiList},

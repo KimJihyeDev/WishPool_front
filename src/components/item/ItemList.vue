@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
                    
-                    <item-input v-on:onInsert="handleInsert" />
+                    <!-- <item-input v-on:onInsert="handleInsert" /> -->
                     <div class="ui-block" style="margin-bottom:0px;">  
                         <!-- <div class="ui-block-title">
                             <h4 class="title">위시 아이템 리스트</h4>
@@ -119,15 +119,16 @@
 <script>
     import Item from './Item.vue';
     import ItemAdd from './ItemAdd.vue';
-    import ItemInput from './ItemInput.vue';
+    // import ItemInput from './ItemInput.vue';
     import ItemEmpty from './ItemEmpty.vue';
 
     export default {
         name: 'ItemList',
         created(){
+            console.log(this.$serverUrl+this.$route.fullPath);
             (async()=>{
                 try{
-                    let res = await this.$http.get(this.$serverUrl+this.$route.path);
+                    let res = await this.$http.get(this.$serverUrl+this.$route.fullPath);
                     this.items = res.data.items;
                 }catch(e){
                     console.error(e);
@@ -150,7 +151,7 @@
         components: {
             'item': Item,
             'item-add': ItemAdd,
-            'item-input': ItemInput,
+            // 'item-input': ItemInput,
             'item-empty': ItemEmpty
         },
         computed:{

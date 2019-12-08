@@ -1,310 +1,211 @@
 <template>
-<div class="">
-    <div class="page-has-left-panels page-has-right-panels" style="cursor: url(&quot;undefined&quot;), default;">
+    <div class="landing-page">
+		<!-- Preloader --><!-- ... end Preloader -->
+		<div class="content-bg-wrap"></div>
+		<!-- Header Standard Landing  --><!-- ... end Header Standard Landing  -->
+		<div class="container">
+			<div class="row display-flex">
 
-
-        <div class="container">
-            <div class="row">
-                <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
-                   
-                    <div class="ui-block" style="margin-bottom:0px;">  
-                        <!-- <div class="ui-block-title">
-                            <h4 class="title">위시 아이템 리스트</h4>
-                        </div> -->
-                        <div class="top-header top-header-favorit">
+				<div class="col col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
 					
-                            <div class="profile-section with-social-menu-tabs">
-                                <div class="row">
-                                    <div class="col col-xl-8 m-auto col-lg-8 col-md-12">
-                                        <ul class="nav nav-tabs social-menu-tabs" role="tablist">
-
-                                            <li class="nav-item">
-                                                <a class="nav-link active" data-toggle="tab" href="#home" role="tab">
-                                                    <span class="nav-content">Wishes</span>
-                                                </a>
-                                            </li>
-
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#about" role="tab">
-                                                    <span class="nav-content">Completed</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            
-				        </div>
-                       
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- Tab panes -->
-        
-        <div class="tab-content">
-            <!-- Wishes(미완료 리스트) -->
-            
-            <div class="tab-pane active" id="home" role="tabpanel">
-                <div class="container">
-                    <div class="ui-block">
-                
-				<div class="ui-block-title">
-					<h4 class="title">내 Follow 목록</h4>
-					<!-- <a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="#olymp-three-dots-icon"></use></svg></a> -->
+					<!-- Login-Registration Form  -->
+					
+					<div class="registration-login-form">
+						<!-- Nav tabs -->
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div class="tab-pane active" id="home" role="tabpanel" data-mh="log-tab" style="">
+								<div class="title h6">회원가입</div>
+								<form class="content">
+									<div class="row">
+										<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+											<div class="form-group label-floating is-empty" >
+												<label class="control-label">아이디</label>
+												<input class="form-control" placeholder="" type="text" :class="validateUser" v-model="user.userId">
+                                                <span v-if="hasTypedUserId && !isValidUserId" class="invalid-feedback">
+                                                    <span class="error-box">
+                                                        아이디는 3자~20자 이내의 영문,숫자만 가능합니다.
+                                                    </span>
+                                                </span>
+											<span class="material-input"></span></div>
+										</div>
+									</div>
+								</form>
+                                <a href="#" class="btn btn-purple btn-lg full-width" style="font-size:1.1rem" v-on:click="entry">회원가입 완료</a>
+							</div>
+							<!-- login-tab 삭제 -->
+						</div>
+					</div>
+					
+					<!-- ... end Login-Registration Form  -->		
 				</div>
-				
-				<!-- Notification List Frien Requests -->
-				
-				<ul class="notification-list friend-requests">
-					<li>
-						<div class="author-thumb">
-							<img src="/assets/img/avatar15-sm.jpg" alt="author">
-						</div>
-						<div class="notification-event" >
-							<a href="#" class="h6 notification-friend">Tamara Romanoff</a>
-							<span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
-						</div>
-						<span class="notification-icon">
-                            <a href="#" class="accept-request request-del">
-                                <span class="icon-minu without-texts">
-                                    <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-                                </span>
-                            </a>
-
-                        </span>
-                    </li>
-				</ul>
-				
-				<!-- ... end Notification List Frien Requests -->
 			</div>
-                </div>
-            </div>
-            <!-- Completed(완료 리스트) -->
-            <div class="tab-pane" id="about" role="tabpanel">
-                <div class="container">
-                    <div class="ui-block">
-                
-				<div class="ui-block-title">
-					<h4 class="title">내 Follower 목록</h4>
-					<!-- <a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="#olymp-three-dots-icon"></use></svg></a> -->
-				</div>
-				
-				<!-- Notification List Frien Requests -->
-				
-				<ul class="notification-list friend-requests">
-					<li>
-						<div class="author-thumb">
-							<img src="/assets/img/avatar15-sm.jpg" alt="author">
-						</div>
-						<div class="notification-event" >
-							<a href="#" class="h6 notification-friend">Tamara Romanoff</a>
-							<span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
-						</div>
-						<span class="notification-icon">
-                            <a href="#" class="accept-request request">
-                                <span class="icon-add without-texts" style="margin-right:0px;">
-                                    <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
-                                </span>
-                            </a>
-
-                        </span>
-                    </li>
-				</ul>
-				
-				<!-- ... end Notification List Frien Requests -->
-			</div>
-                </div>
-            </div>
-
-            
-
-            
-        </div>
-
-    </div>
-            <!-- Window-popup Create Event -->
-
-<div class="modal fade" id="create-event" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
-	<div class="modal-dialog window-popup create-event" role="document">
+		</div>
+		<div style="margin-top:2.5rem;"></div>
 	</div>
-</div>
-
-<!-- ... end Window-popup Create Event -->
-    </div>
 </template>
 <script>
-        // Vuex
-		// import { mapActions, mapState } from 'vuex';
-
-        export default {
-			name: 'ItemList',
-			created(){
-				// this.$http.get(this.$serverUrl+this.$route.path)
-				// .then(res=>{
-				// 	console.log(res.data);
-				// 	this.items = res.data;
-				// })
-
-				/*웹소켓으로 데이터 가져오기*/
-				const self = this;
-				this.$socket.emit('reqList');
-				this.$socket.on('resList', function(data){
-					self.items = data;
-				});
-
-				//Vuex
-                // this.fetchItemList();
-                
+export default {
+	
+	name: 'Register_ResetPassword',
+    data(){
+		return{
+			user:{
+				userId:'',
+				userName:'테스트임미당',
+				email:'test@test.com',
+				password:'1234',
+				phone:'010-111-2222',
+				nickName:'tempNick',
+				birth:'20180327',
+				entryType:'w',
 			},
-            data() {
-                return {
-					//Vuex로 할경우 items는 주석처리해야함
-					items: [
-						// {	
-						// 	_id: 0,
-						// 	itemName: '고양이 마우스 장난감',
-						// 	itemPrice: '10000원',
-						// 	purchasedBy: 'me'
-						// },
-						// {	
-						// 	_id: 1,
-						// 	itemName: 'vue.js 책',
-						// 	itemPrice: '230000원',
-						// 	purchasedBy: 'you'
-						// },
-						// {	
-						// 	_id: 2,
-						// 	itemName: 'starbuck 기프티콘',
-						// 	itemPrice: '1234원',
-						// 	purchasedBy: 'he'
-						// },
-						// 						{	
-						// 	_id: 3,
-						// 	itemName: '텀블러',
-						// 	itemPrice: '10000원',
-						// 	purchasedBy: ''
-						// },
-						// {	
-						// 	_id: 4,
-						// 	itemName: '정수기',
-						// 	itemPrice: '230000원',
-						// 	purchasedBy: ''
-						// },
-						// {	
-						// 	_id: 5,
-						// 	itemName: '루이비통',
-						// 	itemPrice: '1234원',
-						// 	purchasedBy: ''
-						// }
-                    ],
-                    item:{
-                        itemName: '',
-                        itemPrice: '',
-                        itemLink: '',
-                        itemRank: '',
-                        visibleTo: 'f',
-                        itemMemo: ''
-                    }
-				}
-            },
-            components: {
-			},
-			computed:{
-				unPurchasedList(){
-					return this.items.filter(item => item.purchasedBy === '');
-				},
-				purchasedList(){
-					return this.items.filter(item => item.purchasedBy !== '')
-				},
-				// Vuex
-				// ...mapState(['items'])
-			},
-			methods:{
-				makePurchase(id){
-					console.log('purchase made.'+id);
-					const index = this.items.findIndex(item=> item._id === id);
-					this.items[index].purchasedBy = "me";
-				},
-				cancelPurchase(id){
-					console.log('purchase canceled.'+id);
-					const index = this.items.findIndex(item=> item._id === id);
-					this.items[index].purchasedBy = "";
-                },
-                moveToAdd(){
-                    this.$router.push({path:'/item/add'});
-                },
-                addItem(val){
-                    if(val){
-                        this.item.itemName = val.itemName;
-                        this.item.itemPrice = val.itemPrice;
-                    }
-                    this.$http.post(this.$serverUrl+'/item/add', this.item)
-                    .then(res=>{
-                        if(res.data.code == 200){
-                            console.log('정상 : '+res.data.msg);
-                            this.$socket.emit('reqList');
-                        }else if(res.data.code == 500){
-                            console.log('서버오류 : '+res.data.msg);
-                        }
-                    }).catch(e=>{
-                        console.error(e);
-                    });
-                    this.$router.push({path:'/item/list'});
-                    // location.href=this.$url+'item/list';
-                },
-                setInputItem(val){
-                    this.item.itemName = val.itemName;
-                    this.item.itemPrice = val.itemPrice;
-                    console.log(val);
-                    this.$http.post(this.$serverUrl+'/item/add', this.item)
-                    .then(res=>{
-                        if(res.data.code == 200){
-                            console.log('정상 : '+res.data.msg);
-                            this.$socket.emit('reqList');
-                        }else if(res.data.code == 500){
-                            console.log('서버오류 : '+res.data.msg);
-                        }
-                    }).catch(e=>{
-                        console.error(e);
-                    });
-                }
-				// Vuex
-				// ...mapActions(['fetchItemList'])
-			},
+			// 비번 재입력
+			passwordConfirm:'',
+			// 생일 확인용
+			birthConfirm:'',
+			// 입력값 널값 체크
+            hasTypedUserId:false,
+            hasTypedUserName:false,
+            hasTypedEmail:false,
+            hasTypedPassword:false,
+            hasTypedPasswordConfirm:false,
+            hasTypedPhone:false,
+            hasTypedNickName:false,
+			hasTypedBirth:false,
+			// 입력값 유효성 체크
+			isValidUserId:false,
+			isValidUserName:false,
+			isValidEmail:false,
+			isValidtPassword:false,
+			isValidPasswordConfirm:false,
+			isValidPhone:false,
+			isValidNickName:false,
+			isValidBirth:false,
+		}
+	},
+	methods:{
+		entry(){
+			this.$http.post(this.$serverUrl +'/users/temp', this.user)
+			.then((result)=>{
+				console.log(result);
+			})
+			.catch((err)=>{
+				console.error(err);
+			})
+		}
+	},
+	watch:{
+		
+	},
+	components:{
+	},
+    computed:{
+        validateUser(){
+            return {
+                'was-validated' : this.user.userId && this.isValidUserId,
+                'not-validated' : this.user.userId && !this.isValidUserId
+            }
+        },
+        validateUserName(){
+            return {
+                'was-validated' : this.user.userName && this.isValidUserName,
+                'not-validated' : this.user.userName && !this.isValidUserName
+            }
+        },
+        validateEmail(){
+            return {
+                'was-validated' : this.user.email && this.isValidEmail,
+                'not-validated' : this.user.email && !this.isValidEmail
+            }
+        },
+        validatePassword(){
+            return {
+                'was-validated' : this.user.password && this.isValidPassword,
+                'not-validated' : this.user.password && !this.isValidPassword
+            }
+        },
+        validatePasswordConfirm(){
+            return {
+                'was-validated' : this.passwordConfirm && this.isValidPasswordConfirm,
+                'not-validated' : this.passwordConfirm && !this.isValidPasswordConfirm
+            }
+        },
+        validatePhone(){
+            return {
+                'was-validated' : this.user.phone && this.isValidPhone,
+                'not-validated' : this.user.phone && !this.isValidPhone
+            }
+        },
+        validateNickName(){
+            return {
+                'was-validated' : this.user.nickName && this.isValidNickName,
+                'not-validated' : this.user.nickName && !this.isValidNickName
+            }
+        },
+        validateBirth(){
+            return {
+                // 'was-validated' : this.user.birth && this.isValidBirth,
+                // 'not-validated' : this.user.birth && !this.isValidBirth
+                'was-validated' : this.birthConfirm && this.isValidBirth,
+                'not-validated' : this.birthConfirm && !this.isValidBirth
+            }
         }
+    }
+		
+}
 </script>
 <style scoped>
-    .ui-block-title{
-        padding: 13px 13px 5px;
+	@media (max-width: 1023px){
+	.registration-login-form{
+			padding-top:0;
+		}
+	}
+	.registration-login-form .title {
+		padding: 15px;
+		font-size: medium;
+	}
+    @media (max-width: 480px){
+        .remember a {
+            display: inline;
+        }
     }
-    h6{
-        font-size:1rem;
+    .form-control{
+        font-size: 1.14rem;
     }
-    .nav, .navbar{
-        flex-wrap: nowrap;
+    @media (max-width: 360px){
+        .form-group.label-floating label.control-label, .form-group.label-placeholder label.control-label {
+            font-size:1rem;
+        }
     }
-    .w-search {
-        width: 100%;
-        margin-bottom: 1rem;
+    .checkbox label{
+        font-size: 1rem;
     }
-    .nav-link{
-        height:100%;
+    
+    .registration-login-form .remember{
+        margin: 25px 0 10px;
     }
-    .nav-content{
-        width: 100%;
-        text-align: center;
-        font-size: 1.1rem;
+
+    .not-validated {
+        border-color: #dc3545;
+        padding-right: calc(1.5em + .75rem);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc3545' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23dc3545' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center right calc(.375em + .1875rem);
+        background-size: calc(.75em + .375rem) calc(.75em + .375rem);
     }
-    .form-group.with-button button{
-        width: 45px;
-        background: #ff5e3a;
+    .was-validated{
+        border-color: #28a745;
+        padding-right: calc(1.5em + .75rem);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: center right calc(.375em + .1875rem);
+        background-size: calc(.75em + .375rem) calc(.75em + .375rem);
     }
-    .ui-block-title .btn {
-        margin-bottom: 10px;
+    .invalid-feedback{
+        display: block;
     }
-    .ui-block{
-        width:100%;
+    .linkA{
+       text-decoration: underline; 
     }
 </style>

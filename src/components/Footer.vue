@@ -58,7 +58,7 @@
 export default {
     name:'Footer',
     methods:{
-        gotoFollowList(){ this.$router.push({path:'/follow/follow'}) },
+        gotoFollowList(){ this.$router.push({path:'/follow/list'}) },
         gotoItemList(){ this.$router.push({path:'/item/list'}) },
         gotoItemAdd(){ this.$router.push({path:'/item/add'}) },
         gotoNotification(){ this.$router.push({path:'/noti'}) },

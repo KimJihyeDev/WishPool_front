@@ -64,7 +64,7 @@
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
                                         </a>
-                                        <a href="#" class="btn btn-control bg-purple">
+                                        <a href="javascript:void(0)" class="btn btn-control bg-purple" @click="listItems">
                                             <svg class="olymp-newsfeed-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-newsfeed-icon"></use></svg>
                                         </a>
                 
@@ -85,6 +85,11 @@ export default {
     data(){
         return{
             doIFollow: true,
+        }
+    },
+    methods:{
+        listItems(){
+            
         }
     }
 }
