@@ -1,5 +1,5 @@
 <template>
-    <li>
+    <li @click="sendUserId">
         <div class="author-thumb">
             <img src="/assets/img/avatar15-sm.jpg" alt="author">
         </div>
@@ -26,13 +26,22 @@
 <script>
 export default {
     name:'FollowUser',
-    props: ['isPlus'],
+    props: ['isPlus', 'user'],
     computed:{
         isShow(){
-            if(this.isPlus ==="true"){
+            if(this.isPlus === 'true'){
                 return true;
             }
             return false;
+        }
+    },
+    methods:{
+        sendUserId(){
+            const payload={
+                _id: this._id,
+                isPlus : this._isPlus
+            }
+            this.$emit('onClick', payload);
         }
     }
 }

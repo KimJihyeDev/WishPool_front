@@ -68,10 +68,11 @@
 				
 				<ul class="notification-list friend-requests">
                     <a data-toggle="modal" data-target="#profile">
-                    <follow-user v-for="user in users" 
-                    :key="user._id" 
-                    :user="user"
-                    isPlus="false" />
+                        <follow-user v-for="user in users" 
+                        :key="user._id" 
+                        :user="user"
+                        @onClick="handleClick"
+                        isPlus="false" />
                     </a>
 				</ul>
 				
@@ -86,7 +87,13 @@
 				<!-- Notification List Frien Requests -->
 				
 				<ul class="notification-list friend-requests">
-					<follow-user isPlus="true" />
+					<a data-toggle="modal" data-target="#profile">
+                        <follow-user v-for="user in users" 
+                        :key="user._id" 
+                        :user="user"
+                        @onClick="handleClick"
+                        isPlus="true" />
+                    </a>
 				</ul>
 				
 				<!-- ... end Notification List Frien Requests -->
@@ -159,7 +166,7 @@
 <!-- ... end Window-popup Create Event -->
     <div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="profile" style="display: none;" aria-hidden="true">
         <div class="modal-dialog window-popup" role="document">
-   <follow-detail />
+   <profile-detail :user="this.clickedUserInfo" />
        </div>
     </div>
    
@@ -170,7 +177,7 @@
 </template>
 <script>
 import FollowUser from './FollowUser.vue';
-import FollowDetail from './FollowDetail.vue';
+import ProfileDetail from '../profile/ProfileDetail.vue';
 
 export default {
     name: 'FollowList',
@@ -178,20 +185,21 @@ export default {
         return{
             users:[
                 {
-                    _id: 0,
+                    _id: '5deca9efe8936b4a06963deb',
                     userName: '김하루',
                     nickName: '귀여운 고양이',
                     followingId: 1,
                     followerId: 1,
                 },
                 {
-                    _id: 1,
+                    _id: '5decaa26e8936b4a06963dee',
                     userName: '명혜은',
                     nickName: 'haru_lover',
                     followingId: 0,
                     followerId: 0,
                 }
             ],
+            clickedUserInfo:'',
             searchOption: '',
             searchQuery: '',
             searchResults: [
@@ -215,11 +223,13 @@ export default {
     },
     components:{
         'follow-user':FollowUser,
-        'follow-detail': FollowDetail
+        'profile-detail': ProfileDetail
     },
     methods:{
-        handleClick(){
-
+        handleClick(payload){
+            this.clickedUserInfo = {
+                payload
+            }
         }
     }
 }

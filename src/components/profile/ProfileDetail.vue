@@ -64,7 +64,7 @@
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
                                         </a>
-                                        <a href="javascript:void(0)" class="btn btn-control bg-purple" @click="listItems">
+                                        <a href="javascript:void(0)" class="btn btn-control bg-purple" @click="listItems" data-dismiss="modal" aria-label="Close">
                                             <svg class="olymp-newsfeed-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-newsfeed-icon"></use></svg>
                                         </a>
                 
@@ -82,14 +82,21 @@
 </template>
 <script>
 export default {
-    data(){
-        return{
-            doIFollow: true,
+    name: 'ProfileDetail',
+    props: ['user'],
+    computed:{
+        doIFollow(){
+            if(this.user.isPlus){
+                return false;
+            }
+            return true;
         }
     },
     methods:{
         listItems(){
-            
+            //현재 클릭한 유저(props로 넘어온 this._id)의 아이템 리스트로 이동한다.
+            this.$router.push({name: 'itemList', params: {userId:this.user._id}});
+            //파라미터를 달고 이동하는 경우, path가 아닌 라우터에 해당 컴포넌트 이름(name)을 지정해야한다고 한다.
         }
     }
 }
