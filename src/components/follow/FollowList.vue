@@ -58,7 +58,6 @@
         <!-- Tab panes -->
         
         <div class="tab-content">
-            <!-- Wishes(미완료 리스트) -->
             
             <div class="tab-pane active" id="home" role="tabpanel">
                 <div class="container">
@@ -68,14 +67,18 @@
 				<!-- Notification List Frien Requests -->
 				
 				<ul class="notification-list friend-requests">
-                    <follow-user isPlus="false" />
+                    <a data-toggle="modal" data-target="#profile">
+                    <follow-user v-for="user in users" 
+                    :key="user._id" 
+                    :user="user"
+                    isPlus="false" />
+                    </a>
 				</ul>
 				
 				<!-- ... end Notification List Frien Requests -->
 			</div>
                 </div>
             </div>
-            <!-- Completed(완료 리스트) -->
             <div class="tab-pane" id="about" role="tabpanel">
                 <div class="container">
                     <div class="ui-block">
@@ -153,8 +156,13 @@
 		</div>
         </div>
 	</div>
-    
 <!-- ... end Window-popup Create Event -->
+    <div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="profile" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog window-popup" role="document">
+   <follow-detail />
+       </div>
+    </div>
+   
 <div style="margin-top:2.5rem;"></div>
 
 </div>
@@ -162,11 +170,28 @@
 </template>
 <script>
 import FollowUser from './FollowUser.vue';
+import FollowDetail from './FollowDetail.vue';
 
 export default {
     name: 'FollowList',
     data(){
         return{
+            users:[
+                {
+                    _id: 0,
+                    userName: '김하루',
+                    nickName: '귀여운 고양이',
+                    followingId: 1,
+                    followerId: 1,
+                },
+                {
+                    _id: 1,
+                    userName: '명혜은',
+                    nickName: 'haru_lover',
+                    followingId: 0,
+                    followerId: 0,
+                }
+            ],
             searchOption: '',
             searchQuery: '',
             searchResults: [
@@ -189,7 +214,13 @@ export default {
         }
     },
     components:{
-        'follow-user':FollowUser
+        'follow-user':FollowUser,
+        'follow-detail': FollowDetail
+    },
+    methods:{
+        handleClick(){
+
+        }
     }
 }
 </script>

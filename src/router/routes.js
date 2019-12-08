@@ -10,6 +10,7 @@ import Login from '../components/user/Login.vue'
 import FollowList from '../components/follow/FollowList.vue'
 import NotiList from '../components/notification/NotiList.vue'
 import Settings from '../components/settings/Settings.vue'
+import FollowDetail from '../components/follow/FollowDetail.vue'
 
 // 웹소캣 연습용 컴포턴트 (나중에 삭제하기)
 import Temp from '../components/Temp.vue'
@@ -29,6 +30,8 @@ export default [
     { path:'/user/login', component: Login},
     // { path:'/user/profile/:userId', component: Profile},
     { path:'/follow/follow', component: FollowList},
+    { path:'/follow/detail/', component: FollowDetail},
+    { path:'/follow/detail/:id', component: FollowDetail},
     { path:'/noti', component: NotiList},
     { path:'/settings', component: Settings}
 ]
