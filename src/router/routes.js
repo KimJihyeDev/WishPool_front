@@ -31,6 +31,7 @@ export default [
     { path:'/user/login', component: Login},
     // { path:'/user/profile/:userId', component: Profile},
     { path:'/follow/list', component: FollowList},
+    { path:'/follow/list/:userId', component: FollowList, name:'followList'},
     { path:'/profile/detail/', component: ProfileDetail},
     { path:'/profile/detail/:id', component: ProfileDetail},
     { path:'/noti', component: NotiList},

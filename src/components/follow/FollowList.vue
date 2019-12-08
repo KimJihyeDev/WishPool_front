@@ -49,8 +49,20 @@
                             </div>
                         </form>
                     </div>
-                       
-                    </div>
+                    <ul class="notification-list friend-requests">
+                        <h6 style="margin:0; padding: 0.5rem 1rem; border-top:1px solid lightgrey; border-bottom:1px solid lightgrey; background: whitesmoke">내 프로필 </h6>
+                        <li style="background: whitesmoke">
+                            <div class="author-thumb">
+                                <img src="/assets/img/avatar15-sm.jpg" alt="author">
+                            </div>
+                            <div class="notification-event" >
+                                <a href="#" class="h6 notification-friend">Tamara Romanoff</a>
+                                <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
+                            </div>
+                        </li>
+                        
+                    </ul>
+                    </div> <!-- end of ui-block-->
 
                 </div>
             </div>
@@ -63,12 +75,11 @@
                 <div class="container">
                     <div class="ui-block">
             
-				
 				<!-- Notification List Frien Requests -->
 				
 				<ul class="notification-list friend-requests">
                     <a data-toggle="modal" data-target="#profile">
-                        <follow-user v-for="user in users" 
+                        <follow-user v-for="user in followers" 
                         :key="user._id" 
                         :user="user"
                         @onClick="handleClick"
@@ -88,7 +99,7 @@
 				
 				<ul class="notification-list friend-requests">
 					<a data-toggle="modal" data-target="#profile">
-                        <follow-user v-for="user in users" 
+                        <follow-user v-for="user in followings" 
                         :key="user._id" 
                         :user="user"
                         @onClick="handleClick"
@@ -181,6 +192,35 @@ import ProfileDetail from '../profile/ProfileDetail.vue';
 
 export default {
     name: 'FollowList',
+    created(){
+        //나와 내 followings, followers다 불러온다.
+        console.log(this.$serverUrl+'/follow/list/'+this.$userId);
+        (async()=>{
+            try {
+                //주의) 우리는 follow컬렉션 따로 안만들고 users컬렉션에 만들었으므로, users라우터에 구현하는 것이 편했다.
+                //따라서 users라우터를 호출한다.
+                const res = await this.$http.get(this.$serverUrl+'/users/list/'+this.$userId)
+                if(res.data.code == "200"){
+                    console.log(res.data.msg);
+                    const { user } = res.data;
+                    this.user = user;
+                    this.followingId = user.followingId;
+                    this.followerId = user.followerId;
+                }else{
+                    console.log('서버에러');
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        })();
+        //나는 user 객체에 담고,
+        //내 follows들은 users에 합쳐서 넣는다.(가다나순?)
+
+        //팔로우 리스트 리프레시용
+        this.$on('bus-refresh-fl', async()=>{
+
+        });
+    },
     data(){
         return{
             users:[
@@ -199,6 +239,12 @@ export default {
                     followerId: 0,
                 }
             ],
+            followingId:[],
+            followerId: [],
+            followings:[],
+            followers:[],
+            user:{
+            },
             clickedUserInfo:'',
             searchOption: '',
             searchQuery: '',
@@ -286,5 +332,27 @@ export default {
 }
 .modal-body{
     padding: 24px 23px 8px;
+}
+.notification-event, .notification-list li{
+    display:inline-block;
+    width: 100%;
+}
+.notification-icon{
+    position: absolute;
+    display: inline;
+    right:15px;
+    top:20%;
+}
+.notification-list.friend-requests .notification-icon {
+    display: inline;
+}
+@media (max-width: 360px) {
+  .notification-list .notification-event {
+    max-width: 75%;
+  }
+}
+li{
+    padding: 25px 15px;
+    display:inline-block
 }
 </style>
