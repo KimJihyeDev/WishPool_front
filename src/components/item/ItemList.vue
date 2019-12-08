@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
                    
-                    <item-input v-on:getInputItem="addItem" />
+                    <item-input v-on:onInsert="handleInsert" />
                     <div class="ui-block" style="margin-bottom:0px;">  
                         <!-- <div class="ui-block-title">
                             <h4 class="title">위시 아이템 리스트</h4>
@@ -67,7 +67,7 @@
 							v-on:onPurchase="handlePurchase"
 							/>                 
                         </ul>
-                            <item-empty v-if="isWishEmpty" type="w" @btnPressed="addItem"/>
+                            <item-empty v-if="isWishEmpty" type="w" @btnPressed="handleInsert"/>
                             <!-- .. end 위시아이템 -->
                         </div>
                 </div>
@@ -101,15 +101,11 @@
                     </div>
                 </div>
             </div>
-
-            
-
-            
         </div>
 
     </div>
             <!-- Window-popup Create Event -->
-
+<div style="margin-top:8rem;"></div>
 <div class="modal fade" id="create-event" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
 	<div class="modal-dialog window-popup create-event" role="document">
         <item-add />
@@ -132,7 +128,7 @@
             (async()=>{
                 try{
                     let res = await this.$http.get(this.$serverUrl+this.$route.path);
-                    this.items = res.data;
+                    this.items = res.data.items;
                 }catch(e){
                     console.error(e);
                 }
@@ -208,11 +204,9 @@
                 this.$router.push({path:'/item/add'});
             },
             //아이템 추가함수
-            addItem(val){
-                if(val){
-                    this.item.itemName = val.itemName;
-                    this.item.itemPrice = val.itemPrice;
-                }
+            handleInsert(payload){
+                this.item.itemName = payload.itemName;
+                this.item.itemPrice = payload.itemPrice;
                 //아이템 추가 API호출
                 (async () =>{
                     try{
@@ -221,11 +215,10 @@
                             console.log('정상 : '+res.data.msg);
                             console.log(this.items);
                             const response = await this.$http.get(this.$serverUrl+'/item/list');
-                            this.items = response.data;
+                            this.items = response.data.items;
                         }else if(res.data.code == 500){
                             console.log('서버오류 : '+res.data.msg);
                         }
-                        await this.$router.push({path:'/item/list'});
                     }catch (error){
                         console.error(error)
                     }

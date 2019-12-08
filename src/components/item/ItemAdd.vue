@@ -11,7 +11,7 @@
                 <!-- end modal close button -->
 			</div>
             <item-input 
-                v-on:getInputItem="addItem"
+                v-on:onInsert="handleInsert"
                 inputMode="a"
             />
 			<div class="modal-body">
@@ -105,7 +105,7 @@
                                     <span class="material-input"></span>
                                 </div>
 
-                                <button class="btn btn-breez btn-lg full-width" style="font-size:small" v-on:click="addItem">등록</button>
+                                <button class="btn btn-breez btn-lg full-width" style="font-size:small" v-on:click="handleInsert">등록</button>
                                 </div>
                                 
                             </div>
@@ -138,11 +138,9 @@ export default {
         'item-input': ItemInput,
     },
 	methods:{
-		addItem(val){
-            if(val){
-                this.item.itemName = val.itemName;
-                this.item.itemPrice = val.itemPrice;
-            }
+		handleInsert(val){
+            this.item.itemName = val.itemName;
+            this.item.itemPrice = val.itemPrice;
 			console.log(this.item.itemName);
 			this.$http.post(this.$serverUrl+this.$route.path, this.item)
 			.then(res=>{
