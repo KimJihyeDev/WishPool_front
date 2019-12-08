@@ -25,9 +25,9 @@ export default [
     { path:'/item/detail', component:ItemDetail}, //배포시 삭제
     { path:'/item/detail/:itemId',component:ItemDetail},
     { path:'/item/modify/:itemId',component:ItemModify},
-    { path:'/user/register', component: ResetPassword},
+    { path:'/user/resetpwd', component: ResetPassword},
     { path:'/user/login', component: Login},
-    { path:'/user/profile/:userId', component: Profile},
+    { path:'/user/profile', component: Profile},
     { path:'/follow/follow', component: FollowList},
     { path:'/noti', component: NotiList},
     { path:'/settings', component: Settings}
