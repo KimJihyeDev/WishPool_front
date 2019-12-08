@@ -134,6 +134,14 @@
                     console.error(e);
                 }
             })();
+            this.$on('bus-refresh', async()=>{
+                try{
+                    let res = await this.$http.get(this.$serverUrl+this.$route.fullPath);
+                    this.items = res.data.items;
+                }catch(e){
+                    console.error(e);
+                }
+            });
         },
         data() {
             return {
