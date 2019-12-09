@@ -32,7 +32,9 @@ Vue.prototype.$url = 'http://localhost:8080';
 Vue.prototype.$serverUrl = 'http://localhost:3000';
 
 //로그인 성공하면, userId를 전역객체에 담고 쓰면 어떨까?
-Vue.prototype.$userId = '5decaa26e8936b4a06963dee';
+Vue.prototype.$userId = '5dee0137aa583a45f98dd628';
+//dummy data의 main사용자
+//userId는 'haru'
 
 const router = new VueRouter({
   routes:Routes

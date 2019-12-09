@@ -1,21 +1,21 @@
 <template>
     <li @click="sendUserId">
         <div class="author-thumb">
-            <img src="/assets/img/avatar15-sm.jpg" alt="author">
+            <img :src="user.profileImgPath" alt="author">
         </div>
         <div class="notification-event" >
-            <a href="#" class="h6 notification-friend">Tamara Romanoff</a>
-            <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
+            <a href="#" class="h6 notification-friend">{{user.userName}}</a>
+            <span class="chat-message-item">{{user.profileMsg}}</span>
         </div>
         <span v-if="isShow" class="notification-icon">
-            <a href="#" class="accept-request request">
+            <a href="javascript:void(0)" class="accept-request request" @click.stop="iconClicked">
                 <span class="icon-add without-texts" style="margin-right:0px;">
                     <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                 </span>
             </a>
         </span>
         <span v-if="!isShow" class="notification-icon">
-            <a href="#" class="accept-request request-del">
+            <a href="javascript:void(0)" class="accept-request request-del" @click.stop="iconClicked">
                 <span class="icon-minus without-texts">
                     <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                 </span>
@@ -42,6 +42,9 @@ export default {
                 isPlus : this._isPlus
             }
             this.$emit('onClick', payload);
+        },
+        iconClicked(){
+            this.$emit('onFollowClick');
         }
     }
 }

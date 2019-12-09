@@ -2,19 +2,19 @@
 
     <div class="container">
         <div class="modal-content">
-        <!-- end modal close button -->
             <div class="modal-body">
                 <!-- modal close button(절대 삭제하지 말것) -->
             <a href="javascript:void(0)" class="close icon-close" data-dismiss="modal" aria-label="Close">
                 <svg class="olymp-close-icon" style="fill:#333333; width: 13px;"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
             </a>
+            <!-- end modal close button -->
                 <div class="row">
                     <div class="col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div class="ui-block">
                             <!-- Friend Item -->
                             <div class="friend-item">
                                 <div class="friend-header-thumb">
-                                    <img src="/assets/img/friend1.jpg" alt="friend">
+                                    <img :src="user.profileImgPath" style="width:318px; height:122px; object-fit:cover;" alt="friend">
                                 </div>
                             
                                 <div class="friend-item-content">
@@ -32,11 +32,11 @@
                                     </div>
                                     <div class="friend-avatar">
                                         <div class="author-thumb">
-                                            <img src="/assets/img/avatar1.jpg" alt="author">
+                                            <img :src="user.profileImgPath" style="width:92px; height:92px" alt="author">
                                         </div>
                                         <div class="author-content">
-                                            <a href="#" class="h5 author-name">nickName</a>
-                                            <div class="country">profileMsg</div>
+                                            <a href="#" class="h5 author-name">{{user.nickName}}</a>
+                                            <div class="country"></div>
                                         </div>
                                     </div>
                                     <div class="friend-count">
@@ -54,12 +54,17 @@
                                         </a>
                                     </div>
                                     <div class="control-block-button">
-                                        <a v-if="!doIFollow" href="javascript:void(0)" class="btn btn-control bg-blue">
+                                        <a v-if="isMe" href="javascript:void(0)" class="btn btn-control bg-secondary">
+                                            <span class="icon-minus without-texts" style="margin-right:0px;">
+                                                <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                                            </span>
+                                        </a>
+                                        <a v-else-if="!doIFollow" href="javascript:void(0)" class="btn btn-control bg-blue">
                                             <span  class="icon-add without-texts" style="margin-right:0px;">
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
                                         </a>
-                                        <a v-if="doIFollow" href="javascript:void(0)" class="btn btn-control bg-primary">
+                                        <a v-else href="javascript:void(0)" class="btn btn-control bg-primary">
                                             <span class="icon-minus without-texts" style="margin-right:0px;">
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
@@ -90,6 +95,12 @@ export default {
                 return false;
             }
             return true;
+        },
+        isMe(){
+            if(this.user._id == this.$userId){
+                return true;
+            }
+            return false;
         }
     },
     methods:{
@@ -117,5 +128,10 @@ export default {
     position: absolute;
     top: 7px;
     z-index: 2;
+}
+.author-thumb img{
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
 }
 </style>

@@ -41,7 +41,7 @@
                                 </select>
                                <input type="text" style="display: inline; width:80%;" placeholder="ID/핸드폰 번호 검색" class="form-control" v-model="searchQuery">
                                </div>
-                               <button data-toggle="modal" data-target="#create-event">
+                               <button data-toggle="modal" data-target="#create-event" @click="searchUser">
                                    <svg class="olymp-magnifying-glass-icon">
                                    <use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
                                 </button>
@@ -51,16 +51,17 @@
                     </div>
                     <ul class="notification-list friend-requests">
                         <h6 style="margin:0; padding: 0.5rem 1rem; border-top:1px solid lightgrey; border-bottom:1px solid lightgrey; background: whitesmoke">내 프로필 </h6>
-                        <li style="background: whitesmoke">
-                            <div class="author-thumb">
-                                <img src="/assets/img/avatar15-sm.jpg" alt="author">
-                            </div>
-                            <div class="notification-event" >
-                                <a href="#" class="h6 notification-friend">Tamara Romanoff</a>
-                                <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
-                            </div>
-                        </li>
-                        
+                        <a data-toggle="modal" data-target="#profileA">
+                            <li @click="handleClick(user)">
+                                <div class="author-thumb">
+                                    <img :src="user.profileImgPath" alt="author">
+                                </div>
+                                <div class="notification-event" >
+                                    <a href="#" class="h6 notification-friend">{{user.userName}}</a>
+                                    <span class="chat-message-item">{{user.profileMsg}}</span>
+                                </div>
+                            </li>
+                    </a>
                     </ul>
                     </div> <!-- end of ui-block-->
 
@@ -78,11 +79,12 @@
 				<!-- Notification List Frien Requests -->
 				
 				<ul class="notification-list friend-requests">
-                    <a data-toggle="modal" data-target="#profile">
-                        <follow-user v-for="user in followers" 
+                    <a data-toggle="modal" data-target="#profileA">
+                        <follow-user v-for="user in followings" 
                         :key="user._id" 
                         :user="user"
-                        @onClick="handleClick"
+                        @onClick="handleClick(user)"
+                        @onFollowClick="removeFollow(user)"
                         isPlus="false" />
                     </a>
 				</ul>
@@ -98,11 +100,12 @@
 				<!-- Notification List Frien Requests -->
 				
 				<ul class="notification-list friend-requests">
-					<a data-toggle="modal" data-target="#profile">
-                        <follow-user v-for="user in followings" 
+					<a data-toggle="modal" data-target="#profileA">
+                        <follow-user v-for="user in followers"
                         :key="user._id" 
                         :user="user"
-                        @onClick="handleClick"
+                        @onClick="handleClick(user)"
+                        @onFollowClick="addFollow(user)"
                         isPlus="true" />
                     </a>
 				</ul>
@@ -116,10 +119,10 @@
     </div>
             <!-- Window-popup Create Event -->
 
-<div class="modal fade" id="create-event" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
+<div class="modal fade" id="create-event" ref="create" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
 	<div class="modal-dialog window-popup create-event" role="document">
         <div class="container">
-            <div class="modal-content">
+            <div class="modal-content" id="create-event-body">
                 <div class="modal-header">
                     <h3 class="title" style="display:inline;">새로운 Follow 찾기</h3>
                 <!-- modal close button(절대 삭제하지 말것) -->
@@ -130,62 +133,57 @@
                 </div>
                 <div class="modal-body">
                     <h4>검색결과: "{{searchQuery}}"</h4>
+                    <h5 v-if="!existMatch">검색 결과가 없습니다.</h5>
+                    <!-- 검색결과 : 유저리스트 -->
                     <div class="inline-items" v-for="user in searchResults" :key="user._id">
-                        <div class="author-thumb">
-                            <img :src="user.profileImgPath" alt="author">
-                        </div>
-                        <div class="h6 author-title">{{user.userName}}</div></div>
-                        <span class="material-input"></span><span class="material-input"></span>
+                        <a data-toggle="modal" data-target="#profileB" style="display:flex; align-items: center">
+                            <div class="author-thumb">
+                                <img :src="user.profileImgPath" alt="author">
+                            </div>
+                            <div class="h6 author-title" style="display:inline">{{user.userName}}</div>
+                            <span v-if="!user.doIFollow" class="notification-icon-list">
+                                <a href="javascript:void(0)" class="accept-request request" @click.stop="addFollow(user)">
+                                    <span class="icon-add without-texts" style="margin-right:0px;">
+                                        <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                                    </span>
+                                </a>
+                            </span>
+                            <span v-if="user.doIFollow" class="notification-icon-list">
+                                <a href="javascript:void(0)" class="accept-request request-del" @click.stop="removeFollow(user)">
+                                    <span class="icon-minus without-texts">
+                                        <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                                    </span>
+                                </a>
+                            </span>
+                        </a>
+                    </div>
+                    <!-- end 검색결과 : 유저리스트 -->
+                    <span class="material-input"></span><span class="material-input"></span>
         			<a href="#" class="btn btn-blue btn-lg full-width" data-dismiss="modal" >확인</a>
                 </div>
 			
 		</div>
-			<!-- <div class="modal-body"> -->
-                <!-- 검색 백업 -->
-                <!-- <h4 class="control-label" id="first-h4">ID 검색</h4>
-                <form class="w-search" style="margin-bottom:1rem; margin-right:0; width:100%;">
-                <div class="form-group with-button is-empty">
-                    <input class="form-control" type="text" placeholder="ID로 검색해보세요" v-model="searchQuery">
-                    <button>
-                        <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
-                        <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
-                    <!-- </button>
-                    <span class="material-input"></span>
-                </div>
-                </form>
-                <h4 class="control-label">전화번호 검색</h4>
-                <form class="w-search" style="margin-bottom:1rem; margin-right:0; width:100%;">
-                <div class="form-group with-button is-empty">
-                    <input class="form-control" type="text" placeholder="전화번호로 검색해보세요" v-model="searchQuery">
-                    <button  style="font-size:x-small"> -->
-                        <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
-                        <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
-                    </button>
-                    <span class="material-input"></span>
-                </div>
-                </form> -->
-                    <!-- <div>
-                        <h4>검색결과: {{searchQuery}}</h4>
-                        <ul>
-                            <follow-user isPlus="true" />
-                        </ul>
-                    </div>        
-			</div> -->
 		</div>
         </div>
 	</div>
 <!-- ... end Window-popup Create Event -->
-    <div class="modal fade" id="profile" tabindex="-1" role="dialog" aria-labelledby="profile" style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="profileA" tabindex="-1" role="dialog" aria-labelledby="profileA" style="display: none;" aria-hidden="true" >
         <div class="modal-dialog window-popup" role="document">
-   <profile-detail :user="this.clickedUserInfo" />
+            <profile-detail :user="this.clickedUserInfo" />
        </div>
     </div>
-   
+    <div class="modal fade" id="profileB" tabindex="-1" role="dialog" aria-labelledby="profileB" style="display: none; background:whitesmoke" aria-hidden="true" >
+        <div class="modal-dialog window-popup" role="document">
+            <profile-detail :user="this.clickedUserInfo" />
+       </div>
+    </div>
+      
 <div style="margin-top:2.5rem;"></div>
 
 </div>
 
 </template>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/core.js"></script>
 <script>
 import FollowUser from './FollowUser.vue';
 import ProfileDetail from '../profile/ProfileDetail.vue';
@@ -197,17 +195,15 @@ export default {
         console.log(this.$serverUrl+'/follow/list/'+this.$userId);
         (async()=>{
             try {
-                //주의) 우리는 follow컬렉션 따로 안만들고 users컬렉션에 만들었으므로, users라우터에 구현하는 것이 편했다.
-                //따라서 users라우터를 호출한다.
-                const res = await this.$http.get(this.$serverUrl+'/users/list/'+this.$userId)
+                const res = await this.$http.get(this.$serverUrl+'/follow/list/'+this.$userId);
+                console.log(res.data.code);
                 if(res.data.code == "200"){
                     console.log(res.data.msg);
                     const { user } = res.data;
-                    this.user = user;
-                    this.followingId = user.followingId;
-                    this.followerId = user.followerId;
+                    this.user = user; //나 = user
+                    console.log(this.user);
                 }else{
-                    console.log('서버에러');
+                    console.log(res.data.msg);
                 }
             } catch (e) {
                 console.error(e);
@@ -221,51 +217,32 @@ export default {
 
         });
     },
+    mounted(){
+        console.log('mounted');
+    },
     data(){
         return{
-            users:[
-                {
-                    _id: '5deca9efe8936b4a06963deb',
-                    userName: '김하루',
-                    nickName: '귀여운 고양이',
-                    followingId: 1,
-                    followerId: 1,
-                },
-                {
-                    _id: '5decaa26e8936b4a06963dee',
-                    userName: '명혜은',
-                    nickName: 'haru_lover',
-                    followingId: 0,
-                    followerId: 0,
-                }
-            ],
-            followingId:[],
-            followerId: [],
-            followings:[],
-            followers:[],
-            user:{
-            },
+            users:[ ],
+            user: {},
             clickedUserInfo:'',
-            searchOption: '',
+            searchOption: 'id',
             searchQuery: '',
-            searchResults: [
-                {   
-                    _id: 0,
-                    userName: 'Mathilda Brinker',
-                    profileImgPath: '/assets/img/avatar52-sm.jpg'
-                },
-                {
-                    _id: 1,
-                    userName: 'Rachel Howlett',
-                    profileImgPath: '/assets/img/avatar76-sm.jpg'
-                },
-                {
-                    _id: 2,
-                    userName: 'Marina Valentine',
-                    profileImgPath: '/assets/img/avatar75-sm.jpg'
-                }
-            ],
+            existMatch: false,
+            searchResults: [],
         }
+    },
+    computed:{
+        followings(){
+            console.log('렌더링', this.user.followingId);
+            return this.user.followingId; //populate해왔기때문에, id모음->id에 해당하는 객체모음으로 바뀜
+        },
+        followers(){
+            return this.user.followerId;
+        },
+        //내가 이 사람을 팔로우한다면 true, 아니면 false리턴하는 값.
+        //내가 이 사람을 팔로우할지 안 할지에 따라서 아이콘이 플러스/마이너스로 나뉜다.
+        //내 팔로잉목록에 상대방의 아이디가 있다면,
+       
     },
     components:{
         'follow-user':FollowUser,
@@ -273,9 +250,136 @@ export default {
     },
     methods:{
         handleClick(payload){
-            this.clickedUserInfo = {
-                payload
-            }
+            
+            this.clickedUserInfo = payload;
+            console.log(this.clickedUserInfo);
+        },
+        //follow검색
+        searchUser(){
+            
+            (async()=>{
+                try {
+                    let str = '';
+                    if(this.searchOption == "id"){
+                        str = 'searchId';
+                    }else if(this.searchOption == "phone"){
+                        str = 'searchPhone'
+                    }
+                    const res = await this.$http.get(this.$serverUrl+'/follow/'+str+'/'+this.searchQuery);
+                    if(res.data.code == "200"){
+                        console.log(res.data.msg);
+                        this.existMatch = true;
+                    }else if(res.data.code == "503"){
+                        console.log(res.data.msg);
+                        this.existMatch = false;
+                    }
+                    
+                    //아이디를 가져옴
+                    this.searchResults = res.data.matchUsers;
+                    let idx = -1;
+                    
+                    //각각의 유저에 대하여
+                    this.searchResults.forEach(user=>{
+                        //그 유저가 보유하고있는 followerId에 내가 있는지 확인한다.
+                        console.log(user.followerId);
+                        idx = user.followerId.findIndex(followerObj=>{
+                            //내가 있다면 리턴
+                            return followerObj._id==this.user._id;
+                        })
+                        //만약 리턴값이 있다면 = 내가 이 사람의 팔로워라면,
+                        if(idx>=0){
+                            //user의 doIFollow속성에 true를 추가한다.
+                            user.doIFollow = true;
+                        }else{
+                            user.doIFollow = false;
+                        }
+
+                    });
+                } catch (e) {
+                    console.error(e);
+                }
+            })();
+        },
+        //follow맺기
+        addFollow(followUser){
+            //followUser : 내가 팔로우하려는 유저
+            //내 유저객체의 followingId목록에 followUser의 아이디를 추가한다.
+            const selfUser = this.user;
+
+            selfUser.followingId = [
+                ...selfUser.followingId,
+                followUser._id
+            ];
+            //내가 follow하는 유저의 follwerId목록에 내아이디를 추가한다.
+            followUser.followerId = [
+                ...followUser.followerId,
+                this.user._id
+            ];
+
+            let payload = {
+                selfUser, //나
+                followUser //내가 팔로우하는 유저
+            };
+
+            (async()=>{
+                try {
+                    const res = await this.$http.patch(this.$serverUrl+'/follow/add/'+this.user._id, payload);
+                    const { code, msg, user } = res.data;
+                    if(code == "200"){
+                        console.log(msg);
+                        //팔로우 아이콘 minus로 변경
+
+                        //새로온 user값을 대입해서 리액티브 반영.
+                        this.user = user;
+                        console.log('추가완료', this.user);
+                    }else{
+                        console.log(msg);
+                    }
+                    this.user = user;
+                } catch (e) {
+                    console.error(e);
+                    next(e);
+                }
+            })();
+        },
+        removeFollow(followUser){
+            //followUser : 내가 팔로우끊으려는 유저
+            //내 유저객체의 followingId목록에 followUser의 아이디를 삭제한다.
+            const selfUser = this.user;
+
+            let idx = selfUser.followingId.indexOf(followUser._id);
+            selfUser.followingId.splice(idx, 1);
+
+            //내가 follow하는 유저의 follwerId목록에 내아이디를 추가한다.
+            idx = followUser.followerId.indexOf(selfUser._id);
+            followUser.followerId.splice(idx, 1);
+
+            let payload = {
+                selfUser, //나
+                followUser //내가 팔로우하는 유저
+            };
+
+            (async()=>{
+                try {
+                    //follow맺기와 삭제하기의 API는 같다(수정) - 둘다 add/:id
+                    const res = await this.$http.patch(this.$serverUrl+'/follow/add/'+this.user._id, payload);
+                    const { code, msg, user } = res.data;
+                    if(code == "200"){
+                        console.log(msg);
+                        //팔로우 아이콘 minus로 변경
+
+                        //새로온 user값을 대입해서 리액티브 반영.
+                        this.user = user;
+                        console.log('추가완료', this.user);
+                    }else{
+                        console.log(msg);
+                    }
+                    this.user = user;
+                } catch (e) {
+                    console.error(e);
+                    next(e);
+                }
+            })();
         }
     }
 }
@@ -343,6 +447,11 @@ export default {
     right:15px;
     top:20%;
 }
+.notification-icon-list{
+    position: absolute;
+    display: inline;
+    right:19px;
+}
 .notification-list.friend-requests .notification-icon {
     display: inline;
 }
@@ -354,5 +463,15 @@ export default {
 li{
     padding: 25px 15px;
     display:inline-block
+}
+.dismiss-modalA{
+    background: black;
+    z-index: 10;
+    opacity: 0.5;
+}
+.author-thumb img{
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
 }
 </style>

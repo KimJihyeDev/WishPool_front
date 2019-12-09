@@ -12,11 +12,12 @@ import NotiList from '../components/notification/NotiList.vue'
 import Settings from '../components/settings/Settings.vue'
 import ProfileDetail from '../components/profile/ProfileDetail.vue'
 
-// 웹소캣 연습용 컴포턴트 (나중에 삭제하기)
 import Temp from '../components/Temp.vue'
+import TempRegister from '../components/TempRegister.vue'; //개발용 회원가입
 
 
 export default [
+    { path:'/test', component: TempRegister }, //개발을 위한 임시 회원가입 루트 : /test
     { path:'/category/list', component:CategoryList },
     { path:'/item/list', component:ItemList},
     { path:'/item/list/:userId', component:ItemList, name:'itemList'}, //userId라는 변수에 아이디값 넣어주면 해당 아이디의 아이템리스트 이동가능
