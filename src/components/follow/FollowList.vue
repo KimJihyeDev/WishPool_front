@@ -341,18 +341,24 @@ export default {
                     next(e);
                 }
             })();
+            let num = this.searchResults.findIndex(user=> user._id == followUser._id);
+            this.searchResults[num].doIFollow = true;
         },
         removeFollow(followUser){
             //followUser : 내가 팔로우끊으려는 유저
             //내 유저객체의 followingId목록에 followUser의 아이디를 삭제한다.
             const selfUser = this.user;
 
-            let idx = selfUser.followingId.indexOf(followUser._id);
+            let idx = selfUser.followingId.findIndex((fid)=>fid == followUser._id);
             selfUser.followingId.splice(idx, 1);
+            console.log('끊으려는 사람의 인덱스', idx);
+            console.log('내 팔로잉 리스트', selfUser.followingId);
 
             //내가 follow하는 유저의 follwerId목록에 내아이디를 추가한다.
-            idx = followUser.followerId.indexOf(selfUser._id);
-            followUser.followerId.splice(idx, 1);
+            let index = followUser.followerId.findIndex((fid)=>fid == selfUser._id);
+            followUser.followerId.splice(index, 1);
+            console.log('끊으려는 사람의 팔로워 인덱스', index);
+            console.log('그사람의 팔로워 리스트', followUser.followerId);
 
             let payload = {
                 selfUser, //나
@@ -380,6 +386,9 @@ export default {
                     next(e);
                 }
             })();
+            let num = this.searchResults.findIndex(user=> user._id == followUser._id);
+            this.searchResults[num].doIFollow = false;
+
         }
     }
 }
