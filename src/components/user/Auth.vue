@@ -12,7 +12,6 @@ export default {
     data:function(){
         return {
             user:{
-                email:'',
                 password:'',
                 token:''
             }
