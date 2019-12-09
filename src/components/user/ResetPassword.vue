@@ -1,5 +1,6 @@
 <template>
     <div>
+<<<<<<< HEAD
         <!-- 로그아웃 처리 -->
 		<p>아이디:</p> <input v-model="user.userId">
 		<p>이메일:</p> <input v-model="user.email">
@@ -7,20 +8,27 @@
         <button v-on:click="logout">로그아웃</button>
         
     </div>    
+=======
+        <p>아이디:	{{user.userId}}</p>
+        <p>이메일:	{{user.email}}</p>
+        <p>nickName:{{user.nickName}}</p>
+    </div>
+>>>>>>> 71ddeb507c573076f31e809388001060dc13b5a0
 </template>
 <script>
-export default {
-    name:'ResetPassword',
-    data:function(){
-        return {
-				user:{
-					userId:'',
-					userName:'',
-					email:'',
-					phone:'',
-					nickName:'',
-				}
+    export default {
+        name:'ResetPassword',
+        data:function(){
+            return {
+                user:{
+                    userId:'',
+                    userName:'',
+                    email:'',
+                    phone:'',
+                    nickName:'',
+                }
             }
+<<<<<<< HEAD
     },
     methods:{
         logout:function(){
@@ -48,4 +56,21 @@ export default {
     },
     
 }
+=======
+        },
+        created:function(){
+            const token = localStorage.getItem('wishToken');
+            console.log(token);
+            this.$http.post(this.$serverUrl+ '/users/logout',{headers:{authorization:token}})
+                .then((response)=>{
+                    console.log(response);
+                    localStorage.removeItem('wishToken');
+                })
+                .catch((err)=>{
+                    console.error(err);
+                })
+        }
+
+    }
+>>>>>>> 71ddeb507c573076f31e809388001060dc13b5a0
 </script>
