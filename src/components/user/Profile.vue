@@ -1,28 +1,32 @@
 <template>
     <div>
-    </div>    
+       <h3> {{user.userId}}님 환영합니다. </h3>
+         </div>
 </template>
 <script>
 export default {
     name:'Profile',
     data:function(){
         return {
-            userId:'',
-            userName:'',
-            email:'',
-            phone:'',
-            nickName:'',
+                user:{
+                    userId:'',
+                    userName:'',
+                    email:'',
+                    phone:'',
+                    nickName:'',
+                }
             }
     },
     created:function(){
             const token = localStorage.getItem('wishToken');
-            this.$http.post(this.$serverURL + '/users/pro',{ headers:{ authorization:token }})
+            this.$http.get(this.$serverUrl + '/users/profile',{ headers:{ authorization:token }})
             .then((response)=>{
                 console.log(response);
-                localStorage.setItem('wishToken');
+                this.user = response.data.result;
 
             })
             .catch((err)=>{
+                console.log('에러발생');
                 console.error(err);
             })
     }

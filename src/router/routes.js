@@ -10,10 +10,12 @@ import Profile from '../components/user/Profile.vue'
 import FollowList from '../components/follow/FollowList.vue'
 import NotiList from '../components/notification/NotiList.vue'
 import Settings from '../components/settings/Settings.vue'
+import Auth from '../components/user/Auth.vue'
 
 // 웹소캣 연습용 컴포턴트 (나중에 삭제하기)
 import Temp from '../components/Temp.vue'
-
+// 이메일 테스트용 컴포넌트
+import Test from '../components/user/Test.vue'
 
 export default [
     { path:'/category/list', component:CategoryList },
@@ -25,10 +27,12 @@ export default [
     { path:'/item/detail', component:ItemDetail}, //배포시 삭제
     { path:'/item/detail/:itemId',component:ItemDetail},
     { path:'/item/modify/:itemId',component:ItemModify},
-    { path:'/user/register', component: ResetPassword},
+    { path:'/user/resetpwd', component: ResetPassword},
     { path:'/user/login', component: Login},
-    { path:'/user/profile/:userId', component: Profile},
+    { path:'/user/profile', component: Profile},
     { path:'/follow/follow', component: FollowList},
     { path:'/noti', component: NotiList},
-    { path:'/settings', component: Settings}
+    { path:'/settings', component: Settings},
+    { path:'/user/test', component: Test},
+    { path:'/user/auth/:email', component: Auth},
 ]
