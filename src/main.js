@@ -31,6 +31,7 @@ Vue.prototype.$serverUrl = 'http://localhost:3000';
 
 
 const router = new VueRouter({
+  mode: 'history',
   routes:Routes
 })
 
