@@ -13,12 +13,7 @@
                             <!-- Today Events -->
                             
                             <div class="today-events calendar">
-                                <div class="today-events-thumb">
-                                    <div class="date">
-                                        <div class="day-number">26</div>
-                                        <div class="day-week">Saturday</div>
-                                        <div class="month-year">March, 2016</div>
-                                    </div>
+                                <div class="today-events-thumb" style="height:220px;">
                                 </div>
                             
                                 <div class="list">
@@ -754,26 +749,22 @@
 <script>
 export default {
     name: 'ItemDetail',
-    mounted(){
-        this.$http.get(this.$serverUrl+this.$route.path)
-        .then(res=>{
-			this.item = res.data;
-        }).catch(e=>{
-            console.error(e);
-		})
-		
+    created(){
+        (async()=>{
+            try{
+                const res = await this.$http.get(this.$serverUrl+this.$route.path);
+                this.item = res.data;
+            }catch(e){
+                console.error(e);
+            }
+        })();
+        
     },
     components:{
     },
     data(){
         return {
             item: {
-                itemName:'아이템이름',
-				itemPrice: '20000',
-				itemLink: 'http://localhost/3000',
-				itemRank: '',
-				visibleTo: 'f',
-				itemMemo: '메모를입력한내용메모메모메모를입력한내용메모메모메모를입력한내용메모메모메모를입력한내용메모메모메모를입력한내용메모메모'
             }
         }
     },
@@ -793,16 +784,21 @@ export default {
 			this.$router.push({path:'/item/modify/'+this.item._id})
 		},
 		doDelete(){
-			this.$http.delete(this.$serverUrl+this.$route.path)
-			.then(()=>{
-				this.$socket.emit('reqList', 'delete');
-			}).catch(e=>{
-				console.error(e);
-			});
-			this.$router.push({path:'/item/list/'});
+            (async()=>{
+                try {
+                    const res = await this.$http.delete(this.$serverUrl+this.$route.path);
+                    console.log(res.data.code);
+                    if(res.data.code == "200"){
+                        console.log(res.data.msg);
+			            this.$router.push({name:'itemList', params: {userId: this.$userId}});
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            })();
         },
         goToList(){
-            this.$router.push({path:'/item/list'});
+            this.$router.push({name:'itemList', params: {userId: this.$userId}});
         }
     }
 }

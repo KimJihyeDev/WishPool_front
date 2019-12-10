@@ -1,6 +1,6 @@
 <template>
-   <div class="modal-content">
-			
+<div>
+    <div class="modal-content">
 			<div class="modal-header">
 				<h3 class="title" style="display:inline;">아이템 수정</h3>
                 <!-- modal close button -->
@@ -10,6 +10,13 @@
                 <!-- end modal close button -->
 			</div>
             <div class="ui-block-content">
+                <div class="today-events-thumb" style="height:220px;"></div>
+                <a href="javascript:void(0)" id="photo-link" class="options-message" data-toggle="modal" data-target="#update-header-photo">
+                    <div class="form-control" id="photo-box">
+                        <svg class="olymp-camera-icon" style="margin-right: .7rem;"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-camera-icon"></use></svg>
+                        사진 수정하기
+                    </div>
+                </a>
             <form class="w-search">
                 <h4 class="control-label" id="first-h4">아이템 이름</h4>
                 <div class="form-group with-button is-empty">
@@ -102,23 +109,56 @@
                 </div>
                 <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
                     <button class="btn btn-secondary btn-lg full-width" v-on:click="goToList">취소</button>
-                </div>            
+                </div>
+                            
 			</div>
             <div style="margin-top:2.5rem;"></div>
 		</div>
+                    <div class="modal fade" id="update-header-photo" tabindex="-1" role="dialog" aria-labelledby="update-header-photo" aria-hidden="true">
+	<div class="modal-dialog window-popup update-header-photo" role="document">
+		<div class="modal-content">
+			<a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
+				<svg class="olymp-close-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
+			</a>
+
+			<div class="modal-header">
+				<h5 class="title">아이템 사진 수정</h5>
+			</div>
+
+			<div class="modal-body">
+                <!-- 사진 가져오기 -->
+				<a href="#" class="upload-photo-item" data-dismiss="modal">
+                    <svg class="olymp-photos-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-photos-icon"></use></svg>
+
+                    <h6>라이브러리</h6>
+                    <span>내 사진 불러오기</span>
+                </a>
+                <!-- 사진찍기 -->
+				<a href="#" class="upload-photo-item" data-dismiss="modal" >
+                    <svg class="olymp-camera-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-camera-icon"></use></svg>
+                    <h6>카메라</h6>
+                    <span>사진 촬영 후 업로드</span>
+		        </a>
+			</div>
+		</div>
+	</div>
+</div>
+  
+</div>
+   
 </template>
 <script>
 export default {
     name: 'ItemModify',
 	created(){
-        this.$http.get(this.$serverUrl+this.$route.path)
-        .then(res=>{
-			console.log(res.data);
-			this.item = res.data;
-        }).catch(e=>{
-            console.error(e);
-		})
-		
+        (async()=>{
+            try{
+                const res = await this.$http.get(this.$serverUrl+this.$route.path);
+                this.item = res.data;
+            }catch(e){
+                console.error(e);
+            }
+        })();
     },
 	data(){
 		return {
@@ -156,15 +196,17 @@ export default {
     },
 	methods:{
 		doModify(){
-			this.$http.patch(this.$serverUrl+this.$route.path, this.item)
-			.then(()=>{
-				// console.log(res.data);
-				//목록으로 이동하는 코드
-				this.$socket.emit('reqList', 'delete');
-			}).catch(e=>{
-				console.error(e);
-			})
-			this.$router.push({path:'/item/list'})
+            (async()=>{
+                try {
+                    const res = await this.$http.patch(this.$serverUrl+this.$route.path, this.item);
+                    if(res.data.code == "200"){
+                        console.log(res.data.msg);
+                        this.$router.push({name:'itemList', params: {userId: this.$userId}});
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            })();
 		},
         findItem(){
             //this.linkQuery로 새창 띄우기
@@ -176,7 +218,7 @@ export default {
             this.collapseOption = !this.collapseOption;
         },
         goToList(){
-            this.$router.push({path:'/item/list'});
+            this.$router.push({name:'itemList', params: {userId: this.$userId}});
         }
 	},
 }
@@ -235,10 +277,41 @@ h4{
     padding-top:4px;
 }
 .card-header .collapsed i, .card-header .collapsed svg {
-  -webkit-transform: rotate(-180deg);
-          transform: rotate(-180deg); 
-    }
-    .card-header{
-        border:unset;
-    }
+-webkit-transform: rotate(-180deg);
+        transform: rotate(-180deg); 
+}
+.card-header{
+    border:unset;
+}
+#photo-box{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    padding: 0.7rem;
+    margin-top: 0;
+    margin-bottom: 1.8rem;
+    background: #c2c5d0;
+    border:unset;
+}
+#photo-link{
+    width: 100%;
+}
+.options-message {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333333;
+    fill: #555;
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+.options-message svg {
+    width: 20px;
+    height: 20px;
+}
 </style>

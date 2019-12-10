@@ -9,7 +9,7 @@
             <span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">4 hours ago</time></span>
         </div>
         <div class="more">
-            <a href="#" v-on:click="deleteThis">
+            <a href="javascript:void(0)" v-on:click.stop="deleteThis">
                 <svg class="olymp-little-delete"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-little-delete"></use></svg>
             </a>
         </div>

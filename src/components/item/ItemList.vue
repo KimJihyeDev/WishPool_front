@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
                    
-                    <item-input v-on:getInputItem="addItem" />
+                    <!-- <item-input v-on:onInsert="handleInsert" /> -->
                     <div class="ui-block" style="margin-bottom:0px;">  
                         <!-- <div class="ui-block-title">
                             <h4 class="title">위시 아이템 리스트</h4>
@@ -59,19 +59,15 @@
                         
                         <!-- 위시아이템 -->
                         
-                        <ul class="widget w-friend-pages-added notification-list friend-requests">
+                        <ul v-if="!isWishEmpty" class="widget w-friend-pages-added notification-list friend-requests">
                             <item v-for="item in unPurchasedList"
 							:key="item._id"
-							:name="item.itemName"
-							:price="item.itemPrice" 
-							:id="item._id"
-                            :visibleTo="item.visibleTo"
+							:item="item"
 							isCompleted="완료"
-							v-on:makePurchase="makePurchase"
-							v-on:cancelPurchase="cancelPurchase"
+							v-on:onPurchase="handlePurchase"
 							/>                 
                         </ul>
-                            
+                            <item-empty v-if="isWishEmpty" type="w" @btnPressed="handleInsert"/>
                             <!-- .. end 위시아이템 -->
                         </div>
                 </div>
@@ -92,32 +88,24 @@
                 
                         <!-- 위시아이템 -->
                             
-                        <ul class="widget w-friend-pages-added notification-list friend-requests">
+                        <ul v-if="!isCompletedEmpty" class="widget w-friend-pages-added notification-list friend-requests">
                             <item v-for="item in purchasedList"
 							:key="item._id"
-							:name="item.itemName"
-							:price="item.itemPrice"
-                            :visibleTo="item.visibleTo"
-							:id="item._id"
+							:item="item"
 							isCompleted="취소" 
-							v-on:makePurchase="makePurchase"
-							v-on:cancelPurchase="cancelPurchase"
+							v-on:onPurchase="handlePurchase"
 							/>                  
                         </ul>
-                    
+                        <item-empty v-if="isCompletedEmpty" type="c" />  
                             <!-- .. end 위시아이템 -->
                     </div>
                 </div>
             </div>
-
-            
-
-            
         </div>
 
     </div>
             <!-- Window-popup Create Event -->
-
+<div style="margin-top:8rem;"></div>
 <div class="modal fade" id="create-event" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
 	<div class="modal-dialog window-popup create-event" role="document">
         <item-add />
@@ -131,149 +119,122 @@
 <script>
     import Item from './Item.vue';
     import ItemAdd from './ItemAdd.vue';
-    import ItemInput from './ItemInput.vue';
-        // Vuex
-		// import { mapActions, mapState } from 'vuex';
+    // import ItemInput from './ItemInput.vue';
+    import ItemEmpty from './ItemEmpty.vue';
 
-        export default {
-			name: 'ItemList',
-			created(){
-				// this.$http.get(this.$serverUrl+this.$route.path)
-				// .then(res=>{
-				// 	console.log(res.data);
-				// 	this.items = res.data;
-				// })
-
-				/*웹소켓으로 데이터 가져오기*/
-				const self = this;
-				this.$socket.emit('reqList');
-				this.$socket.on('resList', function(data){
-					self.items = data;
-				});
-
-				//Vuex
-                // this.fetchItemList();
-                
-			},
-            data() {
-                return {
-					//Vuex로 할경우 items는 주석처리해야함
-					items: [
-						// {	
-						// 	_id: 0,
-						// 	itemName: '고양이 마우스 장난감',
-						// 	itemPrice: '10000원',
-						// 	purchasedBy: 'me'
-						// },
-						// {	
-						// 	_id: 1,
-						// 	itemName: 'vue.js 책',
-						// 	itemPrice: '230000원',
-						// 	purchasedBy: 'you'
-						// },
-						// {	
-						// 	_id: 2,
-						// 	itemName: 'starbuck 기프티콘',
-						// 	itemPrice: '1234원',
-						// 	purchasedBy: 'he'
-						// },
-						// 						{	
-						// 	_id: 3,
-						// 	itemName: '텀블러',
-						// 	itemPrice: '10000원',
-						// 	purchasedBy: ''
-						// },
-						// {	
-						// 	_id: 4,
-						// 	itemName: '정수기',
-						// 	itemPrice: '230000원',
-						// 	purchasedBy: ''
-						// },
-						// {	
-						// 	_id: 5,
-						// 	itemName: '루이비통',
-						// 	itemPrice: '1234원',
-						// 	purchasedBy: ''
-						// }
-                    ],
-                    item:{
-                        itemName: '',
-                        itemPrice: '',
-                        itemLink: '',
-                        itemRank: '',
-                        visibleTo: 'f',
-                        itemMemo: ''
-                    }
-				}
-            },
-            components: {
-                'item': Item,
-                'item-add': ItemAdd,
-                'item-input': ItemInput,
-			},
-			computed:{
-				unPurchasedList(){
-					return this.items.filter(item => item.purchasedBy === '');
-				},
-				purchasedList(){
-					return this.items.filter(item => item.purchasedBy !== '')
-				},
-				// Vuex
-				// ...mapState(['items'])
-			},
-			methods:{
-				makePurchase(id){
-					console.log('purchase made.'+id);
-					const index = this.items.findIndex(item=> item._id === id);
-					this.items[index].purchasedBy = "me";
-				},
-				cancelPurchase(id){
-					console.log('purchase canceled.'+id);
-					const index = this.items.findIndex(item=> item._id === id);
-					this.items[index].purchasedBy = "";
-                },
-                moveToAdd(){
-                    this.$router.push({path:'/item/add'});
-                },
-                addItem(val){
-                    if(val){
-                        this.item.itemName = val.itemName;
-                        this.item.itemPrice = val.itemPrice;
-                    }
-                    this.$http.post(this.$serverUrl+'/item/add', this.item)
-                    .then(res=>{
-                        if(res.data.code == 200){
-                            console.log('정상 : '+res.data.msg);
-                            this.$socket.emit('reqList');
-                        }else if(res.data.code == 500){
-                            console.log('서버오류 : '+res.data.msg);
-                        }
-                    }).catch(e=>{
-                        console.error(e);
-                    });
-                    this.$router.push({path:'/item/list'});
-                    // location.href=this.$url+'item/list';
-                },
-                setInputItem(val){
-                    this.item.itemName = val.itemName;
-                    this.item.itemPrice = val.itemPrice;
-                    console.log(val);
-                    this.$http.post(this.$serverUrl+'/item/add', this.item)
-                    .then(res=>{
-                        if(res.data.code == 200){
-                            console.log('정상 : '+res.data.msg);
-                            this.$socket.emit('reqList');
-                        }else if(res.data.code == 500){
-                            console.log('서버오류 : '+res.data.msg);
-                        }
-                    }).catch(e=>{
-                        console.error(e);
-                    });
+    export default {
+        name: 'ItemList',
+        created(){
+            console.log(this.$serverUrl+this.$route.fullPath);
+            (async()=>{
+                try{
+                    let res = await this.$http.get(this.$serverUrl+this.$route.fullPath);
+                    this.items = res.data.items;
+                }catch(e){
+                    console.error(e);
                 }
-				// Vuex
-				// ...mapActions(['fetchItemList'])
-			},
-        }
+            })();
+            this.$on('bus-refresh', async()=>{
+                try{
+                    let res = await this.$http.get(this.$serverUrl+this.$route.fullPath);
+                    this.items = res.data.items;
+                }catch(e){
+                    console.error(e);
+                }
+            });
+        },
+        data() {
+            return {
+                items: [ ],
+                item:{
+                    itemName: '',
+                    itemPrice: '',
+                    itemLink: '',
+                    itemRank: '',
+                    visibleTo: 'f',
+                    itemMemo: ''
+                }
+            }
+        },
+        components: {
+            'item': Item,
+            'item-add': ItemAdd,
+            // 'item-input': ItemInput,
+            'item-empty': ItemEmpty
+        },
+        computed:{
+            unPurchasedList(){
+                return this.items.filter(item => item.purchasedBy === '');
+            },
+            purchasedList(){
+                return this.items.filter(item => item.purchasedBy !== '')
+            },
+            isWishEmpty(){
+                if(this.unPurchasedList.length == 0){
+                    return true;
+                }
+                return false;
+            },
+            isCompletedEmpty(){
+                if(this.purchasedList.length ==0 ){
+                    return true;
+                }
+                return false;
+            }
+        },
+        methods:{
+            //하위컴포넌트에서 완료버튼 클릭시 실행하는 함수, view단만 담당, 
+            //payload : 하위 컴포넌트에서 보낸 수정된 item객체
+            handlePurchase(payload){
+                console.log('purchase made.'+payload._id);
+                //먼저 서버로 해당 아이템이 완료되었다는 수정 API를 호출한다.
+                (async()=>{
+                    try{
+                        const res = await this.$http.patch(this.$serverUrl+'item/modify/'+payload._id, payload.item);
+                        if(res.data.code === "200"){
+                            console.log('완료 처리');
+                            //this.items배열의 수정될 객체의 인덱스를 찾아
+                            const index = this.items.findIndex(item=> item._id ===  res.data.item._id);
+                            //수정된 아이템을 끼어넣어준 배열을 다시 만든다.
+                            this.items = [
+                                ...this.items.slice(0,index),
+                                payload,
+                                ...this.items.slice(index+1, this.items.length)
+                            ]; //VM의 data()가 바뀌었으므로 이때 화면은 리액티브하게 반영된다.
+                        }else{
+                            console.log(res.data.msg);
+                        }
+                    }catch(e){
+                        console.error(e);
+                    }
+                })();
+            },
+            moveToAdd(){
+                this.$router.push({path:'/item/add'});
+            },
+            //아이템 추가함수
+            handleInsert(payload){
+                this.item.itemName = payload.itemName;
+                this.item.itemPrice = payload.itemPrice;
+                //아이템 추가 API호출
+                (async () =>{
+                    try{
+                        let res = await this.$http.post(this.$serverUrl+'/item/add', this.item);
+                        if(res.data.code == 200){
+                            console.log('정상 : '+res.data.msg);
+                            console.log(this.items);
+                            const response = await this.$http.get(this.$serverUrl+'/item/list');
+                            this.items = response.data.items;
+                        }else if(res.data.code == 500){
+                            console.log('서버오류 : '+res.data.msg);
+                        }
+                    }catch (error){
+                        console.error(error)
+                    }
+                })();
+            },
+        },
+    }
 </script>
 <style scoped>
     .ui-block-title{
@@ -297,6 +258,9 @@
         text-align: center;
         font-size: 1.1rem;
     }
+    .nav-item{
+        width: 100%
+    }
     .form-group.with-button button{
         width: 45px;
         background: #ff5e3a;
@@ -307,4 +271,25 @@
     .ui-block{
         width:100%;
     }
+    @media (min-width: 540px){
+    .col-sm-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .col-md-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+@media (min-width: 800px){
+    .col-md-12{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .col-md-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+}
 </style>

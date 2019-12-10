@@ -7,7 +7,7 @@
             <form class="w-search">
                 <div class="form-group with-button is-empty">
                     <input class="form-control" type="text" placeholder="아이템을 간단하게 입력하세요" v-model="inputItem.itemName">
-                    <button @click="sendItem">
+                    <button @click="insertClicked">
                         <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
                         <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
                     </button>
@@ -15,7 +15,7 @@
             </form>
             <form class="w-search">
                 <div class="form-group with-button is-empty">
-                    <input class="form-control" type="text" placeholder="가격을 입력하세요(숫자만 가능)" v-model="inputItem.itemPrice">
+                    <input class="form-control" type="text" placeholder="가격을 입력하세요(숫자만 가능)" v-model.number="inputItem.itemPrice">
                     <button id="addInput">
                         <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
                         <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
@@ -33,12 +33,20 @@ export default {
             inputItem :{
                 itemName:'',
                 itemPrice: ''
-            }
+            },
         }
     },
     methods:{
-        sendItem(){
-            this.$emit('getInputItem', this.inputItem);
+        insertClicked(){
+            if(this.inputItem.itemName !== ''){
+                const item = {
+                    ...this.inputItem
+                }
+                this.inputItem.itemName = '';
+                this.inputItem.itemPrice = '';
+                console.log(item);
+                this.$emit('onInsert', item);
+            }
         }
     }
 }

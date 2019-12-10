@@ -93,10 +93,10 @@
 
 				/*웹소켓으로 데이터 가져오기*/
 				const self = this;
-				this.$socket.emit('reqList');
-				this.$socket.on('resList', function(data){
-					self.items = data;
-				});
+				// this.$socket.emit('reqList');
+				// this.$socket.on('resList', function(data){
+				// 	self.items = data;
+				// });
 
 				//Vuex
 				// this.fetchItemList();

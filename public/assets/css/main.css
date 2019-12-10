@@ -620,8 +620,10 @@ if the page has a “right panel”, add a class for BODY -- ".page-has-right-pa
   height: 4px; }
 
 .olymp-little-delete {
-  width: 8px;
-  height: 8px; }
+  width: 11px;
+  height: 11px; 
+  fill:rgb(150, 142, 142);
+}
 
 .olymp-trophy-icon {
   width: 18px;
@@ -5188,7 +5190,7 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
     top: 5px;
     font-size: 10px;
     color: #d6d9e6;
-    opacity: 0; }
+    opacity: 1; }
     .notification-list .more i + i {
       margin-left: 5px; }
     .notification-list .more svg + i {

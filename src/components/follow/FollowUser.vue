@@ -1,21 +1,21 @@
 <template>
-    <li>
+    <li @click="sendUserId">
         <div class="author-thumb">
-            <img src="/assets/img/avatar15-sm.jpg" alt="author">
+            <img :src="user.profileImgPath" alt="author">
         </div>
         <div class="notification-event" >
-            <a href="#" class="h6 notification-friend">Tamara Romanoff</a>
-            <span class="chat-message-item">Mutual Friend: Sarah Hetfield</span>
+            <a href="#" class="h6 notification-friend">{{user.userName}}</a>
+            <span class="chat-message-item">{{user.profileMsg}}</span>
         </div>
         <span v-if="isShow" class="notification-icon">
-            <a href="#" class="accept-request request">
+            <a href="javascript:void(0)" class="accept-request request" @click.stop="iconClicked">
                 <span class="icon-add without-texts" style="margin-right:0px;">
                     <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                 </span>
             </a>
         </span>
         <span v-if="!isShow" class="notification-icon">
-            <a href="#" class="accept-request request-del">
+            <a href="javascript:void(0)" class="accept-request request-del" @click.stop="iconClicked">
                 <span class="icon-minus without-texts">
                     <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                 </span>
@@ -26,30 +26,37 @@
 <script>
 export default {
     name:'FollowUser',
-    props: ['isPlus'],
+    props: ['isPlus', 'user'],
     computed:{
         isShow(){
-            if(this.isPlus ==="true"){
+            if(this.isPlus === 'true'){
                 return true;
             }
             return false;
+        }
+    },
+    methods:{
+        sendUserId(){
+            const payload={
+                _id: this._id,
+                isPlus : this._isPlus
+            }
+            this.$emit('onClick', payload);
+        },
+        iconClicked(){
+            this.$emit('onFollowClick');
         }
     }
 }
 </script>
 <style scoped>
 .notification-event, .notification-list li{
-    display:inline-block;
+    display:inline-flex;
     width: 100%;
-}
-.notification-icon{
-    position: absolute;
-    display: inline;
-    right:15px;
-    top:20%;
 }
 .notification-list.friend-requests .notification-icon {
     display: inline;
+    margin-top:0px;
 }
 @media (max-width: 360px) {
   .notification-list .notification-event {
@@ -57,8 +64,10 @@ export default {
   }
 }
 li{
-    padding: 25px 15px;
-    display:inline-block
+    padding: 20px 15px;
+    display:inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 </style>
