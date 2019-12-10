@@ -10,7 +10,7 @@
 						<div class="row">
                             <div class="friend-item">
                                 <div class="friend-header-thumb">
-                                    <img :src="newUser.profileImgPath" style="height:100px; width:100px; margin-bottom: 2rem;object-fit:cover; border:1px solid #aaa; border-radius:100%" alt="friend">
+                                    <img :src="user.profileImgPath" style="height:100px; width:100px; margin-bottom: 2rem;object-fit:cover; border:1px solid #aaa; border-radius:100%" alt="friend">
                                 </div>
                             </div>
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
@@ -23,29 +23,29 @@
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
 								<div class="form-group label-floating">
 									<label class="control-label">사용자 닉네임</label>
-									<input class="form-control" placeholder="" type="text" v-model="newUser.nickName">
+									<input class="form-control" placeholder="" type="text" v-model="user.nickName">
 								<span class="material-input"></span></div>
 					
 								<div class="form-group label-floating">
 									<label class="control-label">이메일주소</label>
-									<input class="form-control" placeholder="" type="email"  v-model="newUser.email">
+									<input class="form-control" placeholder="" type="email"  v-model="user.email">
                                     <span class="material-input"></span></div>
 							</div>
 					
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
 								<div class="form-group label-floating">
 									<label class="control-label">전화번호</label>
-									<input class="form-control" placeholder="" type="text"  v-model="newUser.phone">
+									<input class="form-control" placeholder="" type="text"  v-model="user.phone">
 								<span class="material-input"></span></div>
 										
 								<div class="form-group label-floating is-empty">
 									<label class="control-label">생일</label>
-									<input class="form-control" placeholder="" type="text"  v-model="newUser.birth">
+									<input class="form-control" placeholder="" type="text"  v-model="user.birth">
 								<span class="material-input"></span></div>
 							</div>
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
 								<div class="form-group">
-									<textarea  v-model="newUser.profileMsg" class="form-control" placeholder="프로필 메시지(n자 이내)"></textarea>
+									<textarea  v-model="user.profileMsg" class="form-control" placeholder="프로필 메시지(n자 이내)"></textarea>
 								<span class="material-input"></span></div>
                             </div>
 							<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -76,29 +76,66 @@
 								<span class="material-input"></span></div> -->
 							</div> 
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-								<button class="btn btn-primary btn-lg full-width">저장</button>
+								<button class="btn btn-primary btn-lg full-width" @click="saveModify">저장</button>
+								<button class="btn btn-secondary btn-lg full-width" @click="goBack">취소</button>
 							</div>
 					
 						</div>
 					</form>
 					<!-- ... end Personal Information Form  -->
 				</div>
-			</div>
             <div style="margin-top:3rem;"></div>
+			</div>
 		</div>
 </template>
 <script>
 export default {
     name: 'ProfileModify',
-    props: ['user'],
+	created(){
+		(async()=>{
+			try{
+			const res = await this.$http.get(this.$serverUrl+'/users/profile/'+this.$route.params.userId);
+			const { code, msg, user } = res.data;
+			if(code=="200"){
+				this.user = user;
+			}else{
+				console.log(msg);
+				//사용자에게 잘못된 접근이라고 알릴방법?
+				this.$router.go(-1);
+			}
+			}catch(e){
+				console.error(e);
+			}
+		})();
+	},
     data(){
         return {
-            newUser:{}
+            user:{}
         }
-    },
-    created(){
-        this.newUser = this.user;
-    }
+	},
+	methods:{	
+		saveModify(){
+			(async()=>{
+				try{
+				const res = await this.$http.patch(this.$serverUrl+'/users/profile/modify/'+this.user._id, this.user);
+				const { code, msg, newUser } = res.data;
+				if(code=="200"){
+					console.log(msg);
+					this.user = newUser;
+				}else{
+					console.log(msg);
+				}
+				}catch(e){
+					console.error(e);
+				}
+			})();
+		},
+		goBack(){
+			//누르면 한단계 전으로 이동
+			//this.$router.go(-1);
+			this.$router.push({path:'/settings'});
+		}
+	}
 }
 </script>
 <style scoped>

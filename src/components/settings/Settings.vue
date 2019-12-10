@@ -15,7 +15,7 @@
 						<div class="row">
 					
 							<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="description-toggle">
+								<div class="description-toggle" @click="handleClick">
 									<div class="description-toggle-content">
 										<div class="h6">프로필 관리</div>
 										<p>내 프로필을 관리합니다</p>
@@ -87,7 +87,12 @@
 </template>
 <script>
 export default {
-    name:'Setting'
+	name:'Setting',
+	methods:{
+		handleClick(){
+           this.$router.push({name:'profileModify', params: {userId:this.$userId}}); //유저 객체 전달
+        }
+	}
 }
 </script>
 <style scoped>
