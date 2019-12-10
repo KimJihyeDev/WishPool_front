@@ -1,127 +1,126 @@
 <template>
-<div class="">
-    <div class="page-has-left-panels page-has-right-panels" style="cursor: url(&quot;undefined&quot;), default;">
-        <div class="container">
-            <div class="row">
-                <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
-                   
-                    <div class="ui-block" style="margin-bottom:0px;">  
-                        <div class="top-header top-header-favorit">
-					
-                            <div class="profile-section with-social-menu-tabs">
-                                <div class="row">
-                                    <div class="col col-xl-8 m-auto col-lg-8 col-md-12">
-                                        <ul class="nav nav-tabs social-menu-tabs" role="tablist">
-
-                                            <li class="nav-item">
-                                                <a class="nav-link active" data-toggle="tab" href="#home" role="tab">
-                                                    <span class="nav-content"><h4>Followings</h4></span>
-                                                </a>
-                                            </li>
-
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#about" role="tab">
-                                                    <span class="nav-content"><h4>Followers</h4></span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            
-				        </div>
-                    <div class="search">
-                        <form class="w-search" style="margin-bottom: 1rem;">
-                            <h4 style="margin-top:1rem;">새로운 follow 찾기</h4>
-                           <div class="form-group with-button is-empty">
-                               <div style="inline-flex">
-                               <select style="display: inline; width:20%; padding:15px 2px" v-model="searchOption">
-                                   <option value="id">ID</option>
-                                   <option value="phone">핸드폰</option>
-                                </select>
-                               <input type="text" style="display: inline; width:80%;" placeholder="ID/핸드폰 번호 검색" class="form-control" v-model="searchQuery">
-                               </div>
-                               <button data-toggle="modal" data-target="#create-event" @click="searchUser">
-                                   <svg class="olymp-magnifying-glass-icon">
-                                   <use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
-                                </button>
-                                <span class="material-input"></span>
-                            </div>
-                        </form>
-                    </div>
-                    <ul class="notification-list friend-requests">
-                        <h6 style="margin:0; padding: 0.5rem 1rem; border-top:1px solid lightgrey; border-bottom:1px solid lightgrey; background: whitesmoke">내 프로필 </h6>
-                        <a data-toggle="modal" data-target="#profileA">
-                            <li @click="handleClick(user)">
-                                <div class="author-thumb">
-                                    <img :src="user.profileImgPath" alt="author">
-                                </div>
-                                <div class="notification-event" >
-                                    <a href="#" class="h6 notification-friend">{{user.userName}}</a>
-                                    <span class="chat-message-item">{{user.profileMsg}}</span>
-                                </div>
-                            </li>
-                    </a>
-                    </ul>
-                    </div> <!-- end of ui-block-->
-
-                </div>
-            </div>
-        </div>
-        <!-- Tab panes -->
-        
-        <div class="tab-content">
+<div class="container">
+    <div class="row">
+        <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
             
-            <div class="tab-pane active" id="home" role="tabpanel">
-                <div class="container">
-                    <div class="ui-block">
-            
-				<!-- Notification List Frien Requests -->
-				
-				<ul class="notification-list friend-requests">
-                    <a data-toggle="modal" data-target="#profileA">
-                        <follow-user v-for="user in followings" 
-                        :key="user._id" 
-                        :user="user"
-                        @onClick="handleClick(user)"
-                        @onFollowClick="removeFollow(user)"
-                        isPlus="false" />
-                    </a>
-				</ul>
-				
-				<!-- ... end Notification List Frien Requests -->
-			</div>
-                </div>
-            </div>
-            <div class="tab-pane" id="about" role="tabpanel">
-                <div class="container">
-                    <div class="ui-block">
+            <div class="ui-block" style="margin-bottom:0px;">  
                 
-				<!-- Notification List Frien Requests -->
-				
-				<ul class="notification-list friend-requests">
-					<a data-toggle="modal" data-target="#profileA">
-                        <follow-user v-for="user in followers"
-                        :key="user._id" 
-                        :user="user"
-                        @onClick="handleClick(user)"
-                        @onFollowClick="addFollow(user)"
-                        isPlus="true" />
-                    </a>
-				</ul>
-				
-				<!-- ... end Notification List Frien Requests -->
-			</div>
-                </div>
+            <div class="search">
+                <form class="w-search" style="margin-bottom: 1rem;">
+                    <h4 style="margin-top:1rem;">새로운 follow 찾기</h4>
+                    <div class="form-group with-button is-empty">
+                        <div style="inline-flex">
+                        <select style="display: inline; width:20%; padding:15px 2px" v-model="searchOption">
+                            <option value="id">ID</option>
+                            <option value="phone">핸드폰</option>
+                        </select>
+                        <input type="text" style="display: inline; width:80%;" placeholder="ID/핸드폰 번호 검색" class="form-control" v-model="searchQuery">
+                        </div>
+                        <button data-toggle="modal" data-target="#create-event" @click="searchUser">
+                            <svg class="olymp-magnifying-glass-icon">
+                            <use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
+                        </button>
+                        <span class="material-input"></span>
+                    </div>
+                </form>
             </div>
+            <ul class="notification-list friend-requests">
+                <h6 style="margin:0; padding: 0.5rem 1rem; border-top:1px solid lightgrey; border-bottom:1px solid lightgrey; background: whitesmoke">내 프로필 </h6>
+                <a data-toggle="modal" data-target="#profileA">
+                    <li @click="handleClick(user)" style="display:inline-flex; align-items:center">
+                        <div class="author-thumb">
+                            <img :src="user.profileImgPath" alt="author">
+                        </div>
+                        <div class="notification-event" >
+                            <a href="#" class="h6 notification-friend">{{user.userName}}</a>
+                            <span class="chat-message-item">{{user.profileMsg}}</span>
+                        </div>
+                    </li>
+            </a>
+            </ul>
+            <!-- Followings / Followers 탭 헤더 -->
+             <ul class="nav nav-tabs social-menu-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#home" role="tab" v-on:click="toggleFollowing('a')">
+                        <span class="nav-content"><h5>Followings</h5></span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#about" role="tab" v-on:click="toggleFollowing('b')">
+                        <span class="nav-content"><h5>Followers</h5></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- end of Followings / Followers 탭 헤더 -->
+            <!-- Tab panes -->
+            <!-- Followings 친구 목록 -->
+                <div v-if="isFollowing" class="tab-pane active" id="home" role="tabpanel"> 
+                    <!-- if-empty -->
+                    <div v-if="isFollowingEmpty&&isFollowing" style="width:100%; height:100%; display:flex; justify-content:center; align-items:center; flex-direction:column">
+                    <a href="javascript:void(0)" class="btn btn-control bg-blue" data-toggle="modal" data-target="#create-friend-group-1" style="">
+                        <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                    <div class="ripple-container"></div></a>
+                
+                    <div class="author-content">
+                        <a href="#" class="h5 author-name">비었어요!</a>
+                        <div class="country">새로운 follow을 추가해 보세요!</div>
+                    </div>
+                </div>
+                    <!-- end of empty -->
+                    <div v-if="!isFollowingEmpty&&isFollowing" class="ui-block">
+                        <ul class="notification-list friend-requests">
+                            <a data-toggle="modal" data-target="#profileA">
+                                <follow-user v-for="user in followings" 
+                                :key="user._id" 
+                                :user="user"
+                                @onClick="handleClick(user)"
+                                @onFollowClick="removeFollow(user)"
+                                isPlus="false" />
+                            </a>
+                        </ul>
+                        <!-- ... end Followings 친구 목록 -->
+                
+                    </div>
+                </div>
+            
+                <!-- Followers 친구 목록 -->
+                <div v-if="!isFollowing" class="tab-pane" id="about" role="tabpanel">
+                    <div v-if="isFollowerEmpty&&(!isFollowing)" style="width:100%; height:100%; display:flex; justify-content:center; align-items:center; flex-direction:column">
+                  <a href="javascript:void(0)" class="btn btn-control bg-blue" data-toggle="modal" data-target="#create-friend-group-1" style="">
+                     <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                  <div class="ripple-container"></div></a>
+            
+                  <div class="author-content">
+                     <a href="#" class="h5 author-name">비었어요!</a>
+                     <div class="country">새로운 follow을 추가해 보세요!</div>
+                  </div>
+                    <div v-if="!isFollowerEmpty&&(!isFollowing)" class="ui-block">
+                        <ul class="notification-list friend-requests">
+                            <a data-toggle="modal" data-target="#profileA">
+                                <follow-user v-for="user in followers"
+                                :key="user._id" 
+                                :user="user"
+                                @onClick="handleClick(user)"
+                                @onFollowClick="addFollow(user)"
+                                isPlus="true" />
+                            </a>
+                        </ul>
+                        <!-- ... end Followers 친구 목록 -->
+
+                    </div>
+                </div>
+            </div>   
+            </div> <!-- end of ui-block-->
         </div>
-
+            
     </div>
-            <!-- Window-popup Create Event -->
+    
 
-<div class="modal fade" id="create-event" ref="create" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
-	<div class="modal-dialog window-popup create-event" role="document">
-        <div class="container">
+        <!-- Window-popup Create Event -->
+
+    <div class="modal fade" id="create-event" ref="create" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog window-popup create-event" role="document">
             <div class="modal-content" id="create-event-body">
                 <div class="modal-header">
                     <h3 class="title" style="display:inline;">새로운 Follow 찾기</h3>
@@ -159,26 +158,24 @@
                     </div>
                     <!-- end 검색결과 : 유저리스트 -->
                     <span class="material-input"></span><span class="material-input"></span>
-        			<a href="#" class="btn btn-blue btn-lg full-width" data-dismiss="modal" >확인</a>
+                    <a href="#" class="btn btn-blue btn-lg full-width" data-dismiss="modal" >확인</a>
                 </div>
-			
-		</div>
-		</div>
+            </div>
         </div>
-	</div>
+    </div>
 <!-- ... end Window-popup Create Event -->
     <div class="modal fade" id="profileA" tabindex="-1" role="dialog" aria-labelledby="profileA" style="display: none;" aria-hidden="true" >
         <div class="modal-dialog window-popup" role="document">
             <profile-detail :user="this.clickedUserInfo" />
-       </div>
+    </div>
     </div>
     <div class="modal fade" id="profileB" tabindex="-1" role="dialog" aria-labelledby="profileB" style="display: none; background:whitesmoke" aria-hidden="true" >
         <div class="modal-dialog window-popup" role="document">
             <profile-detail :user="this.clickedUserInfo" />
-       </div>
     </div>
-      
-<div style="margin-top:2.5rem;"></div>
+    </div>
+    
+    <div style="margin-top:2.5rem;"></div>
 
 </div>
 
@@ -229,6 +226,7 @@ export default {
             searchQuery: '',
             existMatch: false,
             searchResults: [],
+            isFollowing: true
         }
     },
     computed:{
@@ -239,9 +237,18 @@ export default {
         followers(){
             return this.user.followerId;
         },
-        //내가 이 사람을 팔로우한다면 true, 아니면 false리턴하는 값.
-        //내가 이 사람을 팔로우할지 안 할지에 따라서 아이콘이 플러스/마이너스로 나뉜다.
-        //내 팔로잉목록에 상대방의 아이디가 있다면,
+        isFollowingEmpty(){
+            if(this.user.followingId.length==0){
+                return true;
+            }
+            return false;
+        },
+        isFollowerEmpty(){
+            if(this.user.followerId.length==0){
+                return true;
+            }
+            return false;
+        },
        
     },
     components:{
@@ -250,9 +257,15 @@ export default {
     },
     methods:{
         handleClick(payload){
-            
             this.clickedUserInfo = payload;
             console.log(this.clickedUserInfo);
+        },
+        toggleFollowing(val){
+            if(val == 'a'){
+                this.isFollowing = true;
+            }else if(val =='b'){
+                this.isFollowing = false;
+            }
         },
         //follow검색
         searchUser(){
@@ -400,6 +413,8 @@ export default {
 }
 .nav-link{
     height:100%;
+    background:#fff;
+    padding:0.5rem;
 }
 .social-menu-tabs.nav-tabs .nav-link {
     border-bottom:1px solid #e6ecf5;
@@ -414,6 +429,7 @@ export default {
 }
 .nav-item{
     padding:0;
+    width: 100%;
 }
 .form-group.with-button button{
     width: 45px;
@@ -447,14 +463,11 @@ export default {
     padding: 24px 23px 8px;
 }
 .notification-event, .notification-list li{
-    display:inline-block;
+    display:inline-flex;
     width: 100%;
 }
 .notification-icon{
-    position: absolute;
-    display: inline;
-    right:15px;
-    top:20%;
+    position: relative;
 }
 .notification-icon-list{
     position: absolute;
@@ -470,7 +483,7 @@ export default {
   }
 }
 li{
-    padding: 25px 15px;
+    padding: 17px 15px;
     display:inline-block
 }
 .dismiss-modalA{
@@ -482,5 +495,39 @@ li{
     object-fit: contain;
     width: 100%;
     height: 100%;
+}
+@media (min-width: 540px){
+    .col-sm-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .col-md-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+@media (min-width: 800px){
+    .col-md-12{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .col-md-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+}
+.tab-content{
+    width: 100%;
+    height: 50%;
+}
+.author-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.tab-pane{
+    height: 50%;
 }
 </style>

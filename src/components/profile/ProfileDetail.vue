@@ -14,7 +14,7 @@
                             <!-- Friend Item -->
                             <div class="friend-item">
                                 <div class="friend-header-thumb">
-                                    <img :src="user.profileImgPath" style="width:318px; height:122px; object-fit:cover;" alt="friend">
+                                    <img :src="user.profileImgPath" style="height:122px; object-fit:cover;" alt="friend">
                                 </div>
                             
                                 <div class="friend-item-content">
@@ -133,5 +133,26 @@ export default {
     object-fit: contain;
     width: 100%;
     height: 100%;
+}
+@media (min-width: 540px){
+    .col-sm-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .col-md-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+@media (min-width: 800px){
+    .col-md-12{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .col-md-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
 }
 </style>

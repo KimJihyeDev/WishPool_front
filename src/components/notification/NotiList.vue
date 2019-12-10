@@ -1,39 +1,36 @@
 <template>
-    <div class="page-has-left-panels page-has-right-panels" style="cursor: url(&quot;undefined&quot;), default;">
-      <div class="container">
-         <div class="row">
-            <div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
-               <div class="ui-block">
-                  <div class="ui-block-title">
-                     <h4 class="title">알림</h4>
-                     
-                  </div>
-                  
-                  <!-- Notification List -->
-                  <ul v-if="!haveAllRead" class="notification-list">
-                     <component v-for="noti in notis" 
-                     :key="noti._id"
-                     :is="noti.type"
-                     :by="noti.by"
-                     :id="noti._id"
-                     :itemName="noti.itemName"
-                     :date="noti.date"
-                     :haveRead="!noti.haveRead"
-                     @clicked="relatedPage(noti.type, noti._id)"
-                     @deleteNoti="removeNoti(noti._id)"
-                   />
-                  </ul>
-                  <noti-empty v-if="haveAllRead" />
-                  <!-- ... end Notification List -->
-
+   <div class="container">
+      <div class="row">
+         <div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
+            <div class="ui-block">
+               <div class="ui-block-title">
+                  <h4 class="title">알림</h4>
                </div>
-               <!-- Pagination -->
-               <!-- ... end Pagination -->
+               
+               <!-- Notification List -->
+               <ul v-if="!haveAllRead" class="notification-list">
+                  <component v-for="noti in notis" 
+                  :key="noti._id"
+                  :is="noti.type"
+                  :by="noti.by"
+                  :id="noti._id"
+                  :itemName="noti.itemName"
+                  :date="noti.date"
+                  :haveRead="!noti.haveRead"
+                  @clicked="relatedPage(noti.type, noti._id)"
+                  @deleteNoti="removeNoti(noti._id)"
+                  />
+               </ul>
+               <noti-empty v-if="haveAllRead" />
+               <!-- ... end Notification List -->
+
             </div>
+            <!-- Pagination -->
+            <!-- ... end Pagination -->
          </div>
       </div>
-   <div style="margin-top:2.5rem;"></div>
-</div>
+      <div style="margin-top:2.5rem;"></div>
+   </div>
 </template>
 <script>
 import NotiPurchase from './NotiPurchase.vue'

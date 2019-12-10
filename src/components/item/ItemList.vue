@@ -258,6 +258,9 @@
         text-align: center;
         font-size: 1.1rem;
     }
+    .nav-item{
+        width: 100%
+    }
     .form-group.with-button button{
         width: 45px;
         background: #ff5e3a;
@@ -268,4 +271,25 @@
     .ui-block{
         width:100%;
     }
+    @media (min-width: 540px){
+    .col-sm-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .col-md-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+@media (min-width: 800px){
+    .col-md-12{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .col-md-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+}
 </style>

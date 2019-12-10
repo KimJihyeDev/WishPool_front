@@ -146,18 +146,23 @@ export default {
 	}
 	.inline-items{
 		padding-right:1.2rem;
+		display: flex;
 	}
 	.item-detail{
 		display:inline-flex;
 		flex-direction: row;
-		width: 70%;
+		width: 100%;
 	}
 	.more-btn{
-		display: inline;
-
+		display: inline-flex;
+		width: 120px;
 	}
 	.accept-request{
 		padding-right:8px; padding-left:8px;
 		background:transparent;
+		height: 30px;
+	}
+	.notification-list .selectize-dropdown-content > *, .notification-list li {
+		display: flex;
 	}
 </style>

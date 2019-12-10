@@ -51,17 +51,12 @@ export default {
 </script>
 <style scoped>
 .notification-event, .notification-list li{
-    display:inline-block;
+    display:inline-flex;
     width: 100%;
-}
-.notification-icon{
-    position: absolute;
-    display: inline;
-    right:15px;
-    top:20%;
 }
 .notification-list.friend-requests .notification-icon {
     display: inline;
+    margin-top:0px;
 }
 @media (max-width: 360px) {
   .notification-list .notification-event {
@@ -69,8 +64,10 @@ export default {
   }
 }
 li{
-    padding: 25px 15px;
-    display:inline-block
+    padding: 20px 15px;
+    display:inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 </style>

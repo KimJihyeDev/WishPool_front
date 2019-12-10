@@ -13,12 +13,7 @@
                             <!-- Today Events -->
                             
                             <div class="today-events calendar">
-                                <div class="today-events-thumb">
-                                    <div class="date">
-                                        <div class="day-number">26</div>
-                                        <div class="day-week">Saturday</div>
-                                        <div class="month-year">March, 2016</div>
-                                    </div>
+                                <div class="today-events-thumb" style="height:220px;">
                                 </div>
                             
                                 <div class="list">
