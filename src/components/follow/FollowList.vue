@@ -135,7 +135,7 @@
                     <h5 v-if="!existMatch">검색 결과가 없습니다.</h5>
                     <!-- 검색결과 : 유저리스트 -->
                     <div class="inline-items" v-for="user in searchResults" :key="user._id">
-                        <a data-toggle="modal" data-target="#profileB" style="display:flex; align-items: center">
+                        <a data-toggle="modal" @click="handleClick(user)" data-target="#profileB" style="display:flex; align-items: center">
                             <div class="author-thumb">
                                 <img :src="user.profileImgPath" alt="author">
                             </div>
@@ -166,12 +166,12 @@
 <!-- ... end Window-popup Create Event -->
     <div class="modal fade" id="profileA" tabindex="-1" role="dialog" aria-labelledby="profileA" style="display: none;" aria-hidden="true" >
         <div class="modal-dialog window-popup" role="document">
-            <profile-detail :user="this.clickedUserInfo" />
+            <profile-detail :user="clickedUserInfo"/>
     </div>
     </div>
     <div class="modal fade" id="profileB" tabindex="-1" role="dialog" aria-labelledby="profileB" style="display: none; background:whitesmoke" aria-hidden="true" >
         <div class="modal-dialog window-popup" role="document">
-            <profile-detail :user="this.clickedUserInfo" />
+            <profile-detail :user="clickedUserInfo"/>
     </div>
     </div>
     
@@ -238,14 +238,18 @@ export default {
             return this.user.followerId;
         },
         isFollowingEmpty(){
-            if(this.user.followingId.length==0){
-                return true;
+            if(this.user.followingId){
+                if(this.user.followingId.length==0){
+                    return true;
+                }
             }
             return false;
         },
         isFollowerEmpty(){
-            if(this.user.followerId.length==0){
+            if(this.user.followingId){
+                if(this.user.followerId.length==0){
                 return true;
+                }
             }
             return false;
         },
@@ -257,7 +261,25 @@ export default {
     },
     methods:{
         handleClick(payload){
+            console.log('handleclick', payload);
             this.clickedUserInfo = payload;
+             (async()=>{
+                 try {
+                      const res = await this.$http.get(this.$serverUrl+'/item/count/'+this.clickedUserInfo._id);
+                if(res.data.code=="200"){
+                    console.log(res.data.msg);
+                    this.clickedUserInfo={
+                        ...this.clickedUserInfo,
+                        itemCount : res.data.count
+                    };
+                }else{
+                    console.log(res.data.msg);
+                }
+                 } catch (e) {
+                     consolle.error(e);
+                 }
+               
+            })();
             console.log(this.clickedUserInfo);
         },
         toggleFollowing(val){
@@ -401,8 +423,7 @@ export default {
             })();
             let num = this.searchResults.findIndex(user=> user._id == followUser._id);
             this.searchResults[num].doIFollow = false;
-
-        }
+        },
     }
 }
 </script>

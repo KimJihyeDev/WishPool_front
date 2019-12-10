@@ -11,7 +11,8 @@ import NotiList from '../components/notification/NotiList.vue'
 import Settings from '../components/settings/Settings.vue'
 import Auth from '../components/user/Auth.vue'
 import ProfileDetail from '../components/profile/ProfileDetail.vue'
-// import Profile from '../components/user/Profile.vue'
+import ProfileModify from '../components/profile/ProfileModify.vue'
+
 import Temp from '../components/Temp.vue'
 import TempRegister from '../components/TempRegister.vue'; //개발용 회원가입
 
@@ -39,6 +40,7 @@ export default [
     { path:'/follow/list/:userId', component: FollowList, name:'followList'},
     { path:'/profile/detail/', component: ProfileDetail},
     { path:'/profile/detail/:id', component: ProfileDetail},
+    { path:'/profile/modify/:userId', component: ProfileModify, name:'profileModify'},
     { path:'/noti', component: NotiList},
     { path:'/settings', component: Settings},
     { path:'/user/auth/:email', component: Auth},
