@@ -135,9 +135,8 @@
 
                             <div class="modal-body">
                                 <!-- 사진 가져오기 -->
-                                <a href="#" class="upload-photo-item" data-dismiss="modal">
+                                <a href="javascript:void(0)" @click="showAndroidPhotoLib" class="upload-photo-item" data-dismiss="modal">
                                     <svg class="olymp-photos-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-photos-icon"></use></svg>
-
                                     <h6>라이브러리</h6>
                                     <span>내 사진 불러오기</span>
                                 </a>
@@ -277,6 +276,12 @@ export default {
         },
         toggleCollapse(){
             this.collapseOption = !this.collapseOption;
+        },
+        showAndroidPhotoLib(){
+            Android.loadPhotoLibrary();
+        },
+        showAndroidCamera() {
+            Android.loadCamera();
         }
 	}
 }

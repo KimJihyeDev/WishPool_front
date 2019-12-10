@@ -36,7 +36,8 @@
     ],
     "rules": {
       "no-mixed-spaces-and-tabs": 0,
-      "no-console": "off"
+      "no-console": "off",
+      "no-undef":"off"
     },
     "parserOptions": {
       "parser": "babel-eslint"

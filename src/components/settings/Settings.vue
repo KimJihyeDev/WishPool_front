@@ -40,6 +40,18 @@
 										</label>
 									</div>
 								</div>
+								<div class="description-toggle">
+									<div class="description-toggle-content">
+										<div class="h6">비밀번호 재설정</div>
+										<p>이메일을 통해 비밀번호를 재설정 합니다.</p>
+									</div>
+					
+									<div class="togglebutton">
+										<label class="right-arrow">
+											<i class="fas fa-chevron-right"></i>
+										</label>
+									</div>
+								</div>
 								<!-- <div class="description-toggle">
 									<div class="description-toggle-content">
 										<div class="h6">1:1 문의</div>
