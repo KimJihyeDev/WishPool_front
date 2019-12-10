@@ -13,8 +13,6 @@ import Auth from '../components/user/Auth.vue'
 import ProfileDetail from '../components/profile/ProfileDetail.vue'
 // import Profile from '../components/user/Profile.vue'
 import Temp from '../components/Temp.vue'
-// 이메일 테스트용 컴포넌트
-// import Test from '../components/user/Test.vue'
 import TempRegister from '../components/TempRegister.vue'; //개발용 회원가입
 
 
