@@ -19,15 +19,15 @@
                             
                                 <div class="friend-item-content">
                             
-                                    <div class="more">
+                                    <div v-if="isMe" class="more">
                                         <svg class="olymp-three-dots-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
                                         <ul class="more-dropdown">
                                             <li>
-                                                <a href="#">Report Profile</a>
+                                                <a href="javascript:void(0)" data-dismiss="modal" @click="handleClick">프로필 수정하기</a>
                                             </li>
-                                            <li>
+                                            <!-- <li>
                                                 <a href="#">Block Profile</a>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                     </div>
                                     <div class="friend-avatar">
@@ -41,21 +41,21 @@
                                     </div>
                                     <div class="friend-count">
                                         <a href="#" class="friend-count-item">
-                                            <div class="h6">52</div>
+                                            <div class="h6">{{followCount}}</div>
                                             <div class="title">Follows</div>
                                         </a>
                                         <a href="#" class="friend-count-item">
-                                            <div class="h6">240</div>
+                                            <div class="h6">{{followerCount}}</div>
                                             <div class="title">Followers</div>
                                         </a>
                                         <a href="#" class="friend-count-item">
-                                            <div class="h6">16</div>
+                                            <div class="h6">{{this.user.itemCount}}</div>
                                             <div class="title">Items</div>
                                         </a>
                                     </div>
                                     <div class="control-block-button">
                                         <a v-if="isMe" href="javascript:void(0)" class="btn btn-control bg-secondary">
-                                            <span class="icon-minus without-texts" style="margin-right:0px;">
+                                            <span class="icon-minus without-texts" style="margin-right:0px; color:transparent">
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
                                         </a>
@@ -101,6 +101,18 @@ export default {
                 return true;
             }
             return false;
+        },
+        followCount(){
+            if(this.user.followingId){
+                return this.user.followingId.length;
+            }
+            return 0;
+        },
+        followerCount(){
+            if(this.user.followerId){
+                return this.user.followerId.length;
+            }
+            return 0;
         }
     },
     methods:{
@@ -108,6 +120,9 @@ export default {
             //현재 클릭한 유저(props로 넘어온 this._id)의 아이템 리스트로 이동한다.
             this.$router.push({name: 'itemList', params: {userId:this.user._id}});
             //파라미터를 달고 이동하는 경우, path가 아닌 라우터에 해당 컴포넌트 이름(name)을 지정해야한다고 한다.
+        },
+        handleClick(){
+           this.$router.push({name:'profileModify', params: {userId:this.user._id}}); //유저 객체 전달
         }
     }
 }
@@ -153,6 +168,8 @@ export default {
         flex: 0 0 100%;
         max-width: 100%;
     }
-    
+}
+.more-dropdown{
+    width: 140px;
 }
 </style>
