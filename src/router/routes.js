@@ -6,16 +6,15 @@ import Entry from '../components/user/Entry'
 import ItemDetail from '../components/item/ItemDetail.vue'
 import ResetPassword from '../components/user/ResetPassword.vue'
 import Login from '../components/user/Login.vue'
-// import Profile from '../components/user/Profile.vue'
 import FollowList from '../components/follow/FollowList.vue'
 import NotiList from '../components/notification/NotiList.vue'
 import Settings from '../components/settings/Settings.vue'
 import Auth from '../components/user/Auth.vue'
 import ProfileDetail from '../components/profile/ProfileDetail.vue'
-import Profile from '../components/user/Profile.vue'
+// import Profile from '../components/user/Profile.vue'
 import Temp from '../components/Temp.vue'
 // 이메일 테스트용 컴포넌트
-import Test from '../components/user/Test.vue'
+// import Test from '../components/user/Test.vue'
 import TempRegister from '../components/TempRegister.vue'; //개발용 회원가입
 
 
@@ -34,7 +33,7 @@ export default [
     { path:'/item/modify/:itemId',component:ItemModify},
     { path:'/user/resetpwd', component: ResetPassword},
     { path:'/user/login', component: Login},
-    { path:'/user/profile', component: Profile},
+    // { path:'/user/profile', component: Profile},
     { path:'/follow/follow', component: FollowList},
     { path:'/user/login', component: Login},
     // { path:'/user/profile/:userId', component: Profile},
@@ -44,6 +43,5 @@ export default [
     { path:'/profile/detail/:id', component: ProfileDetail},
     { path:'/noti', component: NotiList},
     { path:'/settings', component: Settings},
-    { path:'/user/test', component: Test},
     { path:'/user/auth/:email', component: Auth},
 ]

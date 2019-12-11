@@ -16,7 +16,7 @@
 						<div class="tab-content">
 							<div class="tab-pane active" id="home" role="tabpanel" data-mh="log-tab" style="">
 								<div class="title h6">회원가입</div>
-								<form class="content">
+								<form class="content" v-on:submit.prevent>
 									<div class="row">
 										<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
 											<div class="form-group label-floating is-empty" >
@@ -104,10 +104,10 @@
                                                         생년월일 8자리를 숫자만 입력해주세요.
                                                     </span>
                                                 </span>
-												<span class="input-group-addon">
+												<!-- <span class="input-group-addon">
 													<svg class="olymp-calendar-icon">
                                                         <use xlink:href="svg-icons/sprites/icons.svg#olymp-calendar-icon"></use></svg>
-												</span>
+												</span> -->
 											</div>
 					
 											<div class="remember">
@@ -147,13 +147,13 @@
 					</div>
 
 					<div class="modal-body">
-						<form method="get">
+						<form method="post">
 							<p>Enter your email and click the send code button. You’ll receive a code in your email. Please use that
 								code below to change the old password for a new one.
 							</p>
 							<div class="form-group label-floating">
 								<label class="control-label">Your Email</label>
-								<input class="form-control" placeholder="" type="email" value="james-spiegel@yourmail.com">
+								<input class="form-control" placeholder="" type="email" value="james-spiegel@yourmail.com" >
 							<span class="material-input"></span></div>
 							<button class="btn btn-purple btn-lg full-width">Send me the Code</button>
 							<div class="form-group label-floating is-empty">
