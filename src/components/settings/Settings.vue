@@ -109,11 +109,11 @@ export default {
 		}
 	},
 	created:function(){
-		const token = localStorage.getItem('wishToken');
-		this.token = token;
-		if(token == null){
-			this.$router.push('/user/login');
-		}
+		// const token = localStorage.getItem('wishToken');
+		// this.token = token;
+		// if(token == null){
+		// 	this.$router.push('/user/login');
+		// }
 	}
 }
 </script>

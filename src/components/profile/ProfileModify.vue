@@ -92,6 +92,9 @@
 export default {
     name: 'ProfileModify',
 	created(){
+		this.$bus.$on('userId', data=>{
+            this.$userId = data;
+		});
 		(async()=>{
 			try{
 			const res = await this.$http.get(this.$serverUrl+'/users/profile/'+this.$route.params.userId);
@@ -132,8 +135,10 @@ export default {
 		},
 		goBack(){
 			//누르면 한단계 전으로 이동
-			this.$router.go(-1);
-			// this.$router.push({path:'/settings'});
+			// this.$router.go(-1);
+			console.log(this.$router);
+			this.$bus.$emit('userId', this.$userId);
+			this.$router.push({name:'settings'}, {params:{userId:this.$userId}});
 		}
 	}
 }

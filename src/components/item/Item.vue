@@ -1,6 +1,6 @@
 <template>
 <div>
-    <li class="inline-items" v-on:click="goDetail">
+    <li v-if="(isMe)||(isPublic)" class="inline-items" v-on:click="goDetail">
 		<div class="item-detail">
 			<div class="author-thumb control-con">
 				<img src="/assets/img/avatar41-sm.jpg" alt="author">
@@ -18,7 +18,7 @@
 			<a href="javascript:void(0)" v-on:click.stop="copyLink" class="accept-request" style="border:1px solid #6cb6f5;">
 				<span class="without-text" style="color:#6cb6f5; font-size:x-small;">링크</span>
 			</a>
-			<a href="javascript:void(0)" v-on:click.stop="makePurchase" class="accept-request" style="border:1px solid #7c5ac2;">
+			<a v-if="isMe" href="javascript:void(0)" v-on:click.stop="makePurchase" class="accept-request" style="border:1px solid #7c5ac2;">
 				<span class="without-text" style="color:#7c5ac2; font-size:x-small;">{{isCompleted}}</span>
 			</a>
 		</div>
@@ -29,12 +29,18 @@
 export default {
 	name: 'Item',
 	props: [ 'item', 'isCompleted' ],
+	created(){
+		
+			this.$bus.$on('userId', data=>{
+				this.$userId = data;
+			})
+	},
 	computed:{
 		isPublic(){
-			return this.item.visibleTo === "t" ? true :false;
+			return this.item.visibleTo == "true" ? true: false;
 		},
 		isPrivate(){
-			return this.item.visibleTo === "f" ? true :false;
+			return this.item.visibleTo == "false" ? true: false;
 		},
 		isGroup(){
 			if(this.isPublic || this.isPrivate){
@@ -42,6 +48,12 @@ export default {
 			}else{
 				return true;
 			}
+		},
+		isMe(){
+			if(this.$userId == this.item.userId){
+				return true;
+			}
+			return false;
 		}
 	},
 	methods:{
@@ -50,7 +62,9 @@ export default {
 			// Android : this.$url+'/detail/'+this._id 을 안드로이드 폰에 복사해야함.
 		},
 		goDetail(){
-			console.log(this.item._id);
+			console.log('userId', this.item.userId);
+			console.log('$userId', this.$userId);
+			console.log('아이템아이디',this.item._id);
 			this.$router.push({path:'/item/detail/'+this.item._id})
 		},
 		goModify(){
@@ -155,12 +169,13 @@ export default {
 	}
 	.more-btn{
 		display: inline-flex;
-		width: 120px;
 	}
 	.accept-request{
-		padding-right:8px; padding-left:8px;
+		padding: 4px 8px;
 		background:transparent;
 		height: 30px;
+		display: flex;
+		align-items: center;
 	}
 	.notification-list .selectize-dropdown-content > *, .notification-list li {
 		display: flex;

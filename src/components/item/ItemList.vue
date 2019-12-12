@@ -125,6 +125,7 @@
     export default {
         name: 'ItemList',
         created(){
+            this.$bus.$emit('userId', this.$userId);
             console.log(this.$serverUrl+this.$route.fullPath);
             (async()=>{
                 try{
@@ -146,14 +147,6 @@
         data() {
             return {
                 items: [ ],
-                item:{
-                    itemName: '',
-                    itemPrice: '',
-                    itemLink: '',
-                    itemRank: '',
-                    visibleTo: 'f',
-                    itemMemo: ''
-                }
             }
         },
         components: {

@@ -30,21 +30,24 @@ Vue.use(VueRouter)
 Vue.prototype.$http = axios;
 Vue.prototype.$url = 'http://localhost:8080';
 Vue.prototype.$serverUrl = 'http://52.231.107.71:3000'; //유동아이피임.
+// Vue.prototype.$serverUrl = 'http://localhost:3000';
 
 //로그인 성공하면, userId를 전역객체에 담고 쓰면 어떨까?
-Vue.prototype.$userId = '5dee0137aa583a45f98dd628';
+Vue.prototype.$userId = '';
 //dummy data의 main사용자
 //userId는 'haru'
 
 const EventBus = new Vue();
 Vue.prototype.$bus = EventBus;
 
+//Login.vue에서 userId생성되는 이벤트 발생되면, 프로토타입에 넣고 사용해준다.
+Vue.prototype.$bus.$on('userId', (data)=>{
+  Vue.prototype.$userId = data;
+})
 const router = new VueRouter({
   // mode: 'history',
   routes:Routes
 })
-
-
 Vue.config.productionTip = false
 
 

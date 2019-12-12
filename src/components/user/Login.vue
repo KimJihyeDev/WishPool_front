@@ -111,8 +111,8 @@
             return{
                 user:{
                     userId:'',
-                    password:''
-                }
+                    password:'',
+                },
             }
         },
         components:{
@@ -126,7 +126,23 @@
 
                         if(response.data.code === 200){
                             localStorage.setItem('wishToken',response.data.result);
-                            this.$router.push('/item/list');
+
+                            //(혜은) 로그인하면, vue prototype객체에 _id값 넣는 방법 시도
+                            (async()=>{
+                                const res = await this.$http.get(this.$serverUrl+'/users/loginInfo/'+this.user.userId);
+                                const { code, _id } = res.data;
+                                if(code=="200"){
+                                    this.$userId = _id;
+                                    this.$bus.$emit('userId', _id);
+                                    console.log(this.$userId+', '+_id);
+                                    this.$router.push({name: 'itemList', params: {userId:this.$userId}});
+                                }
+                            })();
+                            
+                            // end
+
+                            // this.$router.push('/item/list/');
+                            
                         }
                     })
                     .catch((err)=>{
@@ -142,7 +158,7 @@
             if(token){
                 this.$router.push('/item/list');
             }
-        }
+        },
     }
 </script>
 <style scoped>

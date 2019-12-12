@@ -95,10 +95,12 @@
                      <a href="#" class="h5 author-name">비었어요!</a>
                      <div class="country">새로운 follow을 추가해 보세요!</div>
                   </div>
+                  
+                </div>
                     <div v-if="!isFollowerEmpty&&(!isFollowing)" class="ui-block">
                         <ul class="notification-list friend-requests">
                             <a data-toggle="modal" data-target="#profileA">
-                                <follow-user v-for="user in followingUsers"
+                                <follow-user v-for="user in followerUsers"
                                 :key="user._id" 
                                 :user="user"
                                 @onClick="handleClick(user)"
@@ -109,7 +111,6 @@
                         <!-- ... end Followers 친구 목록 -->
 
                     </div>
-                </div>
             </div>   
             </div> <!-- end of ui-block-->
         </div>
@@ -189,10 +190,13 @@ export default {
     name: 'FollowList',
     created(){
         //나와 내 followings, followers다 불러온다.
-        console.log(this.$serverUrl+'/follow/list/'+this.$userId);
+        this.$bus.$on('userId', data=>{
+            this.$userId = data;
+		});
+        console.log(this.$route);
         (async()=>{
             try {
-                const res = await this.$http.get(this.$serverUrl+'/follow/list/'+this.$userId);
+                const res = await this.$http.get(this.$serverUrl+this.$route.path);
                 console.log(res.data.code);
                 if(res.data.code == "200"){
                     console.log(res.data.msg);
@@ -200,6 +204,7 @@ export default {
                     this.user = user; //나 = user
                     this.followingUsers = [ ...populated.followingId];
                     this.followerUsers = [ ...populated.followerId];
+                    console.log(this.followerUsers);
                 }else{
                     console.log(res.data.msg);
                 }
@@ -251,8 +256,8 @@ export default {
             return false;
         },
         isFollowerEmpty(){
-            if(this.followingUsers){
-                if(this.followingUsers.length==0){
+            if(this.followerUsers){
+                if(this.followerUsers.length==0){
                 return true;
                 }
             }
@@ -296,7 +301,9 @@ export default {
         },
         //follow검색
         searchUser(){
-            
+             this.$bus.$on('userId', data=>{
+            this.$userId = data;
+		});
             (async()=>{
                 try {
                     let str = '';
@@ -346,6 +353,7 @@ export default {
                     console.error(e);
                 }
             })();
+            
         },
         //follow맺기
         addFollow(followUser){
@@ -370,13 +378,13 @@ export default {
             (async()=>{
                 try {
                     const res = await this.$http.patch(this.$serverUrl+'/follow/add/'+this.user._id, payload);
-                    const { code, msg, user, populated } = res.data;
+                    const { code, msg, newUser, populated } = res.data;
                     if(code == "200"){
                         console.log(msg);
                         //팔로우 아이콘 minus로 변경
 
                         //새로온 user값을 대입해서 리액티브 반영.
-                        this.user = user;
+                        this.user = newUser;
                         this.followingUsers = [ ...populated.followingId ]; //배열은 대입연산 불가. spread연산자로 넣어준다.
                         this.followerUsers = [ ...populated.followerId ];                        
                         console.log('추가완료', this.user);
@@ -421,14 +429,14 @@ export default {
                 try {
                     //follow맺기와 삭제하기의 API는 같다(수정) - 둘다 add/:id
                     const res = await this.$http.patch(this.$serverUrl+'/follow/add/'+this.user._id, payload);
-                    const { code, msg, user, populated } = res.data; //
+                    const { code, msg, newUser, populated } = res.data; //
                     if(code == "200"){
                         console.log(msg);
                         //팔로우 아이콘 minus로 변경
 
                         //새로온 user값을 대입해서 리액티브 반영.
                         //새로운 팔로잉이랑 새로운 팔로워목록도 리액티브 반영
-                        this.user = user;
+                        this.user = newUser;
                         this.followerUsers = populated.followerId;
                         this.followingUsers = populated.followingId;
                     }else{

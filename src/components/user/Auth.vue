@@ -48,9 +48,9 @@ export default {
         }
     },
     created:function(){
-        const token = (this.$route.path).replace('/user/auth/',"");
-        this.user.token = token;
-        console.log(token);
+        // const token = (this.$route.path).replace('/user/auth/',"");
+        // this.user.token = token;
+        // console.log(token);
     },
     methods:{
         resetPwd:function(){

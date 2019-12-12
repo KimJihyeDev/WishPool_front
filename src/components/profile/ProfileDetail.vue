@@ -132,6 +132,11 @@ export default {
             console.log('profile remove Follow', this.user.userName)
             this.$bus.$emit('removeFollow', this.user);
         }
+    },
+    created(){
+        this.$bus.$on('userId', data=>{
+            this.$userId = data;
+        })
     }
 }
 </script>

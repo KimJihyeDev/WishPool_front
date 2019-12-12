@@ -57,6 +57,9 @@
 <script>
 export default {
     name:'Footer',
+    created(){
+		this.$bus.$emit('userId', this.$userId);
+    },
     methods:{
         gotoFollowList(){ this.$router.push({name:'followList', params:{userId: this.$userId}}) },
         gotoItemList(){ this.$router.push({name:'itemList', params:{userId: this.$userId}}) },

@@ -46,6 +46,11 @@ export default {
         iconClicked(){
             this.$emit('onFollowClick');
         }
+    },
+    craeted(){
+        this.$bus.$on('userId', data=>{
+            this.$userId = data;
+        })
     }
 }
 </script>

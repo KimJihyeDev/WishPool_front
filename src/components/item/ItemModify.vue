@@ -84,19 +84,23 @@
                     <input class="form-control" v-model="item.itemLink" style="padding-top:1rem; padding-bottom:1rem;font-size:medium;" placeholder="" value="" type="text">
                 <span class="material-input"></span></div> -->
                 <h4 class="control-label" style="margin-top:1.5rem;">공개범위</h4>
-                <div class="form-group label-floating is-select mb30">
-                    <div class="radio" style="margin-top:1.2rem;">
+                <div class="form-group is-select mb30">
+                    <!-- <div class="radio" style="margin-top:1.2rem;">
                         <label>
-                            <input type="radio" name="optionsRadios" value="t" v-model="item.visibleTo"/>
+                            <input type="radio" name="optionsRadios" value="true" v-model="item.visibleTo"/>
                             공개
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" value="f" v-model="item.visibleTo" />
+                            <input type="radio" name="optionsRadios" value="false" v-model="item.visibleTo" />
                             비공개
                         </label>
-                    </div>
+                    </div> -->
+                    <select v-model="item.visibleTo" style="padding-top:1rem;">
+                        <option value="true">공개</option>
+                        <option value="false">비공개</option>
+                    </select>
                     <span class="material-input"></span>
                 </div>
                 <label class="control-label">위시메모</label>
@@ -169,9 +173,9 @@ export default {
     },
     filters:{
         visible(to){
-            if(to === 'f'){
+            if(to == 'false'){
                 return '비공개'
-            }else if(to === 't'){
+            }else if(to == 'true'){
                 return '공개'
             }else{
                 return '그룹공개'
@@ -180,19 +184,18 @@ export default {
     },
     computed:{
         isPublic(){
-            if(this.item.visibleTo === 't'){
-                return true;
-            }else if(this.item.visibleTo === 'f'){
-                return false;
-            }
-            return false;
-        },
-        isPrivate(){
-            if(this.item.visibleTo === 'f'){
-                return true;
-            }
-            return false;
-        }
+			return this.item.visibleTo == "true" ? true: false;
+		},
+		isPrivate(){
+			return this.item.visibleTo == "false" ? true: false;
+		},
+		isGroup(){
+			if(this.isPublic || this.isPrivate){
+				return false;
+			}else{
+				return true;
+			}
+		}
     },
 	methods:{
 		doModify(){
@@ -201,6 +204,7 @@ export default {
                     const res = await this.$http.patch(this.$serverUrl+this.$route.path, this.item);
                     if(res.data.code == "200"){
                         console.log(res.data.msg);
+                        console.log('수정', this.$userId);
                         this.$router.push({name:'itemList', params: {userId: this.$userId}});
                     }
                 } catch (e) {
