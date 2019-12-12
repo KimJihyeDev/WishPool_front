@@ -29,7 +29,7 @@ import axios from 'axios'
 Vue.use(VueRouter)
 Vue.prototype.$http = axios;
 Vue.prototype.$url = 'http://localhost:8080';
-Vue.prototype.$serverUrl = 'http://localhost:3000';
+Vue.prototype.$serverUrl = 'http://52.231.107.71:3000'; //유동아이피임.
 
 //로그인 성공하면, userId를 전역객체에 담고 쓰면 어떨까?
 Vue.prototype.$userId = '5dee0137aa583a45f98dd628';
