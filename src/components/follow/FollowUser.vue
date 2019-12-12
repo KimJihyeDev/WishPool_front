@@ -3,7 +3,7 @@
         <div class="author-thumb">
             <img :src="user.profileImgPath" alt="author">
         </div>
-        <div class="notification-event" >
+        <div class="notification-event" style="display:flex; flex-direction:column;">
             <a href="#" class="h6 notification-friend">{{user.userName}}</a>
             <span class="chat-message-item">{{user.profileMsg}}</span>
         </div>

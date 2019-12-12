@@ -27,11 +27,11 @@
             <ul class="notification-list friend-requests">
                 <h6 style="margin:0; padding: 0.5rem 1rem; border-top:1px solid lightgrey; border-bottom:1px solid lightgrey; background: whitesmoke">내 프로필 </h6>
                 <a data-toggle="modal" data-target="#profileA">
-                    <li @click="handleClick(user)" style="display:inline-flex; align-items:center">
+                    <li @click="handleClick(user)" style="display:inline-flex; align-items:center;" >
                         <div class="author-thumb">
                             <img :src="user.profileImgPath" alt="author">
                         </div>
-                        <div class="notification-event" >
+                        <div class="notification-event" style="display:flex; flex-direction:column;">
                             <a href="#" class="h6 notification-friend">{{user.userName}}</a>
                             <span class="chat-message-item">{{user.profileMsg}}</span>
                         </div>
@@ -71,7 +71,7 @@
                     <div v-if="!isFollowingEmpty&&isFollowing" class="ui-block">
                         <ul class="notification-list friend-requests">
                             <a data-toggle="modal" data-target="#profileA">
-                                <follow-user v-for="user in followings" 
+                                <follow-user v-for="user in followingUsers" 
                                 :key="user._id" 
                                 :user="user"
                                 @onClick="handleClick(user)"
@@ -98,7 +98,7 @@
                     <div v-if="!isFollowerEmpty&&(!isFollowing)" class="ui-block">
                         <ul class="notification-list friend-requests">
                             <a data-toggle="modal" data-target="#profileA">
-                                <follow-user v-for="user in followers"
+                                <follow-user v-for="user in followingUsers"
                                 :key="user._id" 
                                 :user="user"
                                 @onClick="handleClick(user)"
@@ -196,9 +196,10 @@ export default {
                 console.log(res.data.code);
                 if(res.data.code == "200"){
                     console.log(res.data.msg);
-                    const { user } = res.data;
+                    const { user, populated } = res.data;
                     this.user = user; //나 = user
-                    console.log(this.user);
+                    this.followingUsers = [ ...populated.followingId];
+                    this.followerUsers = [ ...populated.followerId];
                 }else{
                     console.log(res.data.msg);
                 }
@@ -209,13 +210,22 @@ export default {
         //나는 user 객체에 담고,
         //내 follows들은 users에 합쳐서 넣는다.(가다나순?)
 
-        //팔로우 리스트 리프레시용
-        this.$on('bus-refresh-fl', async()=>{
+        // //팔로우 리스트 리프레시용
+        // this.$on('bus-refresh-fl', async()=>{
 
+        // });
+
+        //프로필화면에서 팔로우 추가/삭제하면 받는 이벤트
+        this.$bus.$on('addFollow', (fUser)=>{
+            //addFollow함수 재활용
+            console.log('addFollow 이벤트 반듬', fUser.userName);
+           this.addFollow(fUser)
         });
-    },
-    mounted(){
-        console.log('mounted');
+        this.$bus.$on('removeFollow', (fUser)=>{
+           //removeFollow함수 재활용
+           console.log('removeFollow 이벤트 반듬', fUser.userName);
+           this.removeFollow(fUser);
+        })
     },
     data(){
         return{
@@ -226,28 +236,23 @@ export default {
             searchQuery: '',
             existMatch: false,
             searchResults: [],
-            isFollowing: true
+            isFollowing: true,
+            followingUsers:[],//팔로잉 유저들 객체
+            followerUsers:[], //팔로워 유저들 객체
         }
     },
     computed:{
-        followings(){
-            console.log('렌더링', this.user.followingId);
-            return this.user.followingId; //populate해왔기때문에, id모음->id에 해당하는 객체모음으로 바뀜
-        },
-        followers(){
-            return this.user.followerId;
-        },
         isFollowingEmpty(){
-            if(this.user.followingId){
-                if(this.user.followingId.length==0){
+            if(this.followingUsers){
+                if(this.followingUsers.length==0){
                     return true;
                 }
             }
             return false;
         },
         isFollowerEmpty(){
-            if(this.user.followingId){
-                if(this.user.followerId.length==0){
+            if(this.followingUsers){
+                if(this.followingUsers.length==0){
                 return true;
                 }
             }
@@ -300,7 +305,14 @@ export default {
                     }else if(this.searchOption == "phone"){
                         str = 'searchPhone'
                     }
-                    const res = await this.$http.get(this.$serverUrl+'/follow/'+str+'/'+this.searchQuery);
+                    
+                    const res = await this.$http.get(this.$serverUrl+'/follow/'+str,
+                    {
+                        params: {
+                            searchQuery: this.searchQuery,
+                            id: this.user._id
+                        }
+                    });
                     if(res.data.code == "200"){
                         console.log(res.data.msg);
                         this.existMatch = true;
@@ -339,64 +351,69 @@ export default {
         addFollow(followUser){
             //followUser : 내가 팔로우하려는 유저
             //내 유저객체의 followingId목록에 followUser의 아이디를 추가한다.
-            const selfUser = this.user;
 
-            selfUser.followingId = [
-                ...selfUser.followingId,
-                followUser._id
+            this.user.followingId = [
+                ...this.user.followingId,
+                followUser._id //내가 팔로우 하는 사람 추가
             ];
             //내가 follow하는 유저의 follwerId목록에 내아이디를 추가한다.
             followUser.followerId = [
                 ...followUser.followerId,
-                this.user._id
+                this.user._id //상대방의 팔로워리스트에 추가
             ];
 
             let payload = {
-                selfUser, //나
+                user: this.user, //나
                 followUser //내가 팔로우하는 유저
             };
 
             (async()=>{
                 try {
                     const res = await this.$http.patch(this.$serverUrl+'/follow/add/'+this.user._id, payload);
-                    const { code, msg, user } = res.data;
+                    const { code, msg, user, populated } = res.data;
                     if(code == "200"){
                         console.log(msg);
                         //팔로우 아이콘 minus로 변경
 
                         //새로온 user값을 대입해서 리액티브 반영.
                         this.user = user;
+                        this.followingUsers = [ ...populated.followingId ]; //배열은 대입연산 불가. spread연산자로 넣어준다.
+                        this.followerUsers = [ ...populated.followerId ];                        
                         console.log('추가완료', this.user);
                     }else{
                         console.log(msg);
                     }
-                    this.user = user;
                 } catch (e) {
                     console.error(e);
-                    next(e);
                 }
             })();
             let num = this.searchResults.findIndex(user=> user._id == followUser._id);
             this.searchResults[num].doIFollow = true;
         },
         removeFollow(followUser){
+            console.log('remove?',followUser);
             //followUser : 내가 팔로우끊으려는 유저
+
             //내 유저객체의 followingId목록에 followUser의 아이디를 삭제한다.
-            const selfUser = this.user;
+            let idx = this.user.followingId.findIndex(fid=>fid == followUser._id);
 
-            let idx = selfUser.followingId.findIndex((fid)=>fid == followUser._id);
-            selfUser.followingId.splice(idx, 1);
-            console.log('끊으려는 사람의 인덱스', idx);
-            console.log('내 팔로잉 리스트', selfUser.followingId);
+            if(idx<0){
+                console.log('잘못된 접근');
+                return false;
+            }
+            this.user.followingId.splice(idx, 1);
 
-            //내가 follow하는 유저의 follwerId목록에 내아이디를 추가한다.
-            let index = followUser.followerId.findIndex((fid)=>fid == selfUser._id);
+            //상대방의 팔로워 리스트에도 사라져야한다.
+            let index = followUser.followerId.findIndex(fid=>fid == this.user._id);
+            if(index<0){
+                console.log('잘못된 접근');
+                return false;
+            }
             followUser.followerId.splice(index, 1);
-            console.log('끊으려는 사람의 팔로워 인덱스', index);
-            console.log('그사람의 팔로워 리스트', followUser.followerId);
-
-            let payload = {
-                selfUser, //나
+            console.log(followUser.followerId);
+            
+            const payload = {
+                user: this.user, //나
                 followUser //내가 팔로우하는 유저
             };
 
@@ -404,18 +421,19 @@ export default {
                 try {
                     //follow맺기와 삭제하기의 API는 같다(수정) - 둘다 add/:id
                     const res = await this.$http.patch(this.$serverUrl+'/follow/add/'+this.user._id, payload);
-                    const { code, msg, user } = res.data;
+                    const { code, msg, user, populated } = res.data; //
                     if(code == "200"){
                         console.log(msg);
                         //팔로우 아이콘 minus로 변경
 
                         //새로온 user값을 대입해서 리액티브 반영.
+                        //새로운 팔로잉이랑 새로운 팔로워목록도 리액티브 반영
                         this.user = user;
-                        console.log('추가완료', this.user);
+                        this.followerUsers = populated.followerId;
+                        this.followingUsers = populated.followingId;
                     }else{
                         console.log(msg);
                     }
-                    this.user = user;
                 } catch (e) {
                     console.error(e);
                     next(e);

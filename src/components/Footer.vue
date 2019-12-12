@@ -62,7 +62,9 @@ export default {
         gotoItemList(){ this.$router.push({name:'itemList', params:{userId: this.$userId}}) },
         gotoItemAdd(){ this.$router.push({path:'/item/add'}) },
         gotoNotification(){ this.$router.push({path:'/noti'}) },
-        gotoSettings(){ this.$router.push({path:'/settings'}) },
+        gotoSettings(){ 
+            console.log(this.$route.path);
+            this.$router.push({name:'settings', params:{userId: this.$userId}}) },
     }
 }
 </script>
