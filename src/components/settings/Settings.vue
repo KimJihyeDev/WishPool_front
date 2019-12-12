@@ -53,7 +53,7 @@
 								</div>
 						
 								<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-									<button class="btn btn-primary btn-lg full-width" v-on:click="logout">로그아웃 하기</button>
+									<button class="btn btn-primary btn-lg full-width" type="button" v-on:click="logout">로그아웃 하기</button>
 								</div>
 
 								<div class="col col-lg-6 col-md-6 col-sm-12 col-12" style="position: absolute; bottom:0.3rem; width:90%; right:unset; ">
@@ -81,8 +81,6 @@ export default {
 	},
 	methods:{
 		logout:function(){
-			// 로그아웃 버튼 눌렀을 시 반응에 문제 발생
-			// url 끝에 ?가 붙는데 이유를 모르겠음
             this.$http.get(this.$serverUrl+ '/users/logout',{headers:{authorization:this.token}})
             .then((response)=>{
 				console.log(response);
