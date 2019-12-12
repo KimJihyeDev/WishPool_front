@@ -36,7 +36,7 @@
                                         </div>
                                         <div class="author-content">
                                             <a href="#" class="h5 author-name">{{user.nickName}}</a>
-                                            <div class="country"></div>
+                                            <div class="country">{{user.profileMsg}}</div>
                                         </div>
                                     </div>
                                     <div class="friend-count">
@@ -59,12 +59,12 @@
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
                                         </a>
-                                        <a v-else-if="!doIFollow" href="javascript:void(0)" class="btn btn-control bg-blue">
+                                        <a v-else-if="!doIFollow" href="javascript:void(0)" class="btn btn-control bg-blue" @click="addFollow">
                                             <span  class="icon-add without-texts" style="margin-right:0px;">
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
                                         </a>
-                                        <a v-else href="javascript:void(0)" class="btn btn-control bg-primary">
+                                        <a v-else href="javascript:void(0)" class="btn btn-control bg-primary" @click="removeFollow">
                                             <span class="icon-minus without-texts" style="margin-right:0px;">
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
@@ -118,11 +118,19 @@ export default {
     methods:{
         listItems(){
             //현재 클릭한 유저(props로 넘어온 this._id)의 아이템 리스트로 이동한다.
-            this.$router.push({name: 'itemList', params: {userId:this.user._id}});
+       this.$router.push({name: 'itemList', params: {userId:this.user._id}});
             //파라미터를 달고 이동하는 경우, path가 아닌 라우터에 해당 컴포넌트 이름(name)을 지정해야한다고 한다.
         },
         handleClick(){
            this.$router.push({name:'profileModify', params: {userId:this.user._id}}); //유저 객체 전달
+        },
+        addFollow(){
+            console.log('profile add Follow')
+            this.$bus.$emit('addFollow', this.user);
+        },
+        removeFollow(){
+            console.log('profile remove Follow')
+            this.$bus.$emit('removeFollow', this.user);
         }
     }
 }

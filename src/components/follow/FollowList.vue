@@ -27,11 +27,11 @@
             <ul class="notification-list friend-requests">
                 <h6 style="margin:0; padding: 0.5rem 1rem; border-top:1px solid lightgrey; border-bottom:1px solid lightgrey; background: whitesmoke">내 프로필 </h6>
                 <a data-toggle="modal" data-target="#profileA">
-                    <li @click="handleClick(user)" style="display:inline-flex; align-items:center">
+                    <li @click="handleClick(user)" style="display:inline-flex; align-items:center;" >
                         <div class="author-thumb">
                             <img :src="user.profileImgPath" alt="author">
                         </div>
-                        <div class="notification-event" >
+                        <div class="notification-event" style="display:flex; flex-direction:column;">
                             <a href="#" class="h6 notification-friend">{{user.userName}}</a>
                             <span class="chat-message-item">{{user.profileMsg}}</span>
                         </div>
@@ -209,10 +209,22 @@ export default {
         //나는 user 객체에 담고,
         //내 follows들은 users에 합쳐서 넣는다.(가다나순?)
 
-        //팔로우 리스트 리프레시용
-        this.$on('bus-refresh-fl', async()=>{
+        // //팔로우 리스트 리프레시용
+        // this.$on('bus-refresh-fl', async()=>{
 
-        });
+        // });
+
+        //프로필화면에서 팔로우 추가/삭제하면 받는 이벤트
+        // this.$bus.$on('addFollow', (data)=>{
+        //     //addFollow함수 재활용
+        //     console.log('addFollow 이벤트 반듬');
+        //    this.addFollow(data)
+        // });
+        // this.$bus.$on('removeFollow', (data)=>{
+        //    //removeFollow함수 재활용
+        //    console.log('removeFollow 이벤트 반듬');
+        //    this.removeFollow(data);
+        // })
     },
     mounted(){
         console.log('mounted');

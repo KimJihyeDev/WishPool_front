@@ -36,6 +36,9 @@ Vue.prototype.$userId = '5dee0137aa583a45f98dd628';
 //dummy data의 main사용자
 //userId는 'haru'
 
+// const EventBus = new Vue();
+// Vue.prototype.$bus = EventBus;
+
 const router = new VueRouter({
   mode: 'history',
   routes:Routes
