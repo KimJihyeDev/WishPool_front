@@ -54,17 +54,17 @@
                                         </a>
                                     </div>
                                     <div class="control-block-button">
-                                        <a v-if="isMe" href="javascript:void(0)" class="btn btn-control bg-secondary">
+                                        <!-- <a v-if="isMe" href="javascript:void(0)" class="btn btn-control bg-secondary">
                                             <span class="icon-minus without-texts" style="margin-right:0px; color:transparent">
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
-                                        </a>
-                                        <a v-else-if="!doIFollow" href="javascript:void(0)" class="btn btn-control bg-blue" @click="addFollow">
+                                        </a> -->
+                                        <a v-if="!isMe&&!doIFollow" href="javascript:void(0)" class="btn btn-control bg-blue" @click="addFollow">
                                             <span  class="icon-add without-texts" style="margin-right:0px;">
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
                                         </a>
-                                        <a v-else href="javascript:void(0)" class="btn btn-control bg-primary" @click="removeFollow">
+                                        <a v-if="!isMe&&doIFollow" href="javascript:void(0)" class="btn btn-control bg-primary" @click="removeFollow">
                                             <span class="icon-minus without-texts" style="margin-right:0px;">
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
@@ -125,11 +125,11 @@ export default {
            this.$router.push({name:'profileModify', params: {userId:this.user._id}}); //유저 객체 전달
         },
         addFollow(){
-            console.log('profile add Follow')
+            console.log('profile add Follow', this.user.userName)
             this.$bus.$emit('addFollow', this.user);
         },
         removeFollow(){
-            console.log('profile remove Follow')
+            console.log('profile remove Follow', this.user.userName)
             this.$bus.$emit('removeFollow', this.user);
         }
     }

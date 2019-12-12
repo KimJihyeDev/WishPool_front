@@ -132,8 +132,8 @@ export default {
 		},
 		goBack(){
 			//누르면 한단계 전으로 이동
-			//this.$router.go(-1);
-			this.$router.push({path:'/settings'});
+			this.$router.go(-1);
+			// this.$router.push({path:'/settings'});
 		}
 	}
 }

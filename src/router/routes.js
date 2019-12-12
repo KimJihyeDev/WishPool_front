@@ -41,6 +41,7 @@ export default [
     { path:'/profile/detail/:id', component: ProfileDetail},
     { path:'/profile/modify/:userId', component: ProfileModify, name:'profileModify'},
     { path:'/noti', component: NotiList},
+    { path:'/settings/:userId', component: Settings, name:'settings'},
     { path:'/settings', component: Settings},
     { path:'/user/auth/:email', component: Auth},
 ]
