@@ -30,7 +30,7 @@ export default [
     { path:'/item/detail/:itemId',component:ItemDetail},
     { path:'/item/modify/:itemId',component:ItemModify},
     { path:'/user/resetpwd', component: ResetPassword},
-    { path:'/user/login', component: Login},
+    { path:'/', component: Login},
     // { path:'/user/profile', component: Profile},
     { path:'/follow/follow', component: FollowList},
     { path:'/user/login', component: Login},
