@@ -1,3 +1,9 @@
 export default {
-    items: []
+    items: [],
+    user:{},
+    userId: '',
+    followUsers:[],
+    followingUsers:[],
+    searchedUsers:[],
+
 }
