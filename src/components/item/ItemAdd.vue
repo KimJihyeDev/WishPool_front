@@ -1,4 +1,6 @@
 <template>
+<div>
+    <div class="content-bg-wrap"></div>
     <div class="container">
         <div class="row">
             <div class="modal-content">
@@ -217,8 +219,11 @@
             </div>
         </div>
     </div>
+    </div>
 </template>
 <script>
+import store from '../../store';
+const { state } = store;
 import ItemInput from './ItemInput.vue';
 export default {
     name: 'ItemAdd',
@@ -231,7 +236,7 @@ export default {
 				itemRank: '',
 				visibleTo: 'f',
                 itemMemo: '',
-                userId: this.$userId,
+                userId: state.userId,
             },
             linkQuery:'',
             collapseOption: true
@@ -252,7 +257,7 @@ export default {
                         try{
                             this.$emit('bus-refresh');
                             //'내' 목록만 보여줘야하므로, 내 유저아이디를 파라미터로 갖는 url로 이동
-                            this.$router.push({name: 'itemList', params: {userId: this.$userId}})
+                            this.$router.push({name: 'itemList', params: {userId: state.userId}})
                         }catch(e){
                             console.error(e);
                         }

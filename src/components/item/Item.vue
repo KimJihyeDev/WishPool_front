@@ -26,15 +26,11 @@
 </div>
 </template>
 <script>
+import store from '../../store';
+const { state } = store;
 export default {
 	name: 'Item',
 	props: [ 'item', 'isCompleted' ],
-	created(){
-		
-			this.$bus.$on('userId', data=>{
-				this.$userId = data;
-			})
-	},
 	computed:{
 		isPublic(){
 			return this.item.visibleTo == "true" ? true: false;
@@ -50,7 +46,7 @@ export default {
 			}
 		},
 		isMe(){
-			if(this.$userId == this.item.userId){
+			if(state.userId == this.item.userId){
 				return true;
 			}
 			return false;
@@ -63,7 +59,6 @@ export default {
 		},
 		goDetail(){
 			console.log('userId', this.item.userId);
-			console.log('$userId', this.$userId);
 			console.log('아이템아이디',this.item._id);
 			this.$router.push({path:'/item/detail/'+this.item._id})
 		},

@@ -84,7 +84,8 @@ export default {
             this.$http.get(this.$serverUrl+ '/users/logout',{headers:{authorization:this.token}})
             .then((response)=>{
 				console.log(response);
-                localStorage.removeItem('wishToken');
+				localStorage.removeItem('wishToken');
+				this.$http.defaults.headers.common['Authorization'];
                 this.$router.push('/user/login');
             })
             .catch((err)=>{

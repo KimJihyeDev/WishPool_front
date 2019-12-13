@@ -372,7 +372,16 @@ export default {
 
 				if(response.data.code === 200){
 					localStorage.setItem('wishToken',response.data.result);
-					this.$router.push('/item/list');
+					 //(혜은) 로그인하면,  store.state에 _id값 넣는다
+					(async()=>{
+						const res = await this.$http.get(this.$serverUrl+'/users/loginInfo/'+this.user.userId);
+						const { code, _id } = res.data;
+						if(code=="200"){
+							success(localStorage.getItem('wishToken'), _id),
+							// state.userId = _id;
+							this.$router.push({name: 'itemList', params: {userId:state.userId}});
+						}
+					})();
 				}
 			})
 			.catch((err)=>{

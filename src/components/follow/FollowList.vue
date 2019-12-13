@@ -190,9 +190,9 @@ export default {
     name: 'FollowList',
     created(){
         //나와 내 followings, followers다 불러온다.
-        this.$bus.$on('userId', data=>{
-            this.$userId = data;
-		});
+        // this.$bus.$on('userId', data=>{
+        //     this.$userId = data;
+		// });
         console.log(this.$route);
         (async()=>{
             try {
@@ -214,11 +214,6 @@ export default {
         })();
         //나는 user 객체에 담고,
         //내 follows들은 users에 합쳐서 넣는다.(가다나순?)
-
-        // //팔로우 리스트 리프레시용
-        // this.$on('bus-refresh-fl', async()=>{
-
-        // });
 
         //프로필화면에서 팔로우 추가/삭제하면 받는 이벤트
         this.$bus.$on('addFollow', (fUser)=>{
@@ -301,9 +296,6 @@ export default {
         },
         //follow검색
         searchUser(){
-             this.$bus.$on('userId', data=>{
-            this.$userId = data;
-		});
             (async()=>{
                 try {
                     let str = '';

@@ -1,6 +1,33 @@
 <template>
     <div class="landing-page" style="cursor: url(&quot;undefined&quot;), default;">
-        <!-- Preloader --><!-- ... end Preloader -->
+        <!-- Preloader -->
+
+        <div v-if="this.$store.isLoggedIn" id="hellopreloader">
+            <div class="preloader">
+                <svg width="45" height="45" stroke="#fff">
+                    <g fill="none" fill-rule="evenodd" stroke-width="2" transform="translate(1 1)">
+                        <circle cx="22" cy="22" r="6" stroke="none">
+                            <animate attributeName="r" begin="1.5s" calcMode="linear" dur="3s" repeatCount="indefinite" values="6;22"/>
+                            <animate attributeName="stroke-opacity" begin="1.5s" calcMode="linear" dur="3s" repeatCount="indefinite" values="1;0"/>
+                            <animate attributeName="stroke-width" begin="1.5s" calcMode="linear" dur="3s" repeatCount="indefinite" values="2;0"/>
+                        </circle>
+                        <circle cx="22" cy="22" r="6" stroke="none">
+                            <animate attributeName="r" begin="3s" calcMode="linear" dur="3s" repeatCount="indefinite" values="6;22"/>
+                            <animate attributeName="stroke-opacity" begin="3s" calcMode="linear" dur="3s" repeatCount="indefinite" values="1;0"/>
+                            <animate attributeName="stroke-width" begin="3s" calcMode="linear" dur="3s" repeatCount="indefinite" values="2;0"/>
+                        </circle>
+                        <circle cx="22" cy="22" r="8">
+                            <animate attributeName="r" begin="0s" calcMode="linear" dur="1.5s" repeatCount="indefinite" values="6;1;2;3;4;5;6"/>
+                        </circle>
+                    </g>
+                </svg>
+
+                <div class="text">Loading ...</div>
+            </div>
+        </div>
+
+        <!-- ... end Preloader -->
+
         <div class="content-bg-wrap"></div>
         <!-- Header Standard Landing  -->
         <!-- ... end Header Standard Landing  -->
@@ -104,8 +131,11 @@
     </div>
 </template>
 <script>
-    import ResetPassword from './ResetPassword.vue'
+    import ResetPassword from './ResetPassword.vue';
+    import store from '../../store';
+    const { state, dispatch } = store;
     export default {
+
         name: 'Login',
         data(){
             return{
@@ -118,45 +148,45 @@
         components:{
             'resetPassword': ResetPassword,
         },
+        watch:{
+            'state.userId':function(newVal){
+                if(newVal){
+                    this.$router.push({name: 'itemList', params: {userId:state.userId}});
+                }
+            }
+        },
         methods:{
             login:function(){
                 this.$http.post(this.$serverUrl + '/users/login',this.user)
                     .then((response)=>{
-                        console.log(response);
-
                         if(response.data.code === 200){
                             localStorage.setItem('wishToken',response.data.result);
-
-                            //(혜은) 로그인하면, vue prototype객체에 _id값 넣는 방법 시도
+                            //(혜은) 로그인하면,  store.state에 _id값 넣는다
                             (async()=>{
                                 const res = await this.$http.get(this.$serverUrl+'/users/loginInfo/'+this.user.userId);
                                 const { code, _id } = res.data;
                                 if(code=="200"){
-                                    this.$userId = _id;
-                                    this.$bus.$emit('userId', _id);
-                                    console.log(this.$userId+', '+_id);
-                                    this.$router.push({name: 'itemList', params: {userId:this.$userId}});
+                                    const payload = {
+                                        token: response.data.result, 
+                                        userId: _id
+                                    }
+                                    dispatch('success', payload);
+                                    this.$router.push({name: 'itemList', params: {userId:state.userId}});
                                 }
                             })();
                             
                             // end
-
                             // this.$router.push('/item/list/');
-                            
                         }
                     })
                     .catch((err)=>{
+                        dispatch('auth_error');
+                        localStorage.removeItem('wishToken');
                         console.error(err);
                     })
             },
             fbLogin:function(){
             
-            }
-        },
-        created:function(){
-            const token = localStorage.getItem('wishToken');
-            if(token){
-                this.$router.push('/item/list');
             }
         },
     }

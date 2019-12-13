@@ -1,9 +1,5 @@
 export default {
-    items: [],
-    user:{},
-    userId: '',
-    followUsers:[],
-    followingUsers:[],
-    searchedUsers:[],
-
+    userId:'',
+    token: localStorage.getItem('wishToken')||'',
+    status:''
 }

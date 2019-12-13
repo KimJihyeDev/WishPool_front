@@ -20,7 +20,7 @@ import axios from 'axios'
 // const socket = io('http://localhost:3001');
 
 //Vuex
-// import store from './store';
+import store from './store';
 
 //웹소켓 전역객체에 달기
 // Vue.prototype.$socket = socket;
@@ -28,31 +28,39 @@ import axios from 'axios'
 //뷰라이브러리에서 라우팅 사용할수 있게 설정
 Vue.use(VueRouter)
 Vue.prototype.$http = axios;
-Vue.prototype.$url = 'http://localhost:8080';
-Vue.prototype.$serverUrl = 'http://52.231.107.71:3000'; //유동아이피임.
-// Vue.prototype.$serverUrl = 'http://localhost:3000';
 
-//로그인 성공하면, userId를 전역객체에 담고 쓰면 어떨까?
-Vue.prototype.$userId = '';
-//dummy data의 main사용자
-//userId는 'haru'
+Vue.prototype.$url = 'http://localhost:8080';
+// Vue.prototype.$serverUrl = 'http://52.231.107.71:3000'; //유동아이피임.
+Vue.prototype.$serverUrl = 'http://localhost:3000';
+
 
 const EventBus = new Vue();
 Vue.prototype.$bus = EventBus;
 
-//Login.vue에서 userId생성되는 이벤트 발생되면, 프로토타입에 넣고 사용해준다.
-Vue.prototype.$bus.$on('userId', (data)=>{
-  Vue.prototype.$userId = data;
-})
 const router = new VueRouter({
-  // mode: 'history',
+  mode: 'history',
   routes:Routes
 })
+
+store.dispatch('checkLogin', router);
+
+router.beforeEach((to, from, next)=>{
+  if(to.matched.some(record => record.meta.requiresAuth)){
+      if(store.getters.isLoggedIn){
+          next();
+          return;
+      }
+      next('/user/login');
+  }else{
+      next();
+  }
+});
+
 Vue.config.productionTip = false
 
 
 new Vue({
   render: h => h(App),
   router:router,
-  // store
+  store
 }).$mount('#app')

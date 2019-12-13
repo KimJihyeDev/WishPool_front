@@ -134,13 +134,12 @@
     </div>
 </template>
 <script>
+import store from '../../store';
+const { state } = store;
+
 export default {
     name: 'ItemDetail',
     created(){
-
-        this.$bus.$on('userId', data=>{
-            this.$userId = data;
-        });
         (async()=>{
             try{
                 const res = await this.$http.get(this.$serverUrl+this.$route.path);
@@ -171,7 +170,7 @@ export default {
     },
     computed:{
         isMe(){
-            if(this.$userId == this.item.userId){
+            if(state.userId == this.item.userId){
                 return true;
             }
             return false;
@@ -194,8 +193,7 @@ export default {
                     console.log(res.data.code);
                     if(res.data.code == "200"){
                         console.log(res.data.msg);
-                        this.$bus.$emit('userId', this.$userId);
-			            this.$router.push({name:'itemList', params: {userId: this.$userId}});
+			            this.$router.push({name:'itemList', params: {userId: state.userId}});
                     }
                 } catch (e) {
                     console.error(e);
@@ -203,17 +201,17 @@ export default {
             })();
         },
         goToList(){
-            this.$router.push({name:'itemList', params: {userId: this.$userId}});
+            this.$router.push({name:'itemList', params: {userId: state.userId}});
         },
         goback(){
             this.$router.go(-1);
         },
         purchase(){
-            console.log(this.$userId);
+            console.log(state.userId);
             if(this.isPurchased){
                 this.item.purchasedBy = '';
             }else{
-                this.item.purchasedBy = this.$userId;
+                this.item.purchasedBy = state.userId;
             }
             (async()=>{
                 try {

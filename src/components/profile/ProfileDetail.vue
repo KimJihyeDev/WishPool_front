@@ -86,6 +86,9 @@
 
 </template>
 <script>
+import store from '../../store';
+const { state } = store;
+
 export default {
     name: 'ProfileDetail',
     props: ['user'],
@@ -97,7 +100,7 @@ export default {
             return true;
         },
         isMe(){
-            if(this.user._id == this.$userId){
+            if(this.user._id == state.userId){
                 return true;
             }
             return false;
@@ -133,11 +136,6 @@ export default {
             this.$bus.$emit('removeFollow', this.user);
         }
     },
-    created(){
-        this.$bus.$on('userId', data=>{
-            this.$userId = data;
-        })
-    }
 }
 </script>
 <style scoped>

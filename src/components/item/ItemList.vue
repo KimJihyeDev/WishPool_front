@@ -122,10 +122,10 @@
     // import ItemInput from './ItemInput.vue';
     import ItemEmpty from './ItemEmpty.vue';
 
+
     export default {
         name: 'ItemList',
         created(){
-            this.$bus.$emit('userId', this.$userId);
             console.log(this.$serverUrl+this.$route.fullPath);
             (async()=>{
                 try{

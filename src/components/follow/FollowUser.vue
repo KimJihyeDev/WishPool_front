@@ -47,11 +47,6 @@ export default {
             this.$emit('onFollowClick');
         }
     },
-    craeted(){
-        this.$bus.$on('userId', data=>{
-            this.$userId = data;
-        })
-    }
 }
 </script>
 <style scoped>

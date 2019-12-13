@@ -152,6 +152,9 @@
    
 </template>
 <script>
+import store from '../../store';
+const { state } = store;
+
 export default {
     name: 'ItemModify',
 	created(){
@@ -204,8 +207,7 @@ export default {
                     const res = await this.$http.patch(this.$serverUrl+this.$route.path, this.item);
                     if(res.data.code == "200"){
                         console.log(res.data.msg);
-                        console.log('수정', this.$userId);
-                        this.$router.push({name:'itemList', params: {userId: this.$userId}});
+                        this.$router.push({name:'itemList', params: {userId: state.userId}});
                     }
                 } catch (e) {
                     console.error(e);
@@ -222,7 +224,7 @@ export default {
             this.collapseOption = !this.collapseOption;
         },
         goToList(){
-            this.$router.push({name:'itemList', params: {userId: this.$userId}});
+            this.$router.push({name:'itemList', params: {userId: state.userId}});
         }
 	},
 }
