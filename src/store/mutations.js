@@ -9,9 +9,10 @@ export default{
     },
     auth_success(state, payload){
         console.log(payload);
-        state.status = 'success'
-        state.token = payload.token
-        state.userId = payload.userId
+        state.status = 'success';
+        state.token = payload.token;
+        console.log('22222222',payload.userId);
+        state.userId = payload.userId;
     },
     auth_error(state){
         state.status = 'error'

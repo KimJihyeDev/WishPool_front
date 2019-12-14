@@ -8,7 +8,7 @@
             <div class="search">
                 <form class="w-search" style="margin-bottom: 1rem;">
                     <h4 style="margin-top:1rem;">새로운 follow 찾기</h4>
-                    <div class="form-group with-button is-empty">
+                    <div class="form-group with-button is-empty" style="display: flex" >
                         <div style="inline-flex">
                         <select style="display: inline; width:20%; padding:15px 2px" v-model="searchOption">
                             <option value="id">ID</option>
@@ -16,10 +16,10 @@
                         </select>
                         <input type="text" style="display: inline; width:80%;" placeholder="ID/핸드폰 번호 검색" class="form-control" v-model="searchQuery">
                         </div>
-                        <button data-toggle="modal" data-target="#create-event" @click="searchUser">
-                            <svg class="olymp-magnifying-glass-icon">
+                        <a class="btn btn-primary" style="display: flex;margin: 0;widht:  30px;fill: #fff;align-items: center;width: 45px;justify-content: center;" data-toggle="modal" data-target="#create-event" @click="searchUser()">
+                            <svg class="olymp-magnifying-plus-icon">
                             <use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
-                        </button>
+                        </a>
                         <span class="material-input"></span>
                     </div>
                 </form>
@@ -120,21 +120,18 @@
 
         <!-- Window-popup Create Event -->
 
-    <div class="modal fade" id="create-event" ref="create" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="create-event" tabindex="-1" role="dialog" aria-labelledby="create-event" style="display: none;" aria-hidden="true">
         <div class="modal-dialog window-popup create-event" role="document">
             <div class="modal-content" id="create-event-body">
                 <div class="modal-header">
                     <h3 class="title" style="display:inline;">새로운 Follow 찾기</h3>
-                <!-- modal close button(절대 삭제하지 말것) -->
                     <a href="javascript:void(0)" class="close icon-close" data-dismiss="modal" aria-label="Close">
                         <svg class="olymp-close-icon" style="fill:black;"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
                     </a>
-                    <!-- end modal close button -->
                 </div>
                 <div class="modal-body">
                     <h4>검색결과: "{{searchQuery}}"</h4>
                     <h5 v-if="!existMatch">검색 결과가 없습니다.</h5>
-                    <!-- 검색결과 : 유저리스트 -->
                     <div class="inline-items" v-for="user in searchResults" :key="user._id">
                         <a data-toggle="modal" @click="handleClick(user)" data-target="#profileB" style="display:flex; align-items: center">
                             <div class="author-thumb">
@@ -157,7 +154,6 @@
                             </span>
                         </a>
                     </div>
-                    <!-- end 검색결과 : 유저리스트 -->
                     <span class="material-input"></span><span class="material-input"></span>
                     <a href="#" class="btn btn-blue btn-lg full-width" data-dismiss="modal" >확인</a>
                 </div>
@@ -185,6 +181,8 @@
 <script>
 import FollowUser from './FollowUser.vue';
 import ProfileDetail from '../profile/ProfileDetail.vue';
+import store from '../../store';
+const { state } = store;
 
 export default {
     name: 'FollowList',
@@ -304,7 +302,7 @@ export default {
                     }else if(this.searchOption == "phone"){
                         str = 'searchPhone'
                     }
-                    
+                    console.log(this);
                     const res = await this.$http.get(this.$serverUrl+'/follow/'+str,
                     {
                         params: {
@@ -320,14 +318,13 @@ export default {
                         this.existMatch = false;
                     }
                     
-                    //아이디를 가져옴
+                    // 아이디를 가져옴
                     this.searchResults = res.data.matchUsers;
                     let idx = -1;
-                    
-                    //각각의 유저에 대하여
+                    // 각각의 유저에 대하여
                     this.searchResults.forEach(user=>{
                         //그 유저가 보유하고있는 followerId에 내가 있는지 확인한다.
-                        console.log(user.followerId);
+                        console.log(user);
                         idx = user.followerId.findIndex(followerObj=>{
                             //내가 있다면 리턴
                             return followerObj._id==this.user._id;
