@@ -30,8 +30,8 @@ Vue.use(VueRouter)
 Vue.prototype.$http = axios;
 
 Vue.prototype.$url = 'http://localhost:8080';
-// Vue.prototype.$serverUrl = 'http://52.231.107.71:3000'; //유동아이피임.
-Vue.prototype.$serverUrl = 'http://localhost:3000';
+Vue.prototype.$serverUrl = 'http://52.231.107.71:3000'; //유동아이피임.
+// Vue.prototype.$serverUrl = 'http://localhost:3000';
 
 
 const EventBus = new Vue();
