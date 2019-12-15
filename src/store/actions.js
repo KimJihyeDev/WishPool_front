@@ -11,7 +11,7 @@ export default {
             commit(FETCH_ITEM_LIST, res.data);
         })
     },
-    checkLogin({commit}, router){
+    checkLogin({commit}){
         return new Promise((resolve, reject)=>{
             const token = localStorage.getItem('wishToken');
             commit('auth_request');
@@ -22,10 +22,9 @@ export default {
                 if(res.data.code=="200"){ //서버에서 유효한 사용자라고 판단이 났다면,
                     const payload = {
                         token,
-                        userId: res.data.userId
+                        userId: res.data.userId,
                     };
                     commit('auth_success', payload);
-                    router.push({name: 'itemList', params:{userId:res.data.userId}});
                     resolve(res)
                 }else{
                     console.log(res.data.message);
@@ -58,5 +57,8 @@ export default {
             delete axios.defaults.headers.common['Authorization']
             resolve()
         })
+    },
+    history({commit}, payload){
+        commit('history', payload);
     }
 }

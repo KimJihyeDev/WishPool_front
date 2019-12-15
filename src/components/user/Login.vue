@@ -171,6 +171,7 @@
                                         userId: _id
                                     }
                                     dispatch('success', payload);
+                                    console.log('asdf', state.userId);
                                     this.$router.push({name: 'itemList', params: {userId:state.userId}});
                                 }
                             })();

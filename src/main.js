@@ -30,8 +30,8 @@ Vue.use(VueRouter)
 Vue.prototype.$http = axios;
 
 Vue.prototype.$url = 'http://localhost:8080';
-Vue.prototype.$serverUrl = 'http://52.231.107.71:3000'; //유동아이피임.
-// Vue.prototype.$serverUrl = 'http://localhost:3000';
+// Vue.prototype.$serverUrl = 'http://52.231.107.71:3000'; //유동아이피임.
+Vue.prototype.$serverUrl = 'http://localhost:3000';
 
 
 const EventBus = new Vue();
@@ -42,9 +42,15 @@ const router = new VueRouter({
   routes:Routes
 })
 
-store.dispatch('checkLogin', router);
+store.dispatch('checkLogin');
 
 router.beforeEach((to, from, next)=>{
+  const payload={
+    from: from.path,
+    name: from.name,
+    params: from.params.userId
+  }
+  store.dispatch('history', payload);
   if(to.matched.some(record => record.meta.requiresAuth)){
       if(store.getters.isLoggedIn){
           next();

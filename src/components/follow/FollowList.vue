@@ -1,22 +1,24 @@
 <template>
+<div class="landing-page">
+     <!-- <div class="content-bg-wrap"></div> -->
 <div class="container">
     <div class="row">
         <div class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
             
-            <div class="ui-block" style="margin-bottom:0px;">  
+            <div class="ui-block" style="margin-bottom:0px; margin-top: 2rem;">  
                 
             <div class="search">
                 <form class="w-search" style="margin-bottom: 1rem;">
                     <h4 style="margin-top:1rem;">새로운 follow 찾기</h4>
                     <div class="form-group with-button is-empty" style="display: flex" >
-                        <div style="inline-flex">
-                        <select style="display: inline; width:20%; padding:15px 2px" v-model="searchOption">
+                        <div style="display: inline-flex; width: 100%;">
+                        <select style="display: inline; width:30%; padding:15px 2px" v-model="searchOption">
+                            <option value="phone">전화번호</option>
                             <option value="id">ID</option>
-                            <option value="phone">핸드폰</option>
                         </select>
-                        <input type="text" style="display: inline; width:80%;" placeholder="ID/핸드폰 번호 검색" class="form-control" v-model="searchQuery">
+                        <input type="text" style="display: inline; width:70%; padding:5px;" placeholder="ID/핸드폰 번호 검색" class="form-control" v-model="searchQuery">
                         </div>
-                        <a class="btn btn-primary" style="display: flex;margin: 0;widht:  30px;fill: #fff;align-items: center;width: 45px;justify-content: center;" data-toggle="modal" data-target="#create-event" @click="searchUser()">
+                        <a class="btn btn-primary" style="display: flex;margin: 0;widht: 30px;fill: #fff;align-items: center;width: 45px;justify-content: center;" data-toggle="modal" data-target="#create-event" @click="searchUser()">
                             <svg class="olymp-magnifying-plus-icon">
                             <use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
                         </a>
@@ -69,8 +71,8 @@
                 </div>
                     <!-- end of empty -->
                     <div v-if="!isFollowingEmpty&&isFollowing" class="ui-block">
-                        <ul class="notification-list friend-requests">
-                            <a data-toggle="modal" data-target="#profileA">
+                        <ul class="notification-list friend-requests" style="display: flex; align-items: center; justify-content: center;" >
+                            <a data-toggle="modal" style="width:100%" data-target="#profileA">
                                 <follow-user v-for="user in followingUsers" 
                                 :key="user._id" 
                                 :user="user"
@@ -175,7 +177,7 @@
     <div style="margin-top:2.5rem;"></div>
 
 </div>
-
+</div>
 </template>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/core.js"></script>
 <script>
@@ -191,7 +193,6 @@ export default {
         // this.$bus.$on('userId', data=>{
         //     this.$userId = data;
 		// });
-        console.log(this.$route);
         (async()=>{
             try {
                 const res = await this.$http.get(this.$serverUrl+this.$route.path);
@@ -230,7 +231,7 @@ export default {
             users:[ ],
             user: {},
             clickedUserInfo:'',
-            searchOption: 'id',
+            searchOption: 'phone',
             searchQuery: '',
             existMatch: false,
             searchResults: [],
@@ -565,5 +566,8 @@ li{
 }
 .tab-pane{
     height: 50%;
+}
+.container{
+    height: 42rem;
 }
 </style>

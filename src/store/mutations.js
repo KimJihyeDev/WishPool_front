@@ -8,11 +8,12 @@ export default{
         state.status = 'loading'
     },
     auth_success(state, payload){
-        console.log(payload);
         state.status = 'success';
         state.token = payload.token;
-        console.log('22222222',payload.userId);
         state.userId = payload.userId;
+        state.from = payload.from;
+        state.name = payload.name;
+        state.params = payload.params;
     },
     auth_error(state){
         state.status = 'error'
@@ -21,4 +22,9 @@ export default{
       state.status = ''
       state.token = ''
     },
+    history(state, payload){
+        state.from = payload.from;
+        state.name = payload.name;
+        state.params = payload.params;
+    }
 }

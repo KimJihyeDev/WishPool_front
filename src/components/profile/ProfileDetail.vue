@@ -21,7 +21,7 @@
                             
                                     <div v-if="isMe" class="more">
                                         <svg class="olymp-three-dots-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
-                                        <ul class="more-dropdown">
+                                        <ul class="more-dropdown" style="width: max-content;">
                                             <li>
                                                 <a href="javascript:void(0)" data-dismiss="modal" @click="handleClick">프로필 수정하기</a>
                                             </li>
@@ -53,23 +53,23 @@
                                             <div class="title">Items</div>
                                         </a>
                                     </div>
-                                    <div class="control-block-button">
+                                    <div class="control-block-button" style="display: flex; justify-content: center;">
                                         <!-- <a v-if="isMe" href="javascript:void(0)" class="btn btn-control bg-secondary">
                                             <span class="icon-minus without-texts" style="margin-right:0px; color:transparent">
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
                                         </a> -->
-                                        <a v-if="!isMe&&!doIFollow" href="javascript:void(0)" class="btn btn-control bg-blue" @click="addFollow">
+                                        <a v-if="!isMe&&!doIFollow" href="javascript:void(0)" style="display: flex; align-items: center; justify-content: center;" class="btn btn-control bg-blue" @click="addFollow">
                                             <span  class="icon-add without-texts" style="margin-right:0px;">
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
                                         </a>
-                                        <a v-if="!isMe&&doIFollow" href="javascript:void(0)" class="btn btn-control bg-primary" @click="removeFollow">
+                                        <a v-if="!isMe&&doIFollow" href="javascript:void(0)" style="display: flex; justify-content: center;" class="btn btn-control bg-primary" @click="removeFollow">
                                             <span class="icon-minus without-texts" style="margin-right:0px;">
                                                 <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                                             </span>
                                         </a>
-                                        <a href="javascript:void(0)" class="btn btn-control bg-purple" @click="listItems" data-dismiss="modal" aria-label="Close">
+                                        <a href="javascript:void(0)" style="display: flex; align-items: center; justify-content: center;" class="btn btn-control bg-purple" @click="listItems" data-dismiss="modal" aria-label="Close">
                                             <svg class="olymp-newsfeed-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-newsfeed-icon"></use></svg>
                                         </a>
                 
@@ -183,4 +183,13 @@ export default {
 .more-dropdown{
     width: 140px;
 }
+.friend-count{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 0.2rem;
+    margin-left: 0.2rem;
+}
+.friend-count-item {
+    margin-right: 0;
+}   
 </style>

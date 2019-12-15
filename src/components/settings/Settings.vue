@@ -14,7 +14,7 @@
 						
 								<div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 									<div class="description-toggle">
-										<div class="description-toggle-content">
+										<div class="description-toggle-content" @click="showProfile">
 											<div class="h6">프로필 관리</div>
 											<p>내 프로필을 관리합니다</p>
 										</div>
@@ -72,6 +72,9 @@
 	</div>    
 </template>
 <script>
+import store from '../../store';
+const { state } = store;
+
 export default {
 	name:'Setting',
 	data:function(){
@@ -107,6 +110,9 @@ export default {
 			}else{
 				return false;
 			}
+		},
+		showProfile(){
+			this.$router.push({name:'profileModify', params:{userId:state.userId}})
 		}
 	},
 	created:function(){

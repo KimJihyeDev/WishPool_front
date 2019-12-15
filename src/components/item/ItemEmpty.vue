@@ -13,23 +13,23 @@
             <a href="#" class="  full-block" data-toggle="modal" data-target="#create-friend-group-1"></a>
             <div class="content" id="empty-area">
                <div v-if="isWish">
-                  <a href="javascript:void(0)" v-on:click="emitPlus" class="btn btn-control bg-blue" data-toggle="modal" data-target="#create-friend-group-1" style="">
+                  <a href="javascript:void(0)" v-on:click="emitPlus" class="btn btn-control bg-blue" data-toggle="modal" data-target="#create-friend-group-1" style="display: inline-flex; align-items: center; justify-content: center;">
                      <svg class="olymp-plus-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
                   <div class="ripple-container"></div></a>
             
                   <div class="author-content">
                      <a href="#" class="h5 author-name">비었어요!</a>
-                     <div class="country">버튼을 눌러 새로운 아이템을 추가해 보세요!</div>
+                     <div class="country" style="width:max-content">버튼을 눌러 새로운 아이템을 <br/>추가해 보세요!</div>
                   </div>
                </div>
                <div v-if="!isWish">
-                  <a href="javascript:void(0)" v-on:click="emitPlus" class="btn btn-control bg-purple" data-toggle="modal" data-target="#create-friend-group-1" style="">
+                  <a href="javascript:void(0)" v-on:click="emitPlus" class="btn btn-control bg-purple" data-toggle="modal" data-target="#create-friend-group-1" style="display: inline-flex; align-items: center; justify-content: center;">
                      <svg class="olymp-happy-face-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
                   <div class="ripple-container"></div></a>
                   
                   <div class="author-content">
                      <a href="#" class="h5 author-name">비었어요!</a>
-                     <div class="country">아직 완료된 아이템이 없네요!</div>
+                     <div class="country" style="width:max-content">아직 완료된 아이템이 없네요!</div>
                   </div>
                </div>
             </div>

@@ -57,26 +57,26 @@
 					<input v-model="item.itemPrice" style="display:inline; width:80%; font-size:medium;padding: 1.9rem 1.1rem 0.5rem; margin-top:-1px;" class="form-control" placeholder="" value="" type="text">
 				    <span class="material-input"></span>
                 </div> -->
-                <h4 class="control-label" id="first-h4">링크검색</h4>
+                <!-- <h4 class="control-label" id="first-h4">링크검색</h4>
                 <form class="w-search" style="margin-bottom:1rem">
                 <div class="form-group with-button is-empty">
                     <input class="form-control" type="text" placeholder="원하는 아이템의 링크를 검색해보세요" v-model="linkQuery">
                     <button v-on:click="findItem">
-                        <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg>
+                        <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
                         <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
-                    </button>
+                    <!-- </button>
                     <span class="material-input"></span>
                 </div>
-                </form>
+                </form> -->
                 <h4 class="control-label">링크입력</h4>
                 <form class="w-search" style="margin-bottom:1rem">
                 <div class="form-group with-button is-empty">
                     <input class="form-control" type="text" placeholder="" v-model="item.itemLink">
-                    <button v-on:click="pasteLink" style="font-size:x-small">
-                        paste
+                    <!-- <button v-on:click="pasteLink" style="font-size:x-small"> -->
+                        <!-- paste -->
                         <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
                         <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
-                    </button>
+                    <!-- </button> -->
                     <span class="material-input"></span>
                 </div>
                 </form>

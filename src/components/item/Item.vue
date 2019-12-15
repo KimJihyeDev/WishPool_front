@@ -5,9 +5,9 @@
 			<div class="author-thumb control-con">
 				<img src="/assets/img/avatar41-sm.jpg" alt="author">
 					
-				<div v-if=isPublic class="label-avatar bg-blue-light public">공개</div>
-				<div v-if=isPrivate class="label-avatar post-category bg-primary private">비공개</div>
-				<div v-if=isGroup class="label-avatar post-category bg-purple group">그룹공개</div>
+				<div v-if="isPublic" class="label-avatar bg-blue-light public">공개</div>
+				<div v-if="isPrivate" class="label-avatar post-category bg-primary private">비공개</div>
+				<div v-if="isGroup" class="label-avatar post-category bg-purple group">그룹공개</div>
 			</div>
 			<div class="notification-event">
 				<a href="#" class="h6 notification-friend">{{item.itemName}}</a>
@@ -41,9 +41,8 @@ export default {
 		isGroup(){
 			if(this.isPublic || this.isPrivate){
 				return false;
-			}else{
-				return true;
 			}
+			return true;
 		},
 		isMe(){
 			if(state.userId == this.item.userId){
@@ -78,6 +77,7 @@ export default {
 			}else if(this.isCompleted =='취소'){
 				this.item.purchasedBy =''
 			}
+			console.log('aaa', this.item);
 			this.$emit('onPurchase', this.item);
 			
 		}
@@ -142,16 +142,25 @@ export default {
 	.public{
 		width: 30px;
 		right: 16px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0;
 	}
 	.private{
 		width: 35px;
-		right: 12px;
-		padding: 0 0.5px;
+		right: 12px;display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0;
 	}
 	.group{
 		width: 40px;
-		padding: 0 0.5px;
 		right: 9px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0;
 	}
 	.inline-items{
 		padding-right:1.2rem;
@@ -174,5 +183,10 @@ export default {
 	}
 	.notification-list .selectize-dropdown-content > *, .notification-list li {
 		display: flex;
+	}
+	.w-friend-pages-added .notification-event {
+		display: flex;
+ 	   flex-direction: column;
+    	justify-content: center;
 	}
 </style>

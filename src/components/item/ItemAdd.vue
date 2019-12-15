@@ -1,7 +1,8 @@
 <template>
 <div>
     <div class="content-bg-wrap"></div>
-    <div class="container">
+    <div class="container" style="font-family: 'Nanum Gothic Coding', monospace;
+font-family: 'Nunito', sans-serif;">
         <div class="row">
             <div class="modal-content">
                 <div class="modal-header">
@@ -67,26 +68,26 @@
                                         </div>
                                     </a>
                                 <span class="material-input"></span>
-                                <h4 class="control-label" id="first-h4">링크검색</h4>
+                                <!-- <h4 class="control-label" id="first-h4">링크검색</h4>
                                 <form class="w-search" style="margin-bottom:1rem">
                                 <div class="form-group with-button is-empty">
                                     <input class="form-control" type="text" placeholder="원하는 아이템의 링크를 검색해보세요" v-model="linkQuery">
                                     <button v-on:click="findItem">
-                                        <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg>
+                                        <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
                                         <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
-                                    </button>
+                                    <!-- </button>
                                     <span class="material-input"></span>
                                 </div>
-                                </form>
+                                </form> -->
                                 <h4 class="control-label">링크입력</h4>
                                 <form class="w-search" style="margin-bottom:1rem">
                                 <div class="form-group with-button is-empty">
                                     <input class="form-control" type="text" placeholder="" v-model="item.itemLink">
-                                    <button v-on:click="pasteLink" style="font-size:x-small">
-                                        paste
+                                    <!-- <button v-on:click="pasteLink" style="font-size:x-small">
+                                        paste -->
                                         <!-- <svg class="olymp-magnifying-glass-icon"><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-magnifying-glass-icon"></use></svg> -->
                                         <!-- <svg><use xlink:href="/assets/svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg> -->
-                                    </button>
+                                    <!-- </button> -->
                                     <span class="material-input"></span>
                                 </div>
                                 </form>
@@ -94,22 +95,11 @@
                                     <input class="form-control" v-model="item.itemLink" style="padding-top:1rem; padding-bottom:1rem;font-size:medium;" placeholder="" value="" type="text">
                                 <span class="material-input"></span></div> -->
                                 <h4 class="control-label" style="margin-top:1.5rem;">공개범위</h4>
-                                <div class="form-group label-floating is-select mb30">
-                                    <div class="radio" style="margin-top:1.2rem;">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" >
-                                            공개
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" checked>
-                                            비공개
-                                        </label>
-                                    </div>
-                                    <span class="material-input"></span>
-                                </div>
-                                <label class="control-label">위시메모</label>
+                                <select v-model="item.visibleTo" style="padding-top:1rem; margin-bottom: 2rem;">
+                                    <option value="true">공개</option>
+                                    <option value="false">비공개</option>
+                                </select>
+                                <h4 class="control-label">위시메모</h4>
                                 <div class="form-group">
                                     <textarea v-model="item.itemMemo" class="form-control" style="font-size:small" placeholder=""></textarea>
                                     <span class="material-input"></span>
@@ -234,7 +224,7 @@ export default {
 				itemPrice: '',
 				itemLink: '',
 				itemRank: '',
-				visibleTo: 'f',
+				visibleTo: 'false',
                 itemMemo: '',
                 userId: state.userId,
             },

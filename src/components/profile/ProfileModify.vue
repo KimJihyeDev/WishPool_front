@@ -89,11 +89,11 @@
 		</div>
 </template>
 <script>
-import store from '../../store';
-const { state } = store;
+// import store from '../../store';
+// const { state } = store;
 
 export default {
-    name: 'ProfileModify',
+	name: 'ProfileModify',
 	created(){
 		(async()=>{
 			try{
@@ -104,7 +104,7 @@ export default {
 			}else{
 				console.log(msg);
 				//사용자에게 잘못된 접근이라고 알릴방법?
-				this.$router.go(-1);
+				// this.$router.back();
 			}
 			}catch(e){
 				console.error(e);
@@ -120,14 +120,14 @@ export default {
 		saveModify(){
 			(async()=>{
 				try{
-				const res = await this.$http.patch(this.$serverUrl+'/users/profile/modify/'+this.user._id, this.user);
-				const { code, msg, newUser } = res.data;
-				if(code=="200"){
-					console.log(msg);
-					this.user = newUser;
-				}else{
-					console.log(msg);
-				}
+					const res = await this.$http.patch(this.$serverUrl+'/users/profile/modify/'+this.user._id, this.user);
+					const { code, msg, newUser } = res.data;
+					if(code=="200"){
+						console.log(msg);
+						this.user = newUser;
+					}else{
+						console.log(msg);
+					}
 				}catch(e){
 					console.error(e);
 				}
@@ -135,10 +135,9 @@ export default {
 		},
 		goBack(){
 			//누르면 한단계 전으로 이동
-			// this.$router.go(-1);
+			// this.$router.back();
 			console.log(this.$router);
-			this.$bus.$emit('userId', state.userId);
-			this.$router.push({name:'settings'}, {params:{userId:state.userId}});
+			// this.$router.push({name:'settings'}, {params:{userId:state.userId}});
 		}
 	}
 }

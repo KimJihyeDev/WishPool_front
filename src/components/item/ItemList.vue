@@ -179,11 +179,12 @@
             //하위컴포넌트에서 완료버튼 클릭시 실행하는 함수, view단만 담당, 
             //payload : 하위 컴포넌트에서 보낸 수정된 item객체
             handlePurchase(payload){
-                console.log('purchase made.'+payload._id);
+                console.log('purchase made.',payload);
+                console.log('주소체크', this.$serverUrl+'item/modify/'+payload._id);
                 //먼저 서버로 해당 아이템이 완료되었다는 수정 API를 호출한다.
                 (async()=>{
                     try{
-                        const res = await this.$http.patch(this.$serverUrl+'item/modify/'+payload._id, payload.item);
+                        const res = await this.$http.patch(this.$serverUrl+'/item/modify/'+payload._id, payload);
                         if(res.data.code === "200"){
                             console.log('완료 처리');
                             //this.items배열의 수정될 객체의 인덱스를 찾아
@@ -285,4 +286,5 @@
     }
     
 }
+
 </style>
