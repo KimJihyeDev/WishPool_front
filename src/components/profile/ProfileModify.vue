@@ -76,8 +76,8 @@
 								<span class="material-input"></span></div> -->
 							</div> 
 							<div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-								<button class="btn btn-primary btn-lg full-width" @click="saveModify">저장</button>
-								<button class="btn btn-secondary btn-lg full-width" @click="goBack">취소</button>
+								<a class="btn btn-primary btn-lg full-width" style="color: #fff; font-size:1rem;" @click="saveModify">저장</a>
+								<a class="btn btn-secondary btn-lg full-width" style="color: #fff; font-size:1rem;" @click="goBack">취소</a>
 							</div>
 					
 						</div>
@@ -134,11 +134,8 @@ export default {
 			})();
 		},
 		goBack(){
-
 			//누르면 한단계 전으로 이동
-			// this.$router.back();
-			// console.log(this.$router);
-			// this.$router.push({name:'settings'}, {params:{userId:state.userId}});
+			this.$router.back();
 		}
 	}
 }

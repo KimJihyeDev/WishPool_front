@@ -24,7 +24,7 @@
                 <span class="material-input"></span></div>
             </form>
             <form class="w-search">
-                <h4 class="control-label" id="first-h4">아이템 가격</h4>
+                <h4 class="control-label" id="first-h4" style="margin-top: 2rem;">아이템 가격</h4>
                 <div class="form-group with-button is-empty">
                     <input class="form-control" type="text" placeholder="가격을 입력하세요(숫자만 가능)" v-model="item.itemPrice">
                 <span class="material-input"></span></div>
@@ -68,7 +68,7 @@
                     <span class="material-input"></span>
                 </div>
                 </form> -->
-                <h4 class="control-label">링크입력</h4>
+                <h4 class="control-label" style="margin-top:0">링크입력</h4>
                 <form class="w-search" style="margin-bottom:1rem">
                 <div class="form-group with-button is-empty">
                     <input class="form-control" type="text" placeholder="" v-model="item.itemLink">
@@ -108,11 +108,11 @@
                     <textarea v-model="item.itemMemo" class="form-control" style="font-size:small" placeholder=""></textarea>
                     <span class="material-input"></span>
                 </div>
-                <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-                    <button class="btn btn-primary btn-lg full-width" v-on:click="doModify">수정완료</button>
+                <div class="col col-lg-6 col-md-6 col-sm-12 col-12" style="padding:0; margin-top:2.6rem;">
+                    <a class="btn btn-primary btn-lg full-width" style="width: 100%; color: #fff; font-size:1rem;" v-on:click="doModify">수정완료</a>
                 </div>
-                <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-                    <button class="btn btn-secondary btn-lg full-width" v-on:click="goToList">취소</button>
+                <div class="col col-lg-6 col-md-6 col-sm-12 col-12" style="padding:0">
+                    <a class="btn btn-secondary btn-lg full-width" style="width: 100%; color: #fff; font-size:1rem;" v-on:click="goToList">취소</a>
                 </div>
                             
 			</div>
@@ -224,7 +224,7 @@ export default {
             this.collapseOption = !this.collapseOption;
         },
         goToList(){
-            this.$router.push({name:'itemList', params: {userId: state.userId}});
+            this.$router.back();
         }
 	},
 }

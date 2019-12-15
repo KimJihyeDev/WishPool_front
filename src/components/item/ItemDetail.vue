@@ -111,15 +111,15 @@
                             <!-- ... end Today Events -->
                             <div v-if="isMe" class="btn-list">
                                 <div class="list1">
-                                    <button class="btn btn-breez btn-lg full-width" v-on:click="modify">수정</button>
-                                    <button class="btn btn-primary btn-lg full-width" v-on:click="doDelete">삭제</button>
+                                    <a class="btn btn-breez btn-lg" style="color: #fff; font-size:1rem; width: 45%" v-on:click="modify">수정</a>
+                                    <a class="btn btn-primary btn-lg" style="color: #fff; font-size:1rem; width: 45%" v-on:click="doDelete">삭제</a>
                                 </div>
-                                <button class="btn btn-secondary btn-lg full-width" style="width:90%" v-on:click="goToList">목록으로</button>
+                                <a class="btn btn-secondary btn-lg full-width" style="width:90%;color: #fff;" v-on:click="goToList">목록으로</a>
                             </div>
                             <div v-else class="btn-list">
-                                <button v-if="!isPurchased" class="btn btn-primary btn-lg full-width" style="width:90%; height:3.7rem;" v-on:click="purchase">내가 사주기</button>
-                                <button v-if="isPurchased" class="btn btn-breez btn-lg full-width" style="width:90%; height:3.7rem;" @click="purchase">사주기 취소</button>
-                                <button class="btn btn-secondary btn-lg full-width" style="width:90%; height:3.7rem;" v-on:click="goback">뒤로가기</button>
+                                <a v-if="!isPurchased" class="btn btn-primary btn-lg full-width" style="width:90%; height:3.7rem;color: #fff; font-size:1rem;" v-on:click="purchase">내가 사주기</a>
+                                <a v-if="isPurchased" class="btn btn-breez btn-lg full-width" style="width:90%; height:3.7rem;color: #fff; font-size:1rem;" @click="purchase">사주기 취소</a>
+                                <a class="btn btn-secondary btn-lg full-width" style="width:90%; height:3.7rem;color: #fff; font-size:1rem;" v-on:click="goback">뒤로가기</a>
                             </div>
                         </div>
     <div style="margin-top:5rem;"></div>
@@ -204,7 +204,7 @@ export default {
             this.$router.push({name:'itemList', params: {userId: state.userId}});
         },
         goback(){
-            this.$router.go(-1);
+            this.$router.back();
         },
         purchase(){
             console.log(state.userId);
@@ -259,5 +259,7 @@ export default {
     display:flex;
     flex-direction: row;
     width:100%;
+    padding: 3px 1.3rem;
+    justify-content: space-between
 }
 </style>
