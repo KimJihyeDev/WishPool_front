@@ -86,7 +86,7 @@
                                                 페이스북으로 로그인하기</a>
 
                                             <div class="or"></div>
-                                            <a href="#" id="join" class="btn btn-lg btn-primary full-width">회원가입하기</a>
+                                            <a href="javascript:void(0)" id="join" class="btn btn-lg btn-primary full-width" @click="entry">회원가입하기</a>
 
                                             <!-- <p>Don’t you have an account? <a href="#">Register Now!</a> it’s really simple and you can start enjoing all the benefits!</p> -->
                                         </div>
@@ -103,35 +103,14 @@
         <!-- Window-popup Restore Password -->
 
 
-        <resetPassword />
+        <!-- <resetPassword /> -->
         <!-- ... end Window-popup Restore Password -->
 
 
-        <!-- Window Popup Main Search -->
-
-        <div class="modal fade" id="main-popup-search" tabindex="-1" role="dialog" aria-labelledby="main-popup-search" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered window-popup main-popup-search" role="document">
-                <div class="modal-content">
-                    <a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
-                        <svg class="olymp-close-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
-                    </a>
-                    <div class="modal-body">
-                        <form class="form-inline search-form" method="post">
-                            <div class="form-group label-floating is-empty">
-                                <label class="control-label">What are you looking for?</label>
-                                <input class="form-control bg-white" placeholder="" type="text" value="">
-                                <span class="material-input"></span></div>
-
-                            <button class="btn btn-purple btn-lg">Search</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 <script>
-    import ResetPassword from './ResetPassword.vue';
+    // import ResetPassword from './ResetPassword.vue';
     import store from '../../store';
     const { state, dispatch } = store;
     export default {
@@ -146,7 +125,7 @@
             }
         },
         components:{
-            'resetPassword': ResetPassword,
+            // 'resetPassword': ResetPassword,
         },
         watch:{
             'state.userId':function(newVal){
@@ -188,6 +167,9 @@
             },
             fbLogin:function(){
             
+            },
+            entry(){
+                this.$router.push('/user/entry');
             }
         },
     }

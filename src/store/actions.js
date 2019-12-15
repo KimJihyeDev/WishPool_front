@@ -51,12 +51,7 @@ export default {
         commit('auth_error')
     },
     logout({commit}){
-        return new Promise((resolve) => {
-            commit('logout')
-            localStorage.removeItem('wishToken')
-            delete axios.defaults.headers.common['Authorization']
-            resolve()
-        })
+        commit('logout');
     },
     history({commit}, payload){
         commit('history', payload);

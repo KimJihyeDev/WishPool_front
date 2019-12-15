@@ -73,7 +73,7 @@
 </template>
 <script>
 import store from '../../store';
-const { state } = store;
+const { state, dispatch } = store;
 
 export default {
 	name:'Setting',
@@ -89,7 +89,8 @@ export default {
 				console.log(response);
 				localStorage.removeItem('wishToken');
 				this.$http.defaults.headers.common['Authorization'];
-                this.$router.push('/user/login');
+				dispatch('logout');
+				this.$router.push('/user/login');
             })
             .catch((err)=>{
                 console.error(err);

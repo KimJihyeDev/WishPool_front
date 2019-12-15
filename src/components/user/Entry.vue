@@ -120,6 +120,8 @@
 												</div>
 											</div>
 											<a href="#" class="btn btn-purple btn-lg full-width" style="font-size:1.1rem" v-on:click="entry">회원가입 완료</a>
+											<a href="#" class="btn btn-secondary btn-lg full-width" style="font-size:1.1rem" v-on:click="login">로그인으로 돌아가기</a>
+										
 										</div>
 									</div>
 								</form>
@@ -387,6 +389,9 @@ export default {
 			.catch((err)=>{
 				console.error(err);
 			})
+		},
+		login(){
+			this.$router.push('/user/login');
 		}
 	},
 	watch:{
@@ -640,8 +645,9 @@ export default {
                 'was-validated' : this.birthConfirm && this.isValidBirth,
                 'not-validated' : this.birthConfirm && !this.isValidBirth
             }
-        }
-    }
+		}
+	},
+	
 		
 }
 </script>

@@ -11,16 +11,14 @@ export default{
         state.status = 'success';
         state.token = payload.token;
         state.userId = payload.userId;
-        state.from = payload.from;
-        state.name = payload.name;
-        state.params = payload.params;
     },
     auth_error(state){
         state.status = 'error'
     },
     logout(state){
       state.status = ''
-      state.token = ''
+      state.token = '';
+      state.userId = ''
     },
     history(state, payload){
         state.from = payload.from;

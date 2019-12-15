@@ -134,9 +134,10 @@ export default {
 			})();
 		},
 		goBack(){
+
 			//누르면 한단계 전으로 이동
 			// this.$router.back();
-			console.log(this.$router);
+			// console.log(this.$router);
 			// this.$router.push({name:'settings'}, {params:{userId:state.userId}});
 		}
 	}
