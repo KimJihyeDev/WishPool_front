@@ -55,5 +55,11 @@ export default {
     },
     history({commit}, payload){
         commit('history', payload);
+    },
+    footerClass({commit}, payload){
+        commit('footerClass', payload)
+    },
+    receiveSid({commit}, sid){
+        commit('receiveSid', sid);
     }
 }

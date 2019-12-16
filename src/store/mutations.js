@@ -24,5 +24,22 @@ export default{
         state.from = payload.from;
         state.name = payload.name;
         state.params = payload.params;
+    },
+    footerClass(state, payload){
+        state.tab1 = false;
+        state.tab2 = false;
+        state.tab3 = false;
+        state.tab4 = false;
+        state.tab5 = false;
+        switch(payload){
+            case 1: state.tab1 = true; break;
+            case 2: state.tab2 = true; break;
+            case 3: state.tab3 = true; break;
+            case 4: state.tab4 = true; break;
+            case 5: state.tab5 = true; break;
+        }
+    },
+    receiveSid(state, sid){
+        state.sid = sid;
     }
 }

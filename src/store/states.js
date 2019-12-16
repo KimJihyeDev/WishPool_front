@@ -4,5 +4,21 @@ export default {
     status:'',
     from:'',
     params: '',
-    name:''
+    name:'',
+    tab1: {
+        active: false    
+    },
+    tab2: {
+        active: false    
+    },
+    tab3: {
+        active: false    
+    },
+    tab4: {
+        active: false    
+    },
+    tab5: {
+        active: false    
+    },
+    sid:''
 }

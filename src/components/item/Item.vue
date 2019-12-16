@@ -27,7 +27,7 @@
 </template>
 <script>
 import store from '../../store';
-const { state } = store;
+const { state, dispatch } = store;
 export default {
 	name: 'Item',
 	props: [ 'item', 'isCompleted' ],
@@ -59,9 +59,11 @@ export default {
 		goDetail(){
 			console.log('userId', this.item.userId);
 			console.log('아이템아이디',this.item._id);
+			dispatch('footerClass', 2);
 			this.$router.push({path:'/item/detail/'+this.item._id})
 		},
 		goModify(){
+			dispatch('footerClass', 2);
 			this.$router.push({path:'/item/modify/'+this.item._id})
 		},
 		voidClick(){

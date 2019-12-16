@@ -218,6 +218,7 @@ export default {
         this.$bus.$on('addFollow', (fUser)=>{
             //addFollow함수 재활용
             console.log('addFollow 이벤트 반듬', fUser.userName);
+            
            this.addFollow(fUser)
         });
         this.$bus.$on('removeFollow', (fUser)=>{
@@ -349,7 +350,11 @@ export default {
         addFollow(followUser){
             //followUser : 내가 팔로우하려는 유저
             //내 유저객체의 followingId목록에 followUser의 아이디를 추가한다.
-
+            const data={
+                follower: state.sid,
+                followed: followUser._id
+            }
+            this.$socket.emit('follow-add', data);
             this.user.followingId = [
                 ...this.user.followingId,
                 followUser._id //내가 팔로우 하는 사람 추가

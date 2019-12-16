@@ -213,7 +213,7 @@ font-family: 'Nunito', sans-serif;">
 </template>
 <script>
 import store from '../../store';
-const { state } = store;
+const { state, dispatch } = store;
 import ItemInput from './ItemInput.vue';
 export default {
     name: 'ItemAdd',
@@ -226,7 +226,7 @@ export default {
 				itemRank: '',
 				visibleTo: 'false',
                 itemMemo: '',
-                userId: state.userId,
+                userId: '',
             },
             linkQuery:'',
             collapseOption: true
@@ -239,18 +239,17 @@ export default {
 		handleInsert(val){
             this.item.itemName = val.itemName;
             this.item.itemPrice = val.itemPrice;
+            this.item.userId = state.userId;
             (async()=>{
                 try{
-                    const res = await this.$http.post(this.$serverUrl+this.$route.path, this.item);
-                    if(res.data.code == 200){
+                    const res = await this.$http.post(this.$serverUrl+'/item/add', this.item);
+                    if(res.data.code == "200"){
                         console.log('정상 : '+res.data.msg);
-                        try{
-                            this.$emit('bus-refresh');
+                            // this.$emit('bus-refresh');
                             //'내' 목록만 보여줘야하므로, 내 유저아이디를 파라미터로 갖는 url로 이동
+                            dispatch('footerClass', 2);
+                            // const uid = state.userId;
                             this.$router.push({name: 'itemList', params: {userId: state.userId}})
-                        }catch(e){
-                            console.error(e);
-                        }
                     }else if(res.data.code == 500){
                         console.log('서버오류 : '+res.data.msg);
                     }
