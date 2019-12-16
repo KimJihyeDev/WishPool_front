@@ -41,5 +41,15 @@ export default{
     },
     receiveSid(state, sid){
         state.sid = sid;
+    },
+    updateNoti(state, noti){
+        noti.id = state.num;
+        state.notis = [
+            noti,
+            ...state.notis
+        ];
+        
+        console.log('asdfasdf', state.notis)
+        state.num = state.num+1;
     }
 }

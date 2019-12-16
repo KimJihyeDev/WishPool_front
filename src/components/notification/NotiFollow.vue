@@ -1,7 +1,7 @@
 <template>
     <li v-on:click="emitClick" :class="{'un-read':haveRead}">
         <div class="author-thumb">
-            <img src="/assets/img/avatar2-sm.jpg" alt="author">
+            <img :src="profileImgPath" alt="author">
         </div>
         <div class="notification-event">
             <a href="#" class="h6 notification-friend">{{by}}</a>
@@ -19,7 +19,8 @@
 <script>
 export default {
    name: 'NotiFollow',
-    props: ['by', 'date', 'itemName', 'haveRead'],
+    props: ['by', 'date', 'itemName', 'haveRead', 'profileImgPath'],
+    
     methods:{
         deleteThis(){
             this.$emit('deleteNoti');

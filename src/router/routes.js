@@ -41,7 +41,7 @@ export default [
     { path:'/profile/detail/', component: ProfileDetail, meta: { requiresAuth: true }},
     { path:'/profile/detail/:id', component: ProfileDetail, meta: { requiresAuth: true }},
     { path:'/profile/modify/:userId', component: ProfileModify, name:'profileModify', meta: { requiresAuth: true }},
-    { path:'/noti', component: NotiList, meta: { requiresAuth: true }},
+    { path:'/noti/:userId', component: NotiList, name:'notiList', meta: { requiresAuth: true }},
     { path:'/settings/:userId', component: Settings, name:'settings', meta: { requiresAuth: true }},
     { path:'/settings', component: Settings, meta: { requiresAuth: true }},
     { path:'/user/auth/:email', component: Auth},

@@ -16,6 +16,7 @@
                   :id="noti._id"
                   :itemName="noti.itemName"
                   :date="noti.date"
+                  :profileImgPath="noti.profileImgPath"
                   :haveRead="!noti.haveRead"
                   @clicked="relatedPage(noti.type, noti._id)"
                   @deleteNoti="removeNoti(noti._id)"
@@ -35,7 +36,10 @@
 <script>
 import NotiPurchase from './NotiPurchase.vue'
 import NotiFollow from './NotiFollow.vue';
-import NotiEmpty from './NotiEmpty.vue'
+import NotiEmpty from './NotiEmpty.vue';
+import store from '../../store';
+const { state } = store;
+
 export default {
    name: 'NotiList',
    components:{
@@ -52,35 +56,37 @@ export default {
       });
       this.countUnread = count;
       //웹 Socket으로 알림이 늘어날 때마다 countUnread숫자를 늘린다.
+     
    },
    data(){
       return{
-         notis:[
-            {
-               _id: 0,
-               type: 'noti-purchase', //컴포넌트 이름이랑 일치시켜줘야한다.
-               by: 'Mathilda Brinker',
-               itemName: '스타벅스 텀블러',
-               date: '',
-               haveRead: true
-            },
-            {
-               _id:1,
-               type: 'noti-follow',
-               by: 'Nicholas Grissom',
-               itemName: '고양이 장난감',
-               date: '',
-               haveRead: false
-            },
-            {
-               _id:2,
-               type: 'noti-follow',
-               by: 'Nicholas Grissom',
-               itemName: '고양이 장난감',
-               date: '',
-               haveRead: false
-            }
-         ],
+         id:0,
+         // notis:[
+            // {
+            //    _id: 0,
+            //    type: 'noti-purchase', //컴포넌트 이름이랑 일치시켜줘야한다.
+            //    by: 'Mathilda Brinker',
+            //    itemName: '스타벅스 텀블러',
+            //    date: '',
+            //    haveRead: true
+            // },
+            // {
+            //    _id:1,
+            //    type: 'noti-follow',
+            //    by: 'Nicholas Grissom',
+            //    itemName: '고양이 장난감',
+            //    date: '',
+            //    haveRead: false
+            // },
+            // {
+            //    _id:2,
+            //    type: 'noti-follow',
+            //    by: 'Nicholas Grissom',
+            //    itemName: '고양이 장난감',
+            //    date: '',
+            //    haveRead: false
+            // }
+         // ],
          haveAllRead: false,
          countUnread: 0
       }
@@ -106,6 +112,9 @@ export default {
          console.log(count);
          console.log(this.countUnread);
          return count;
+      },
+      notis(){
+         return state.notis;
       }
    },
    methods:{

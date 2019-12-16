@@ -350,9 +350,13 @@ export default {
         addFollow(followUser){
             //followUser : 내가 팔로우하려는 유저
             //내 유저객체의 followingId목록에 followUser의 아이디를 추가한다.
+            const follower = {
+                user : this.user,
+                sid : state.sid
+            }
             const data={
-                follower: state.sid,
-                followed: followUser._id
+                follower,
+                followed: followUser
             }
             this.$socket.emit('follow-add', data);
             this.user.followingId = [
@@ -443,7 +447,11 @@ export default {
                 }
             })();
             let num = this.searchResults.findIndex(user=> user._id == followUser._id);
-            this.searchResults[num].doIFollow = false;
+            console.log('numnumnum', num);
+            if(num>=0){
+                this.searchResults[num].doIFollow = false;
+            }
+            
         },
     }
 }

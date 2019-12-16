@@ -20,5 +20,7 @@ export default {
     tab5: {
         active: false    
     },
-    sid:''
+    sid:'',
+    notis:[],
+    num: 0
 }

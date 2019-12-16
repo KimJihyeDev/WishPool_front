@@ -61,7 +61,7 @@ const { state } = store;
 export default {
     name:'Footer',
     created(){
-        this.$socket.on('follow-noti', ()=>{
+        this.$socket.on('increase-noti', ()=>{
             this.noti = this.noti+1;
         })
     },
@@ -69,7 +69,7 @@ export default {
         gotoFollowList(){ this.$router.push({name:'followList', params:{userId: state.userId}}) },
         gotoItemList(){ this.$router.push({name:'itemList', params:{userId: state.userId}}) },
         gotoItemAdd(){ this.$router.push({path:'/item/add'}) },
-        gotoNotification(){ this.$router.push({path:'/noti'}); this.noti=0; },
+        gotoNotification(){ this.$router.push({name:'notiList', params:{userId: state.userId}})},
         gotoSettings(){ 
             console.log(this.$route.path);
             this.$router.push({name:'settings', params:{userId: state.userId}}) },

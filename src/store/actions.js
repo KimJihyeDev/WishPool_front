@@ -61,5 +61,8 @@ export default {
     },
     receiveSid({commit}, sid){
         commit('receiveSid', sid);
+    },
+    updateNoti({commit}, noti){
+        commit('updateNoti', noti);
     }
 }

@@ -46,6 +46,25 @@ Vue.prototype.$socket.on('giveSid', (sid)=>{
   store.dispatch('receiveSid',sid);
   console.log('4', store.state.sid);
   Vue.prototype.$socket.emit('receiveUid', store.state.userId);
+});
+
+Vue.prototype.$socket.on('follow-noti', (data)=>{
+         
+  console.log(data);
+  const noti = {
+     type: 'noti-follow',
+     by: data.userName,
+     itemName: data.itemName,
+     date:'',
+     haveRead: false,
+     profileImgPath : data.profileImgPath
+  }
+  console.log(noti);
+  store.dispatch('updateNoti', noti);
+  // this.notis = [
+  //    noti,
+  //    ...this.notis
+  // ]
 })
 
 router.beforeEach((to, from, next)=>{
